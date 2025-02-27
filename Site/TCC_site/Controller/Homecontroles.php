@@ -3,7 +3,7 @@
     {
         public function index()
         {
-
+            echo 'pagina';
         }
     }
 ?>
