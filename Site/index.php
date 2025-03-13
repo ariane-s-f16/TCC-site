@@ -1,5 +1,5 @@
 <?php
-
+require_once  'TCC_site/Conexao/Conexao.php';
 require_once  'TCC_site/Core/Core.php';
 require_once  'TCC_site/Controller/Homecontroles.php';
 require_once  'TCC_site/Controller/Errorcontroles.php';
