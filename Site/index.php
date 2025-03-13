@@ -3,6 +3,7 @@
 require_once  'TCC_site/Core/Core.php';
 require_once  'TCC_site/Controller/Homecontroles.php';
 require_once  'TCC_site/Controller/Errorcontroles.php';
+require_once  'TCC_site/Model/Postagem.php';
 
 
 
