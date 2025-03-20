@@ -3,9 +3,15 @@
     {
         public function start($urlGet)
         {
-            if(isset($urlGEt['pagina']) )
+            if (isset($urlGet['metodo'])) {
+				$acao = $urlGet['metodo'];
+			} else {
+				$acao = 'index';
+			}
+
+            if(isset($urlGet['pagina']) )
             { 
-                $controller= ucfirst($urlGEt['pagina'].'Controller');
+                $controller= ucfirst($urlGet['pagina'].'Controller');
 
                 $acao = 'index';
 
@@ -17,9 +23,18 @@
 
            if(! class_exists($controller))
            {
-            $controller= 'Errocontroles';
+            $controller= 'Errorcontroles';
            }
-           call_user_func_array(array(new $controller, $acao), array());
+
+           if (isset($urlGet['id']) && $urlGet['id'] != null) 
+            {
+            $id = $urlGet['id'];
+            } else
+             {
+                $id = null;
+             }
+
+           call_user_func_array(array(new $controller, $acao), array('id'=> $id));
 
 
           

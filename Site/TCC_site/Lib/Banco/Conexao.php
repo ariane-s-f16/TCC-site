@@ -4,7 +4,7 @@ abstract class Conexao
 {
     private static $conexao;
 
-    public static function GetConexao()
+    public static function GetConn()
     {
         if(self::$conexao ==null)
         {
