@@ -5,6 +5,7 @@ require_once  'TCC_site/Controller/Homecontroles.php';
 require_once  'TCC_site/Controller/Errorcontroles.php';
 require_once  'TCC_site/Model/Postagem.php';
 require_once  'TCC_site/Lib/Banco/Conexao.php';
+require_once  'TCC_site/Controller/Postcontroles.php';
 
 
 

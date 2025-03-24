@@ -1,5 +1,5 @@
 <?php
-include 'Lib/Banco/Conexao.php';
+
 
 class Postagem
 {
