@@ -4,7 +4,7 @@ class Errorcontroles
 {
     public function index()
 		{
-			echo 'PAg 1';
+			echo 'PAg 3';
 		}
 }
 ?>
