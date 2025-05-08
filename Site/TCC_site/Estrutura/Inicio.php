@@ -5,11 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <style> 
-        *{margin: 0; padding: 0;} body{font-size: 28px;} ul{list-style-type: none; margin: 0; padding: 0; overflow: hidden; border: 1px solid #e7e7e7; background-color: #f3f3f3;}
-        li {float: left;} li a {display: block; color: #4b4646; text-align: center; padding: 20px 40px; text-decoration: none;} li a:hover:not(.active) {background-color: #ddd;} 
-        li a.active {color: white; background-color: #04AA6D;}.secao {margin: 0; font-family: Helvetica, sans-serif;}.secao-div { display: flex; flex-wrap: wrap; justify-content: center; padding: 10px; text-align: center;}
-        .secao-div-card {display: flex; flex-direction: column; align-items: center; width: calc(100% / 3 - 60px); margin: 10px; padding: 20px; box-shadow: 2px 2px 16px 0px rgba(0, 0, 0, 0.1); border-radius: 15px; background-color: white; transition: all 0.5s ease;}
-        .secao-div-card:hover {transform: scale(1.1); z-index: 1;}.secao4-div-card img { width: 35%; height: auto;}.secao4-div-card h3 { margin-bottom: 0px;}
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-size: 20px; font-family: Helvetica, sans-serif;} ul {list-style-type: none; margin: 0; padding: 0; overflow: hidden; border: 1px solid #e7e7e7; background-color: #f3f3f3;}
+        li {float: left;} li a {display: block; color: #4b4646; text-align: center; padding: 20px 40px; text-decoration: none;} li a:hover:not(.active) {background-color: #ddd;}
+        li a.active {color: white; background-color: #04AA6D;}.carousel-container {position: relative; overflow: hidden; width: 100%;} .carousel-track {display: flex; width: max-content; animation: scroll 20s linear infinite;}
+        @keyframes scroll { 0% { transform: translateX(0); }100% { transform: translateX(-50%); }}.card {flex: 0 0 auto; width: 200px;margin: 10px;padding: 10px;background: white;border: 1px solid #ccc;
+        text-align: center;border-radius: 10px; box-shadow: 2px 2px 8px rgba(0,0,0,0.1);}
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .card button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card button a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
     </style>
     <title>Document</title>
 </head>
@@ -32,41 +55,78 @@
                 
             </div>
         </div>
-        <div class="conteudo_linha">
+        <div class="menu_lateral">
             <div class="col_1">
-                <h1>Bem vindo!<br> Venha conhecer nosso time<br></h1>
+                <h1>Bem vindo!<br> <br></h1>
                 <p>Já possui cadastro? Faça seu Login!</p>
-                <button class="btn"><a href="View/Login.html">Login</a>
+                <button class="btn"><a href="View/Login.html">Login</a></button>
             </div>
             <div class="col_2">
                 <img src="..." alt="loading">
             </div>
         </div>
-        <div class="profissionais">
-            <div class="corpo_profisionais">
-                <div class="secao-div-card">
-                    <?php $sql = "SELECT * FROM PROFISSIONAIS "; $rs= mysqli_query($conexao, $sql) or die("Erro neste caralho" . mysqli_error($conexao)); while($dados = mysqli_fetch_assoc($rs)){
-                     ?>
-                    <img data-lazyloaded="1" data-placeholder-resp="256x256" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTYiIGhlaWdodD0iMjU2IiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgc3R5bGU9ImZpbGw6I2NmZDRkYjtmaWxsLW9wYWNpdHk6IDAuMTsiLz48L3N2Zz4=" width="256" height="256" decoding="async" data-src="/pagina-html-css/missao.png" alt="imagem do card 1 html e css"><noscript><img width="256" height="256" decoding="async" src="/pagina-html-css/missao.png" alt="imagem do card 1 html e css"></noscript>
-                    <h3><?=$dados = ['nome']?></h3>
-
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-
-                    <p><?=$dados = ['descricao']?></p>
+        <!--CARROSSEL AUTOMÁTICO PARA PROFISSIONAIS-->
+        <div class="carousel-container">
+            <div class="carousel-track">
+           
                 
-                </div>
+                    <?php $sql = "SELECT * FROM EMPRESAS "; $rs= mysqli_query($conexao, $sql) or die("Erro neste caralho" . mysqli_error($conexao)); while($dados = mysqli_fetch_assoc($rs)){
+                     ?> 
+                     
+                     <?php 
+                     echo "
+                     <div class='secao-div-card'>
+                        <div style='border: 1px solid #ccc; margin: 10px; padding: 10px; width: 200px; text-align: center;'>
+                            <img src='" . $dados["imagem"] . "' style='width:100%; height:auto;'><br>
+                            <strong>" . $dados["nome"] . "</strong><br>
+                            R$ " . number_format($dados["preco"], 2, ',', '.') . "
+                            <button class='btn_card'><a href='  EMPRESA.php?id=" . $dados["id"] . "' style='text-decoration: none; color: inherit; cursor: pointer;'> mais informações </a></button>
+                        </div>
+                     </div>";
+                      
+                     ?>
+                            
+               
 
-            <?php
+                    <?php
                 }
                 ?>   
+            </div>    
                
-            </div>
+           
+        </div>
+
+        <br>
+
+        <!--CARROSSEL AUTOMÁTICO PARA EMPRESAS-->
+        <div class="carousel-container">
+            <div class="carousel-track">
+           
+                
+                    <?php $sql = "SELECT * FROM EMPRESAS "; $rs= mysqli_query($conexao, $sql) or die("Erro neste caralho" . mysqli_error($conexao)); while($dados = mysqli_fetch_assoc($rs)){
+                     ?> 
+                     
+                     <?php 
+                     echo "
+                     <div class='secao-div-card'>
+                        <div style='border: 1px solid #ccc; margin: 10px; padding: 10px; width: 200px; text-align: center;'>
+                            <img src='" . $dados["imagem"] . "' style='width:100%; height:auto;border-radius: 10%;'><br>
+                            <strong>" . $dados["nome"] . "</strong><br>
+                            R$ " . number_format($dados["preco"], 2, ',', '.') . "
+                            <button class='btn_card'><a href='  EMPRESA.php?id=" . $dados["id"] . "' style='text-decoration: none; color: inherit; cursor: pointer;'> mais informações </a></button>
+                        </div>
+                     </div>";
+                      
+                     ?>
+                            
+               
+
+                    <?php
+                }
+                ?>   
+            </div>    
+               
+           
         </div>
 
 

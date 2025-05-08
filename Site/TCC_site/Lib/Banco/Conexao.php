@@ -8,7 +8,7 @@ abstract class Conexao
     {
         if(self::$conexao ==null)
         {
-            self::$conexao = new PDO('msql: host:localhost; dbname:tcc;', 'root', '');
+            self::$conexao = new PDO('msql: host:localhost; dbname:OPI;', 'root', '');
         }
        
         return self:: $conexao;

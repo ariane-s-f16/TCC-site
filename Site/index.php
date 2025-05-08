@@ -3,14 +3,13 @@
 require_once  'TCC_site/Core/Core.php';
 require_once  'TCC_site/Controller/Homecontroles.php';
 require_once  'TCC_site/Controller/Errorcontroles.php';
-require_once  'TCC_site/Model/Postagem.php';
 require_once  'TCC_site/Lib/Banco/Conexao.php';
-require_once  'TCC_site/Controller/Postcontroles.php';
 
 
 
 
-$arquivo= file_get_contents('TCC_site/estrutura/inicio.html');
+
+$arquivo= file_get_contents('TCC_site/estrutura/HOME.html');
 
 ob_start();
     $core = new Core;

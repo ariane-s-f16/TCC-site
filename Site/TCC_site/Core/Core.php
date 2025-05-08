@@ -11,7 +11,7 @@
 
             if(isset($urlGet['pagina']) )
             { 
-                $controller= ucfirst($urlGet['pagina'].'Controller');
+                $controller= ucfirst($urlGet['pagina'].'controles');
 
                 $acao = 'index';
 
