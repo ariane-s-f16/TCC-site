@@ -1,9 +1,9 @@
 <?php
-require_once 'models/Profissional.php';
-require_once 'models/Portfolio.php';
-require_once 'models/Comentario.php';
+require_once 'Model/Empresa.php';
+require_once 'Model/Portfolio.php';
+require_once 'Model/Comentario.php';
 
-class ProfissionalControles {
+class Empresacontroles {
     public function exibir() {
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             echo "ID inválido.";
@@ -12,9 +12,9 @@ class ProfissionalControles {
 
         $id = intval($_GET['id']);
 
-        $profissional = Profissional::getById($id);
-        if (!$profissional) {
-            echo "Profissional não encontrado!";
+        $empresa = Profissional::getById($id);
+        if (!$empresa) {
+            echo "Empresa não encontrado!";
             exit;
         }
 
@@ -22,7 +22,7 @@ class ProfissionalControles {
         $comentarios = Comentario::getByProfissional($id);
 
         // Carrega a view passando os dados
-        require_once 'views/profissional/exibir.php';
+        require_once 'Views/Empresa/exibir.php';
     }
 }
 

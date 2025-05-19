@@ -2,39 +2,66 @@
     class Core
     {
         public function start($urlGet)
-        {
-            if (isset($urlGet['metodo'])) {
-				$acao = $urlGet['metodo'];
-			} else {
-				$acao = 'index';
-			}
+        {  
+            //dividi a URl em partes
+            $url = $_GET['url'] ?? '';
+            $url = trim($url, '/');
+            $urlPartes = explode('/', $url);
 
-            if(isset($urlGet['pagina']) )
-            { 
-                $controller= ucfirst($urlGet['pagina'].'controles');
+            //verificando se o controller existe e define ele 
 
-                $acao = 'index';
+            $controller = !empty($urlPartes[0]) ? ucfirst($urlPartes[0]) . 'controles' : 'Homecontroles';
 
-            }else 
-            {
-                $controller= 'Homecontroles';
-            }
-          
+        // Define o ID, se existir
+        $id = $urlPartes[1] ?? null;
 
-           if(! class_exists($controller))
-           {
-            $controller= 'Errorcontroles';
-           }
+        $id = $urlPartes[1] ?? null;
 
-           if (isset($urlGet['id']) && $urlGet['id'] != null) 
-            {
-            $id = $urlGet['id'];
-            } else
-             {
-                $id = null;
-             }
+        // Verifica se a classe do controller existe
+        if (!class_exists($controller)) {
+            http_response_code(404);
+            echo json_encode(['erro' => 'Controller não encontrado']);
+            exit;
+        }
+        $controllerInstance = new $controller();
 
-           call_user_func_array(array(new $controller, $acao), array( $id));
+        // Define o método de acordo com o HTTP
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        // Mapeia o método para função do controller
+        switch ($method) {
+            case 'GET':
+                $action = $id ? 'show' : 'index';
+                break;
+            case 'POST':
+                $action = 'store';
+                break;
+            case 'PUT':
+                $action = 'update';
+                parse_str(file_get_contents("php://input"), $_PUT);
+                $_REQUEST = $_PUT; 
+                break;
+            case 'DELETE':
+                $action = 'delete';
+                break;
+            default:
+                http_response_code(405);
+                echo json_encode(['erro' => 'Método não permitido']);
+                exit;
+        }
+
+        // Verifica se o método existe no controller
+        if (!method_exists($controllerInstance, $action)) {
+            http_response_code(404);
+            echo json_encode(['erro' => 'Método não encontrado']);
+            exit;
+        }
+
+        $response = call_user_func_array([$controllerInstance, $action], [$id]);
+
+        // Retorna JSON
+        header('Content-Type: application/json');
+        echo json_encode($response);
 
 
           

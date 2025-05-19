@@ -15,7 +15,7 @@
         }
     </style>
     
-    <title>Document</title>
+    <title>quanto está logado</title>
 </head>
 <body>
      
@@ -37,24 +37,24 @@
             </div>
         </div>
         <!--carrosel para empresas--> 
-        <<?php require_once 'componentes/card.php'; ?>
+        <<?php require_once 'componentes/renderizacaocards.php'; ?>
 
 <div class="carousel-container">
     <div class="carousel-track">
         <?php foreach ($empresas as $empresa): ?>
-            <?= renderizacaoCard($empresa, 'ExibirEmpresa.php') ?>
+            <?= renderizacaoCard($empresa, 'Exibir.php') ?>
         <?php endforeach; ?>
     </div>
 </div>
         
         <!--fim de carrosel para empresas-->
         <!--carrosel para prestadores de serviço-->
-        <<?php require_once 'componentes/card.php'; ?>
+        <<?php require_once 'componentes/renderizacaocards.php'; ?>
 
 <div class="carousel-container">
     <div class="carousel-track">
         <?php foreach ($dados as $profissional): ?>
-            <?= renderizacaoCard($profissional, 'ExibirProfissional.php') ?>
+            <?= renderizacaoCard($profissional, 'Exibir.php') ?>
         <?php endforeach; ?>
     </div>
 </div>
