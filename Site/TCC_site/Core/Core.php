@@ -10,7 +10,11 @@
 
             //verificando se o controller existe e define ele 
 
-            $controller = !empty($urlPartes[0]) ? ucfirst($urlPartes[0]) . 'controles' : 'Homecontroles';
+            if (!empty($urlPartes[0])) {
+                $controller = 'Controller\\' . ucfirst($urlPartes[0]) . 'Controles';
+            } else {
+                $controller = 'Controller\\HomeControles';
+            };
 
         // Define o ID, se existir
         $id = $urlPartes[1] ?? null;
@@ -18,6 +22,7 @@
        
 
         // Verifica se a classe do controller existe
+        
         if (!class_exists($controller)) {
             http_response_code(404);
             echo json_encode(['erro' => 'Controller não encontrado']);

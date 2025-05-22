@@ -7,7 +7,7 @@
             $id = (int) $id;
         }
 
-        $conexao=  Connection::GetConn();
+        $conexao =  Conexao::GetConn();
         $stmt= mysqli_prepare ($conexao, "SELECT * FROM EMPRESAS WHERE id = ?");
         mysqli_stmt_bind_param($stmt, "i", $id);
         mysqli_stmt_execute($stmt);

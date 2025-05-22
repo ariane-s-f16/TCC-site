@@ -5,13 +5,13 @@ class Comentario {
     private $conexao;
 
     public function __construct() {
-        $this->conexao = Connection::GetConn();
+        $this->conexao = Conexao::GetConn();
         if (!$this->conexao) {
             throw new Exception("Erro na conexão com o banco de dados.");
         }
     }
 
-    public function getByProfissional(int $usuario_id): array {
+    public  function getByUsuario(int $usuario_id): array {
         $sql = "SELECT * FROM COMENTARIOS WHERE usuario_id = ? ORDER BY data_comentario DESC";
         $stmt = mysqli_prepare($this->conexao, $sql);
         if (!$stmt) {

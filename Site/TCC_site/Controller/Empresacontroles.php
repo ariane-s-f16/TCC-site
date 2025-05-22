@@ -1,7 +1,8 @@
 <?php
-require_once 'Model/Empresa.php';
-require_once 'Model/Portfolio.php';
-require_once 'Model/Comentario.php';
+require_once 'TCC_site/Model/Empresa.php';
+require_once 'TCC_site/Model/Portfolio.php';
+require_once 'TCC_site/Model/Comentario.php';
+
 
 class Empresacontroles {
     public function exibir() {
@@ -12,14 +13,18 @@ class Empresacontroles {
 
         $id = intval($_GET['id']);
 
-        $empresa = Profissional::getById($id);
+        $empresa = Empresa::getById($id);
         if (!$empresa) {
             echo "Empresa não encontrado!";
             exit;
         }
 
-        $portfolio = Portfolio::getByProfissional($id);
-        $comentarios = Comentario::getByProfissional($id);
+        $portfolio = Portifolio::getById($id);
+        $comentarios = new Comentario();
+        $comentario = $comentarios->getByUsuario($id);
+
+        
+       $empresa= $dados;
 
         // Carrega a view passando os dados
         require_once 'Views/Empresa/exibir.php';

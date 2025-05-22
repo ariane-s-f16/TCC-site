@@ -7,7 +7,7 @@ class Portifolio
             $id = (int) $id;
         }
         
-        $conexao = Connection::getConn();
+        $conexao = Conexao::getConn();
         $sql = mysqli_prepare ($conexao, "SELECT * FROM PORTIFOLIO WHERE id = ?");
         mysqli_stmt_bind_param($sql, "i", $id);
         mysqli_stmt_execute($sql);
