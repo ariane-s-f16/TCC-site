@@ -40,7 +40,7 @@ class Comentario {
         mysqli_stmt_close($stmt);
         return $success;
     }
-    public function deletarComentario(int $usuario_id, string $nome, string $comentario): bool 
+    public function deletarComentario($comentario_id): bool 
     {
         $sql ="DELETE FROM COMENTARIOS WHERE id=? ";
         $stmt = mysqli_prepare($this->conexao, $sql);
@@ -53,13 +53,13 @@ class Comentario {
         mysqli_stmt_close($stmt);
         return $success;
        
-    } public function editarComentario( string $comentario, string $novocomentario): bool {
+    } public function editarComentario( int $comentario_id, string $novocomentario): bool {
           $sql = " UPDATE  COMENTARIOS SET comentario=? WHERE id=? ";
           $stmt = mysqli_prepare($this->conexao, $sql);
           if (!$stmt) {
               throw new Exception("Erro na preparação da inserção.");
           }
-          mysqli_stmt_bind_param($stmt, "iss", $novocomentario, $comentario);
+          mysqli_stmt_bind_param($stmt, "iss", $novocomentario, $comentario_id);
           $success = mysqli_stmt_execute($stmt);
           mysqli_stmt_close($stmt);
           return $success;

@@ -7,12 +7,14 @@
 <!--fim do prestador-->
 
 <!--PORTIFOLIO-->
+ 
 <?php foreach ($portfolio as $item): ?>
     <div class='secao-div-card'>
         <img src='<?= htmlspecialchars($item['imagem']) ?>'>
         <strong><?= htmlspecialchars($item['descricao']) ?></strong>
     </div>
 <?php endforeach; ?>
+
 <!--FIM DO PORTIFOLIO-->
 
 <!-- COMENTÁRIOS -->

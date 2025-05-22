@@ -15,7 +15,7 @@
         // Define o ID, se existir
         $id = $urlPartes[1] ?? null;
 
-        $id = $urlPartes[1] ?? null;
+       
 
         // Verifica se a classe do controller existe
         if (!class_exists($controller)) {
