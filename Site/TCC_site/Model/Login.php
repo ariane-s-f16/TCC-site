@@ -1,8 +1,9 @@
 <?php
 
 function verificacao(string $email, string $senha): ?array {
+    $conexao =  Conexao::GetConn();
     $sql = "SELECT * FROM USUARIOS WHERE email = ? LIMIT 1";
-    $stmt = mysqli_prepare($this->conexao, $sql);
+    $stmt = mysqli_prepare($conexao, $sql);
     if (!$stmt) {
         throw new Exception("Erro na preparação da consulta.");
     }
@@ -20,6 +21,11 @@ function verificacao(string $email, string $senha): ?array {
             mysqli_stmt_close($stmt);
             return $usuario;
         }
+}
+ function logout() {
+    session_start();
+    session_unset();
+    session_destroy();
 }
 
 ?>
