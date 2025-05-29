@@ -1,5 +1,6 @@
 <?php
      class Profissional {
+        private $conexao;
     public static function getById($id) 
     {
 
@@ -18,6 +19,18 @@
             return mysqli_fetch_assoc($result);
         }
         return null;
+    }
+    public function denunciar(int $id): bool{
+        $conexao=  Conexao::GetConn();
+        $sql = "UPDATE PROFISSIONAIS SET denunciado = 1 WHERE id = ?";
+        $stmt = mysqli_prepare($conexao, $sql);
+        if (!$stmt) {
+            throw new Exception("Erro na preparação da denúncia.");
+        }
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $success;
     }
 }
 ?>

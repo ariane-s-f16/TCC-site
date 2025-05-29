@@ -4,16 +4,11 @@
 class Comentario {
     private $conexao;
 
-    public function __construct() {
-        $this->conexao = Conexao::GetConn();
-        if (!$this->conexao) {
-            throw new Exception("Erro na conexão com o banco de dados.");
-        }
-    }
-
+   
     public  function getByUsuario(int $usuario_id): array {
+        $conexao =  Conexao::GetConn();
         $sql = "SELECT * FROM COMENTARIOS WHERE usuario_id = ? ORDER BY data_comentario DESC";
-        $stmt = mysqli_prepare($this->conexao, $sql);
+        $stmt = mysqli_prepare($conexao, $sql);
         if (!$stmt) {
             throw new Exception("Erro na preparação da consulta.");
         }
@@ -30,8 +25,9 @@ class Comentario {
     }
 
     public function inserirComentario(int $usuario_id, string $nome, string $comentario): bool {
+        $conexao =  Conexao::GetConn();
         $sql = "INSERT INTO COMENTARIOS (usuario_id, nome, comentario) VALUES (?, ?, ?)";
-        $stmt = mysqli_prepare($this->conexao, $sql);
+        $stmt = mysqli_prepare(conexao, $sql);
         if (!$stmt) {
             throw new Exception("Erro na preparação da inserção.");
         }
@@ -42,8 +38,9 @@ class Comentario {
     }
     public function deletarComentario($comentario_id): bool 
     {
+        $conexao =  Conexao::GetConn();
         $sql ="DELETE FROM COMENTARIOS WHERE id=? ";
-        $stmt = mysqli_prepare($this->conexao, $sql);
+        $stmt = mysqli_prepare($conexao, $sql);
         if (!$stmt) {
             throw new Exception("Erro na preparação da exclusão.");
         }
@@ -54,8 +51,9 @@ class Comentario {
         return $success;
        
     } public function editarComentario( int $comentario_id, string $novocomentario): bool {
+        $conexao =  Conexao::GetConn();
           $sql = " UPDATE  COMENTARIOS SET comentario=? WHERE id=? ";
-          $stmt = mysqli_prepare($this->conexao, $sql);
+          $stmt = mysqli_prepare($conexao, $sql);
           if (!$stmt) {
               throw new Exception("Erro na preparação da inserção.");
           }
@@ -65,6 +63,19 @@ class Comentario {
           return $success;
       
     }
+    public function denunciar(): bool{
+        $conexao =  Conexao::GetConn();
+        $sql = "UPDATE COMENTARIOS SET denunciado = 1 WHERE id = ?";
+        $stmt = mysqli_prepare($conexao, $sql);
+        if (!$stmt) {
+            throw new Exception("Erro na preparação da denúncia.");
+        }
+        mysqli_stmt_bind_param($stmt, "i", $comentario_id);
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $success;
+    }
+
 
 }
 ?>

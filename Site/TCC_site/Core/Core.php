@@ -27,6 +27,7 @@
             http_response_code(404);
             echo json_encode(['erro' => 'Controller não encontrado']);
             exit;
+        
         }
         $controllerInstance = new $controller();
 

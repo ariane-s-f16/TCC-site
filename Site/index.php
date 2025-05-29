@@ -4,9 +4,9 @@
 
 
 require_once 'TCC_site/Core/Core.php';
-require_once 'TCC_site/Controller/Profissionalcontroles.php';
-require_once 'TCC_site/Controller/Homecontroles.php';
-require_once 'TCC_site/Controller/Empresacontroles.php';
+require_once 'TCC_site/Controller/ProfissionalControles.php';
+require_once 'TCC_site/Controller/HomeControles.php';
+require_once 'TCC_site/Controller/EmpresaControles.php';
 
 
 

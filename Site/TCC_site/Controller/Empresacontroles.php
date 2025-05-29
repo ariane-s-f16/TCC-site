@@ -1,10 +1,12 @@
 <?php
+namespace Controller;
+
 require_once 'TCC_site/Model/Empresa.php';
-require_once 'TCC_site/Model/Portfolio.php';
+require_once 'TCC_site/Model/Portifolio.php';
 require_once 'TCC_site/Model/Comentario.php';
 
 
-class Empresacontroles {
+class EmpresaControles {
     public function exibir() {
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             echo "ID inválido.";
@@ -19,7 +21,7 @@ class Empresacontroles {
             exit;
         }
 
-        $portfolio = Portifolio::getById($id);
+        $portifolio = Portifolio::getById($id);
         $comentarios = new Comentario();
         $comentario = $comentarios->getByUsuario($id);
 

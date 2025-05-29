@@ -1,10 +1,10 @@
 
-<!--imagem do prestador de serviço-->
+<!--imagem do prestador de serviço/empresa-->
 <div class='container_um'>
- <img src='<?= htmlspecialchars($dados['imagem'])?> ' style='width:100%; height:auto; border-radius:10%;'>
- <div class='descricao'>  <?= nl2br(htmlspecialchars($dados['descricao'])) ?></div> 
+ <img src='<?= htmlspecialchars($profissional ['imagem'])?> ' style='width:100%; height:auto; border-radius:10%;'>
+ <div class='descricao'>  <?= nl2br(htmlspecialchars($profissional ['descricao'])) ?></div> 
 </div> 
-<!--fim do prestador-->
+<!--fim do prestador/empresa-->
 
 <!--PORTIFOLIO-->
  

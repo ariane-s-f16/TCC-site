@@ -1,10 +1,12 @@
 <?php
 
-class Errorcontroles
+namespace Controller;
+
+class ErrorControles
 {
     public function index()
 		{
-			echo 'PAg 3';
+			echo 'ola, tudo bem?';
 		}
 }
 ?>

@@ -1,9 +1,12 @@
 <?php
+
+namespace Controller;
+
 require_once 'TCC_site/Model/Profissional.php';
 require_once 'TCC_site/Model/Portifolio.php';
 require_once 'TCC_site/Model/Comentario.php';
 
-class Profissionalcontroles {
+class ProfissionalControles {
     public function exibir() {
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             echo "ID inválido.";

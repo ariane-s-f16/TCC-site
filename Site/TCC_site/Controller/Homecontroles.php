@@ -1,10 +1,13 @@
 <?php
 
-class Homecontroles
+namespace Controller;
+
+class HomeControles
 {
     public function index()
 		{
-			echo 'PAg 3';
+			require_once  'TCC_site/View/Home.php';
+			
 		}
 }
 ?>
