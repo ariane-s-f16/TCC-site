@@ -65,11 +65,20 @@
 
         $response = call_user_func_array([$controllerInstance, $action], [$id]);
 
-        // Retorna JSON
-        header('Content-Type: application/json');
-        echo json_encode($response);
-
-
+        // Verifica se é chamada da API ou navegador
+        $isJsonRequest = isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false;
+        
+        // Se for chamada da API (JSON)
+        if ($isJsonRequest) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($response);
+            return;
+        }
+        
+        // Se for acesso pelo navegador (HTML), o controller já incluiu a view com require_once
+        // NÃO envie cabeçalho nem use json_encode
+        return;
+       
           
         }
     }

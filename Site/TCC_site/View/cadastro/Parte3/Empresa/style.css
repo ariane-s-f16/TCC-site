@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    background-image: url("../../../img/fundo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    height: 85vh;
+    width: 35%;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0px 0px 8px 0px #00000038;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_foto{
+    width: 170px;
+    height: 170px;
+    background-color: gainsboro;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transform: translateY(-5%);
+}
+
+.input_foto label{
+    width: 100%;
+    height: 100%;
+}
+
+#foto{
+    display: none;
+}
+
+.input_box{
+    margin-top: 1%;
+    width: 80%;
+    height: 10%;
+}
+
+.input_box input{
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    padding-left: 1.5%;
+    border: none;
+    border-bottom: 2px solid #777777;
+    outline: none;
+}
+
+.select{
+    margin-top: 5%;
+    width: 80%;
+    height: 6%;
+}
+
+select{
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    outline: none;
+    background-color: #ececec;
+    color: #4b4b4b;
+    padding-left: 1%;
+    border: 1px solid #d6d6d6;
+}
+
+.selectsLocal{
+    width: 80%;
+    height: 6%;
+    margin-top: 3%;
+    display: flex;
+    gap: 3%;
+}
+
+.selects{
+    width: calc(100%/3);
+    height: 100%;
+}
+
+.button{
+    width: 80%;
+    height: 10%;
+    margin-top: 4%;
+}
+
+.cadastrar{
+    width: 100%;
+    height: 100%;
+    background-color: #6989f0;
+    color: white;
+    border-radius: 100px;
+    font-size: 22px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cadastrar:hover{
+    background-color: #4e64ad;
+}
+
+.input_termos{
+    text-align: center;
+    width: 80%;
+    margin-top: 3%;
+    font-size: 14px;
+}
+
+.input_termos a{
+    color: #3434a3;
+    text-decoration: none;
+}
+
+.input_termos a:hover{
+    color: #272777;
+}
+
+@media screen and (max-width: 1750px) {
+    .input_foto{
+        width: 155px;
+        height: 155px;
+    }
+    
+    .input_termos{
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1550px) {
+    .input_foto{
+        width: 140px;
+        height: 140px;
+        margin-bottom: 4%;
+    }
+
+    .input_box{
+        margin-top: 6%;
+        height: 8%;
+    }
+
+    .select{
+        height: 5%;
+    }
+
+    .selectsLocal{
+        height: 5%;
+    }
+
+    .input_termos{
+        font-size: 11px;
+    }
+
+    .button{
+        height: 8%;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    form{
+        width: 40%;
+        height: 85vh;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    form{
+        width: 100%;
+        height: 100%;
+    }
+
+    .input_foto{
+        margin-bottom: 0%;
+        width: 170px;
+        height: 170px;
+    }
+
+    .input_box{
+        margin-top: 5%;
+        width: 70%;
+    }
+
+    .select{
+        width: 70%;
+        height: 6%;
+    }
+
+    .selectsLocal{
+        width: 70%;
+        height: 6%;
+    }
+
+    .button{
+        width: 70%;
+        height: 10%;
+    }
+
+    .input_termos{
+        font-size: 14px;
+        width: 70%;
+    }
+}
+
+@media screen  and (max-width: 900px){
+    .input_foto{
+        width: 200px;
+        height: 200px;
+    }
+    
+    .input_box{
+        width: 80%;
+    }
+
+    .input_box input{
+        font-size: 22px;
+    }
+    
+    .select{
+        width: 80%;
+        height: 4%;
+    }
+
+    .selectsLocal{
+        width: 80%;
+        height: 4%;
+    }
+
+    select{
+        font-size: 14px;
+    }
+
+    .button{
+        width: 80%;
+        height: 8%;
+    }
+
+    .cadastrar{
+        font-size: 26px;
+    }
+    
+    .input_termos{
+        width: 80%;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .input_foto{
+        transform: translateY(-35%);
+        width: 170px;
+        width: 170px;
+    }
+    
+    .input_box{
+        height: 7%;
+    }
+
+    .input_box input{
+        font-size: 18px;
+    }
+    
+    select{
+        font-size: 12px;
+    }
+
+    .button{
+        height: 7%;
+    }
+
+    .cadastrar{
+        font-size: 22px;
+    }
+
+    .input_termos{
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .input_foto{
+        width: 155px;
+        height: 155px;
+    }
+
+    .input_box{
+        height: 6%;
+        margin-top: 7%;
+    }
+
+    .input_box input{
+        font-size: 16px;
+    }
+
+    .select{
+        margin-top: 5%;
+    }
+
+    .selectsLocal{
+        margin-top: 5%;
+    }
+
+    .button{
+        height: 6%;
+        margin-top: 10%;
+    }
+}
+
+@media screen  and (max-width: 400px){
+    .input_foto{
+        height: 130px;
+        width: 130px;
+    }
+
+    .select{
+        height: 5%;
+    }
+
+    .selectsLocal{
+        height: 5%;
+    }
+
+    .button{
+        height: 7%;
+    }
+}

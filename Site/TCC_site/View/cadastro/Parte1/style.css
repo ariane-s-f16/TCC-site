@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+:root{
+    --color1: #3d3d3d;
+    --color2: #727272;
+    --color3: #777777;
+    --color4: #272777;
+    --color5: #4e64ad;
+    --color6: #3434a3;
+    --color7: #6989f0;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    background-image: url("../../img/fundo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    background-color: white;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 70%;
+    height: 80vh;
+    border-radius: 4px;
+    box-shadow: 0px 0px 20px 0px #0000002e;
+}
+
+.mudarlogar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    border-radius: 4px;
+    background-image: url("../../img/fundo2.png");
+}
+
+.mudarlogar h1{
+    font-size: 35px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: #fcfcfc;
+}
+
+.mudarlogar .button1{
+    width: 80%;
+    height: 10%;
+    margin-bottom: 10%;
+    margin-top: 15%;
+}
+
+.button1 a{
+    font-size: 22px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    color: var(--color1);
+    background-color: #fcfcfc;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+.titulo{
+    width: 80%;
+    margin-bottom: 5%;
+}
+
+.titulo h1{
+    font-size: 35px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--color1);
+}
+
+.input_box{
+    position: relative;
+    width: 80%;
+    height: 10%;
+    margin-bottom: 5%;
+}
+
+.input_boxF{
+    position: relative;
+    width: 80%;
+    height: 10%;
+}
+
+input{
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid var(--color3);
+}
+
+input::placeholder{
+    color: var(--color2);
+}
+
+i{
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color2);
+}
+
+.input_termos{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.input_termos p{
+    color: var(--color1);
+    width: 80%;
+    font-size: 14px;
+}
+
+.input_termos a{
+    color: var(--color6);
+    text-decoration: none;
+}
+
+.input_termos a:hover{
+    color: var(--color4);
+    text-decoration: underline;
+}
+
+.button2{
+    width: 80%;
+    height: 10%;
+    margin-top: 7%;
+}
+
+.cadastrar{
+    font-size: 22px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    color: white;
+    background-color: var(--color7);
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cadastrar:hover{
+    background-color: var(--color5);
+}
+
+.mudarlogar2{
+    display: none;
+}
+
+@media screen and (max-width: 1750px) {
+    .mudarlogar{
+        background-image: url("../../img/fundo2_1750.png");
+        background-repeat: no-repeat;
+    }
+}
+
+@media screen and (max-width: 1550px) {
+    .mudarlogar{
+        background-image: url("../../img/fundo2_1550.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .container{
+        width: 50%;
+    }
+    
+    .mudarlogar{
+        display: none;
+    }
+
+    .container form{
+        height: 100%;
+        width: 100%;
+    }
+
+    .titulo h1{
+        font-size: 30px;
+    }
+
+    .input_box{
+        height: 8%;
+    }
+
+    .input_boxF{
+        height: 8%;
+    }
+    .button2{
+        margin-top: 10%;
+    }
+
+    .mudarlogar2{
+        display: block;
+        text-align: center;
+        width: 80%;
+        margin-top: 2%;
+    }
+    
+    .mudarlogar2 p{
+        color: var(--color1);
+        font-size: 14px;
+    }
+    
+    .mudarlogar2 a{
+        color: var(--color6);
+        text-decoration: none;
+    }
+    
+    .mudarlogar2 a:hover{
+        color: var(--color4);
+        text-decoration: underline;
+    }
+}
+
+@media screen and (max-width: 1000px){
+    .container{
+        height: 100%;
+        width: 100%;
+    }
+
+    .titulo h1{
+        font-size: 45px;
+    }
+
+    input{
+        font-size: 24px;
+    }
+
+    i{
+        font-size: 24px;
+    }
+
+    .input_termos p{
+        font-size: 18px;
+    }
+
+    .mudarlogar2 p{
+        font-size: 18px;
+    }
+
+    .button2{
+        height: 8%;
+    }
+
+    .button2 a{
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 550px){
+
+    .titulo h1{
+        font-size: 30px;
+    }
+
+    input{
+        font-size: 16px;
+    }
+
+    i{
+        font-size: 18px;
+    }
+
+    .cadastrar{
+        font-size: 20px;
+    }
+
+    .input_termos p{
+        font-size: 12px;
+    }
+}
