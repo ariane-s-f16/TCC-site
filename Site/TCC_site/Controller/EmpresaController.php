@@ -6,7 +6,7 @@ require_once 'TCC_site/Model/Portifolio.php';
 require_once 'TCC_site/Model/Comentario.php';
 
 
-class EmpresaControles {
+class EmpresaController {
     public function exibir() {
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             echo "ID inválido.";
