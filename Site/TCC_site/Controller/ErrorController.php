@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class ErrorControles
+class ErrorController
 {
     public function index()
 		{
