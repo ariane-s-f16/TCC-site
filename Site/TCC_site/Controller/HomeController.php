@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class HomeControles
+class HomeController
 {
     public function index()
 		{
