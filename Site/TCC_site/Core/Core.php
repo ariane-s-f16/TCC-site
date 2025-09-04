@@ -11,9 +11,9 @@
             //verificando se o controller existe e define ele 
 
             if (!empty($urlPartes[0])) {
-                $controller = 'Controller\\' . ucfirst($urlPartes[0]) . 'Controles';
+                $controller = 'Controller\\' . ucfirst($urlPartes[0]) . 'Controller';
             } else {
-                $controller = 'Controller\\HomeControles';
+                $controller = 'Controller\\HomeController';
             };
 
         // Define o ID, se existir
