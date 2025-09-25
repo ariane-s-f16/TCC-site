@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="#" method="get">
+        <form action="?url=cadastro" method="post">
             <div class="titulo"><h1>Cadastro</h1></div>
 
             <div class="input_box">
@@ -44,11 +44,11 @@
             </div>
             
             <div class="mudarlogar2">
-                <p>Já tem uma conta? <a href="../../Entrar/index.html">Conecte-se</a>.</p>
+                <p>Já tem uma conta? <a href="Views/Entrar/index.html">Conecte-se</a>.</p>
             </div>
         </form>
     </div>
 
-    <script src="script.js"></script>
+    <script src="public/script.js"></script>
 </body>
 </html>

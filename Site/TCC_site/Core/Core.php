@@ -1,85 +1,126 @@
 <?php
-    class Core
+
+class Core
+{
+    private string $apiBaseUrl = 'http://127.0.0.1:8000'; // URL da sua API Laravel
+
+    public function start()
     {
-        public function start($urlGet)
-        {  
-            //dividi a URl em partes
-            $url = $_GET['url'] ?? '';
-            $url = trim($url, '/');
-            $urlPartes = explode('/', $url);
+        $url = $_GET['url'] ?? '';
+        $url = trim($url, '/');
 
-            //verificando se o controller existe e define ele 
+        // Caminho base da pasta View para arquivos estáticos e formulário
+        $viewBasePath = __DIR__ . '/../View/';
 
-            if (!empty($urlPartes[0])) {
-                $controller = 'Controller\\' . ucfirst($urlPartes[0]) . 'Controller';
-            } else {
-                $controller = 'Controller\\HomeController';
-            };
-
-        // Define o ID, se existir
-        $id = $urlPartes[1] ?? null;
-
-       
-
-        // Verifica se a classe do controller existe
-        
-        if (!class_exists($controller)) {
-            http_response_code(404);
-            echo json_encode(['erro' => 'Controller não encontrado']);
+        // Se a URL for vazia, carregar o formulário HTML
+        if ($url === '') {
+            require_once $viewBasePath . 'cadastro/Parte1/index.php';
             exit;
-        
         }
-        $controllerInstance = new $controller();
 
-        // Define o método de acordo com o HTTP
+        // Verifica se a requisição é para arquivo estático (css, js, imagens, etc)
+        $ext = pathinfo($url, PATHINFO_EXTENSION);
+        $staticExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'woff', 'ttf', 'ico', 'html'];
+
+
+        if (in_array(strtolower($ext), $staticExtensions)) {
+            $staticFilePath = $viewBasePath . $url;
+
+            if (file_exists($staticFilePath)) {
+                // Define o Content-Type correto para cada tipo de arquivo
+                $mimeTypes = [
+                    'css'  => 'text/css',
+                    'js'   => 'application/javascript',
+                    'png'  => 'image/png',
+                    'jpg'  => 'image/jpeg',
+                    'jpeg' => 'image/jpeg',
+                    'gif'  => 'image/gif',
+                    'svg'  => 'image/svg+xml',
+                    'woff' => 'font/woff',
+                    'ttf'  => 'font/ttf',
+                    'ico'  => 'image/x-icon',
+                    'html' => 'text/html',
+                ];
+
+                $contentType = $mimeTypes[strtolower($ext)] ?? 'application/octet-stream';
+
+                header('Content-Type: ' . $contentType);
+                readfile($staticFilePath);
+                exit;
+            } else {
+                http_response_code(404);
+                echo "Arquivo estático não encontrado.";
+                exit;
+            }
+        }
+
+        // Caso não seja arquivo estático e nem a URL vazia, é chamada à API
         $method = $_SERVER['REQUEST_METHOD'];
+        $data = [];
 
-        // Mapeia o método para função do controller
+        if (in_array($method, ['POST', 'PUT'])) {
+            $rawData = file_get_contents("php://input");
+            $data = json_decode($rawData, true);
+            if (!$data) {
+                $data = $_POST;
+            }
+        } elseif ($method === 'GET') {
+            $data = $_GET;
+            unset($data['url']);
+        }
+
+        $apiUrl = rtrim($this->apiBaseUrl, '/') . '/api/' . $url;
+
+        $response = $this->makeRequest($method, $apiUrl, $data);
+
+        header('Content-Type: application/json; charset=utf-8');
+        echo $response;
+    }
+
+    private function makeRequest(string $method, string $url, array $data = []): string
+    {
+        $ch = curl_init();
+
         switch ($method) {
             case 'GET':
-                $action = $id ? 'show' : 'index';
+                if (!empty($data)) {
+                    $url .= '?' . http_build_query($data);
+                }
                 break;
+
             case 'POST':
-                $action = 'store';
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
                 break;
+
             case 'PUT':
-                $action = 'update';
-                parse_str(file_get_contents("php://input"), $_PUT);
-                $_REQUEST = $_PUT; 
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
                 break;
+
             case 'DELETE':
-                $action = 'delete';
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 break;
+
             default:
-                http_response_code(405);
-                echo json_encode(['erro' => 'Método não permitido']);
-                exit;
+                return json_encode(['erro' => 'Método HTTP não suportado']);
         }
 
-        // Verifica se o método existe no controller
-        if (!method_exists($controllerInstance, $action)) {
-            http_response_code(404);
-            echo json_encode(['erro' => 'Método não encontrado']);
-            exit;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Accept: application/json',
+        ]);
+
+        $result = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        if ($error) {
+            return json_encode(['erro' => 'Erro ao acessar a API: ' . $error]);
         }
 
-        $response = call_user_func_array([$controllerInstance, $action], [$id]);
-
-        // Verifica se é chamada da API ou navegador
-        $isJsonRequest = isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false;
-        
-        // Se for chamada da API (JSON)
-        if ($isJsonRequest) {
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode($response);
-            return;
-        }
-        
-        // Se for acesso pelo navegador (HTML), o controller já incluiu a view com require_once
-        // NÃO envie cabeçalho nem use json_encode
-        return;
-       
-          
-        }
+        return $result;
     }
-?>
+}
