@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="public/style5.css">
     <title>Document</title>
 </head>
 <body>
@@ -52,7 +52,8 @@
         </div>
 
         <div class="button">
-            <a href="/Home/index.html" onclick="clicou()" class="cadastrar">Cadastrar</a>
+        <button type="button" class="cadastrar" onclick="finalizarCadastro()">Finalizar</button>
+
         </div>
 
         <div class="input_termos">
@@ -60,6 +61,6 @@
         </div>
     </form>
 
-    <script src="script.js"></script>
+    <script src="public/script.js"></script>
 </body>
 </html>

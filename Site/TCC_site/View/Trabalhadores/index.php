@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/style7.css">
+    <link rel="stylesheet" href="public/style8.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <title>Document</title>
 </head>
@@ -51,286 +51,173 @@
         </div>
     </header>
 
-    <main class="home-main">
-        <section class="hero-section">
-            <div class="hero-infor">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        Conectando Você ao Seu Futuro
-                    </h1>
-    
-                    <p class="hero-subtitle">
-                        Encontre os melhores profissionais ou empresas em todo o Brasil.
-                        Uma plataforma confiável para conectar talentos e oportunidades.
-                    </p>
+    <div class="historico"></div>
+
+    <div class="title"><h1>Trabalhadores em todo o Brasil</h1></div>
+
+    <div class="container">
+
+        <div class="filtro-container">
+            <div class="filtro">
+                <div class="localizacao">
+                    <h2>Localização</h2>
+                    <div class="bs-localizacao">
+                        <input class="bsl" id="bsl">
+                        <label class="bsl-label" for="bsl">Digite seu país, estado ou cidade</label>
+                        <label for="bsl" class="bsl-svg">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" heigth="px" width="20px" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M456.69 421.39 362.6 327.3a173.81 173.81 0 0 0 34.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.81 173.81 0 0 0 327.3 362.6l94.09 94.09a25 25 0 0 0 35.3-35.3zM97.92 222.72a124.8 124.8 0 1 1 124.8 124.8 124.95 124.95 0 0 1-124.8-124.8z"></path>
+                            </svg>
+                        </label>
+                    </div>
                 </div>
     
-                <div class="hero-buttons">
-                    <button class="cta-button primeiro">Comece Agora</button>
-                    <button class="cta-button segundo">Saiba Mais</button>
-                </div>
-            </div>
-
-            <div class="hero-img">
-                <img src="../img/img-home.png">
-            </div>
-        </section>
-
-        <section class="como_funciona-section">
-            <div class="section-text">
-                <h2 class="section-title">Conecte-se com oportunidades em 5 passos simples</h2>
-                <p class="section-subtitle">Nossa plataforma foi desenvolvida para facilitar a conexão entre profissionais e empresas qualificados e clientes que precisam de seus serviços.</p>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-linhaIF"></div>
-                <div class="ponto"></div>
-                <div class="passos">
-                    <div class="passos-blocoimg">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1C8.96243 1 6.5 3.46243 6.5 6.5C6.5 9.53757 8.96243 12 12 12C15.0376 12 17.5 9.53757 17.5 6.5C17.5 3.46243 15.0376 1 12 1ZM8.5 6.5C8.5 4.567 10.067 3 12 3C13.933 3 15.5 4.567 15.5 6.5C15.5 8.433 13.933 10 12 10C10.067 10 8.5 8.433 8.5 6.5Z" fill="#000000"></path> <path d="M8 14C4.68629 14 2 16.6863 2 20V22C2 22.5523 2.44772 23 3 23C3.55228 23 4 22.5523 4 22V20C4 17.7909 5.79086 16 8 16H16C18.2091 16 20 17.7909 20 20V22C20 22.5523 20.4477 23 21 23C21.5523 23 22 22.5523 22 22V20C22 16.6863 19.3137 14 16 14H8Z" fill="#000000"></path> </g></svg>
-                    </div>
-                    <div class="passos-text">
-                        <h3 class="passo-n">PASSO 1</h3>
-                        <h2 class="timeline-title">Crie seu perfil</h2>
-                        <p class="timeline-subtitle">Profissionais e empresas podem se cadastrar de forma prática, apresentando seus serviços, qualificações e experiências.</p>
-                    </div>
-                </div>
-                <div class="timeline-linha"></div>
-                <div class="ponto"></div>
-                <div class="passos">
-                    <div class="passos-text">
-                        <h3 class="passo-n">PASSO 2</h3>
-                        <h2 class="timeline-title">Compartilhe seus projetos</h2>
-                        <p class="timeline-subtitle">Publique seus trabalhos já realizados ou descreva os serviços que oferece, facilitando a divulgação para um público mais amplo.
-                        </p>
-                    </div>
-                    <div class="passos-blocoimg">
-                        <svg viewBox="-1 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>share</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-312.000000, -726.000000)" fill="#000000"> <path d="M331,750 C329.343,750 328,748.657 328,747 C328,745.343 329.343,744 331,744 C332.657,744 334,745.343 334,747 C334,748.657 332.657,750 331,750 L331,750 Z M317,742 C315.343,742 314,740.657 314,739 C314,737.344 315.343,736 317,736 C318.657,736 320,737.344 320,739 C320,740.657 318.657,742 317,742 L317,742 Z M331,728 C332.657,728 334,729.343 334,731 C334,732.657 332.657,734 331,734 C329.343,734 328,732.657 328,731 C328,729.343 329.343,728 331,728 L331,728 Z M331,742 C329.23,742 327.685,742.925 326.796,744.312 L321.441,741.252 C321.787,740.572 322,739.814 322,739 C322,738.497 321.903,738.021 321.765,737.563 L327.336,734.38 C328.249,735.37 329.547,736 331,736 C333.762,736 336,733.762 336,731 C336,728.238 333.762,726 331,726 C328.238,726 326,728.238 326,731 C326,731.503 326.097,731.979 326.235,732.438 L320.664,735.62 C319.751,734.631 318.453,734 317,734 C314.238,734 312,736.238 312,739 C312,741.762 314.238,744 317,744 C318.14,744 319.179,743.604 320.02,742.962 L320,743 L326.055,746.46 C326.035,746.64 326,746.814 326,747 C326,749.762 328.238,752 331,752 C333.762,752 336,749.762 336,747 C336,744.238 333.762,742 331,742 L331,742 Z" id="share" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
-                    </div>
-                </div>
-                <div class="timeline-linha"></div>
-                <div class="ponto"></div>
-                <div class="passos">
-                    <div class="passos-blocoimg">
-                        <svg viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 11.1455C5.49956 8.21437 7.56975 5.69108 10.4445 5.11883C13.3193 4.54659 16.198 6.08477 17.32 8.79267C18.4421 11.5006 17.495 14.624 15.058 16.2528C12.621 17.8815 9.37287 17.562 7.3 15.4895C6.14763 14.3376 5.50014 12.775 5.5 11.1455Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15.989 15.4905L19.5 19.0015" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    </div>
-                    <div class="passos-text">
-                        <h3 class="passo-n">PASSO 3</h3>
-                        <h2 class="timeline-title">Seja encontrado com facilidade</h2>
-                        <p class="timeline-subtitle">Clientes em busca de mão de obra qualificada poderão localizar seu perfil diretamente na plataforma, sem depender de indicações informais.</p>
-                    </div>
-                </div>
-                <div class="timeline-linha"></div>
-                <div class="ponto"></div>
-                <div class="passos">
-                    <div class="passos-text">
-                        <h3 class="passo-n">PASSO 4</h3>
-                        <h2 class="timeline-title">Receba avaliações</h2>
-                        <p class="timeline-subtitle">Após a conclusão de cada serviço, os clientes podem avaliar sua performance com estrelas, ajudando a destacar sua reputação e credibilidade.</p>
-                    </div>
-                    <div class="passos-blocoimg">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    </div>
-                </div>
-                <div class="timeline-linha"></div>
-                <div class="ponto"></div>
-                <div class="passos">
-                    <div class="passos-blocoimg">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M40.9999 27.0007L40.9999 15.0007L29 15.0007" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6 37.0002L16.3385 24.5002L26.1846 30.5002L41 15.0002" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    </div>
-                    <div class="passos-text">
-                        <h3 class="passo-n">PASSO 5</h3>
-                        <h2 class="timeline-title">Expanda suas oportunidades</h2>
-                        <p class="timeline-subtitle">Com maior visibilidade e reconhecimento, você terá mais chances de ser contratado para novos serviços por pessoas e empresas de diferentes portes.</p>
-                    </div>
-                </div>
-                <div class="timeline-linhaIF"></div>
-            </div>
-
-            <div class="cf-button">Comece agora mesmo</div>
-        </section>
-
-        <section class="servicos_destaque-section">
-            <div class="section-text">
-                <h2 class="section-title">Serviços em Destaque</h2>
-                <p class="section-subtitle">
-                    Encontre profissionais qualificados nas principais áreas da construção civil
-                </p>
-            </div>
-
-            <div class="sv_des-cards_home">
-                <div class="card">
-                    <div class="servico-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 21h18"/>
-                            <path d="M5 21V7l8-4v18"/>
-                            <path d="M19 21V11l-6-4"/>
-                        </svg>
-                    </div>
+                <div class="categorias">
+                    <h2>Categorias mais pesquisados:</h2>
     
-                    <div class="card-text">
-                        <h3 class="card-title">Pedreiros</h3>
-                        <p class="card-subtitle">
-                            rofissionais especializados em alvenaria, fundações e estruturas de concreto.
-                        </p>
-                    </div>
+                    <div class="ctg-topicos">
+                        <label class="ctg-topico">
+                            <input class="checkbox" type="checkbox" name="calheiro" id="calheiro">
+                            <span class="checkmark"></span>
+                            <p>Calheiro</p>
+                        </label>
     
-                    <button class="card-button">Saiba Mais</button>
+                        <label class="ctg-topico">
+                            <input class="checkbox" type="checkbox" name="pedreiro" id="pedreiro">
+                            <span class="checkmark"></span>
+                            <p>Pedreiro</p>
+                        </label>
+    
+                        <label class="ctg-topico">
+                            <input class="checkbox" type="checkbox" name="pintor" id="pintor">
+                            <span class="checkmark"></span>
+                            <p>Pintor</p>
+                        </label>
+    
+                        <label class="ctg-topico">
+                            <input class="checkbox" type="checkbox" name="eletricista" id="eletricista">
+                            <span class="checkmark"></span>
+                            <p>Eletricista</p>
+                        </label>
+    
+                        <label class="ctg-topico">
+                            <input class="checkbox" type="checkbox" name="encanador" id="encanador">
+                            <span class="checkmark"></span>
+                            <p>Encanador</p>
+                        </label>
+    
+                        <label class="ctg-topico">
+                            <input class="checkbox" type="checkbox" name="gesseiro" id="gesseiro">
+                            <span class="checkmark"></span>
+                            <p>Gesseiro</p>
+                        </label>
+                    </div>
                 </div>
     
-                <div class="card">
-                    <div class="servico-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
-                            <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                        </svg>
-                    </div>
-    
-                    <div class="card-text">
-                        <h3 class="card-title">Eletricistas</h3>
-                        <p class="card-subtitle">
-                            Especialistas em instalações elétricas residenciais, comerciais e industriais.
-                        </p>
-                    </div>
-                    
-                    <button class="card-button">Saiba Mais</button>
-                </div>
-    
-                <div class="card">
-                    <div class="servico-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-paint-bucket" viewBox="0 0 16 16">
-                            <path d="M6.192 2.78c-.458-.677-.927-1.248-1.35-1.643a3 3 0 0 0-.71-.515c-.217-.104-.56-.205-.882-.02-.367.213-.427.63-.43.896-.003.304.064.664.173 1.044.196.687.556 1.528 1.035 2.402L.752 8.22c-.277.277-.269.656-.218.918.055.283.187.593.36.903.348.627.92 1.361 1.626 2.068.707.707 1.441 1.278 2.068 1.626.31.173.62.305.903.36.262.05.64.059.918-.218l5.615-5.615c.118.257.092.512.05.939-.03.292-.068.665-.073 1.176v.123h.003a1 1 0 0 0 1.993 0H14v-.057a1 1 0 0 0-.004-.117c-.055-1.25-.7-2.738-1.86-3.494a4 4 0 0 0-.211-.434c-.349-.626-.92-1.36-1.627-2.067S8.857 3.052 8.23 2.704c-.31-.172-.62-.304-.903-.36-.262-.05-.64-.058-.918.219zM4.16 1.867c.381.356.844.922 1.311 1.632l-.704.705c-.382-.727-.66-1.402-.813-1.938a3.3 3.3 0 0 1-.131-.673q.137.09.337.274m.394 3.965c.54.852 1.107 1.567 1.607 2.033a.5.5 0 1 0 .682-.732c-.453-.422-1.017-1.136-1.564-2.027l1.088-1.088q.081.181.183.365c.349.627.92 1.361 1.627 2.068.706.707 1.44 1.278 2.068 1.626q.183.103.365.183l-4.861 4.862-.068-.01c-.137-.027-.342-.104-.608-.252-.524-.292-1.186-.8-1.846-1.46s-1.168-1.32-1.46-1.846c-.147-.265-.225-.47-.251-.607l-.01-.068zm2.87-1.935a2.4 2.4 0 0 1-.241-.561c.135.033.324.11.562.241.524.292 1.186.8 1.846 1.46.45.45.83.901 1.118 1.31a3.5 3.5 0 0 0-1.066.091 11 11 0 0 1-.76-.694c-.66-.66-1.167-1.322-1.458-1.847z"/>
-                        </svg>
-                    </div>
-    
-                    <div class="card-text">
-                        <h3 class="card-title">Pintores</h3>
-                        <p class="card-subtitle">
-                            Profissionais em pintura residencial, comercial e acabamentos especiais.
-                        </p>
-                    </div>
-                    
-    
-                    <button class="card-button">Saiba Mais</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="motivos_escolhas-section">
-            <div class="section-text">
-                <h2 class="section-title">Por que profissionais e empresas escolhem nossa plataforma</h2>
-                <p class="section-subtitle">Conectamos trabalhadores qualificados e empresas a clientes de forma ágil, confiável e eficiente.</p>
-            </div>
-
-            <div class="mt_es-cards_home">
-                <div class="card">
-                    <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 3C12 7.97056 16.0294 12 21 12C16.0294 12 12 16.0294 12 21C12 16.0294 7.97056 12 3 12C7.97056 12 12 7.97056 12 3Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Agilidade e praticidade</h3>
-                        <p class="card-subtitle">Contato rápido entre clientes e profissionais, sem burocracia desnecessária.</p>
+                <div class="Avaliacao">
+                    <h2>Avaliação</h2>
+                    <div class="av-buttons">
+                        <div class="mais_estrelas">
+                            <button class="av-button" id="mais_quatro">4 estrelas ou mais</button>
+                            <button class="av-button" id="mais_tres">3 estrelas ou mais</button>
+                        </div>
+        
+                        <div class="menos_estrelas">
+                            <button class="av-button" id="menos_tres" onclick="criarcard()">Menos de 3 estrelas</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z" fill="#1C274C"></path> </g></svg>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Qualidade e confiabilidade
-                        <p class="card-subtitle">Perfis cuidadosamente avaliados por clientes anteriores para garantir excelência.</p>
-                    </div>
-                </div>
+                <div class="ordem">
+                    <h2>Ordem de exibição</h2>
+                    <div class="ode-topicos">
+                        <label class="ode-topico">
+                            <input class="checkbox" type="checkbox" name="mais_recente" id="mais_recente">
+                            <span class="checkmark"></span>
+                            <p>Mais recente</p>
+                        </label>
 
-                <div class="card">
-                    <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.75 12C9.75 10.7574 10.7574 9.75 12 9.75C13.2426 9.75 14.25 10.7574 14.25 12C14.25 13.2426 13.2426 14.25 12 14.25C10.7574 14.25 9.75 13.2426 9.75 12Z" fill="#1C274C"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 13.6394 2.42496 14.1915 3.27489 15.2957C4.97196 17.5004 7.81811 20 12 20C16.1819 20 19.028 17.5004 20.7251 15.2957C21.575 14.1915 22 13.6394 22 12C22 10.3606 21.575 9.80853 20.7251 8.70433C19.028 6.49956 16.1819 4 12 4C7.81811 4 4.97196 6.49956 3.27489 8.70433C2.42496 9.80853 2 10.3606 2 12ZM12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25Z" fill="#1C274C"></path> </g></svg>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Maior visibilidade
-                        <p class="card-subtitle">Exponha seus serviços a milhares de clientes potenciais em todo o país.</p>
-                    </div>
-                </div>
+                        <label class="ode-topico">
+                            <input class="checkbox" type="checkbox" name="mais_antigo" id="mais_antigo">
+                            <span class="checkmark"></span>
+                            <p>Eletricista</p>
+                        </label>
 
-                <div class="mt_es-linha"></div>
+                        <label class="ode-topico">
+                            <input class="checkbox" type="checkbox" name="mais_acessado" id="mais_acessado">
+                            <span class="checkmark"></span>
+                            <p>Mais acessado</p>
+                        </label>
 
-                <div class="card">
-                    <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L2 7L12 12L22 7L12 2ZM2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Flexibilidade para qualquer projeto
-                        <p class="card-subtitle">De pequenos serviços domésticos a grandes empreendimentos corporativos.</p>
-                    </div>
-                </div>
+                        <label class="ode-topico">
+                            <input class="checkbox" type="checkbox" name="mais_bem_avaliado" id="mais_bem_avaliado">
+                            <span class="checkmark"></span>
+                            <p>Mais bem avaliado</p>
+                        </label>
 
-                <div class="card">
-                    <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Credibilidade consolidada
-                        <p class="card-subtitle">Construa uma reputação sólida baseada em confiança e resultados comprovados.</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="mt_es-icon">
-                        <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} </style> <path class="st0" d="M2,28V4c0-1.1,0.9-2,2-2h24c1.1,0,2,0.9,2,2v24c0,1.1-0.9,2-2,2H4C2.9,30,2,29.1,2,28z"></path> <line class="st0" x1="30" y1="20" x2="2" y2="20"></line> <polyline class="st0" points="8,27 6,25 8,23 "></polyline> <polyline class="st0" points="24,23 26,25 24,27 "></polyline> <line class="st0" x1="6" y1="9" x2="16" y2="9"></line> <line class="st0" x1="6" y1="13" x2="12" y2="13"></line> </g></svg>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Interface intuitiva
-                        <p class="card-subtitle">Plataforma simples, prática e acessível para todos os níveis de usuário.</p>
+                        <label class="ode-topico">
+                            <input class="checkbox" type="checkbox" name="mais_avaliado" id="mais_avaliado">
+                            <span class="checkmark"></span>
+                            <p>Mais avaliado</p>
+                        </label>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="cta-section">
-            <div class="section-text">
-                <h2 class="section-title">Pronto para começar?</h2>
-                <p class="section-subtitle">Conecte-se com quem precisa do seu trabalho e com quem pode realizá-lo.</p>
-            </div>
+        <div class="search-container">
+            <div class="homecards"></div>
+            <div class="search-pagination">
+                <div class="pagination">
+                    <button class="arrows">
+                        <span class="material-symbols-outlined" id="sp-arrow-left">
+                            chevron_left
+                        </span>
+                    </button>
 
-            <div class="cta-buttons">
-                <button class="cta-button-primeiro">Contratar para Meu Projeto</button>
-                <button class="cta-button-segundo">Oferecer Meus Serviços</button>
+                    <div class="pagination-numbers">
+                        <button class="pagination-number-button" id="pagination-number1">1</button>
+                    </div>
+
+                    <button class="arrows">
+                        <span class="material-symbols-outlined" id="sp-arrow-rigth">
+                            chevron_right
+                        </span>
+                    </button>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <div class="ft-logo">
-                    <img src="../img/logo.png" alt="logo OPI">
-                    <h3 class="footer-title-logo">TCC Plataforma</h3>
+                <div class="footer-logo">
+                    <img src="../img/logo.png" alt="Logo">
+                    <h3>TCC Platform</h3>
                 </div>
-
-                <p class="footer-subtitle">Aqui, profissionais e empresas podem expor seus serviços com facilidade, enquanto clientes encontram mão de obra qualificada para diferentes tipos de projetos, sem burocracia e com mais confiança.</p>
-                
+                <p class="footer-description">
+                    Conectando profissionais qualificados com empresas em todo o Brasil. 
+                    Encontre os melhores trabalhadores para seus projetos.
+                </p>
                 <div class="social-links">
                     <a href="#" class="social-link">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0,0,256,256">
                             <g fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M11,4c-3.866,0 -7,3.134 -7,7v28c0,3.866 3.134,7 7,7h28c3.866,0 7,-3.134 7,-7v-28c0,-3.866 -3.134,-7 -7,-7zM13.08594,13h7.9375l5.63672,8.00977l6.83984,-8.00977h2.5l-8.21094,9.61328l10.125,14.38672h-7.93555l-6.54102,-9.29297l-7.9375,9.29297h-2.5l9.30859,-10.89648zM16.91406,15l14.10742,20h3.06445l-14.10742,-20z"></path></g></g>
-                        </svg>
+                            </svg>
                     </a>
-
                     <a href="#" class="social-link">
-                        <svg viewBox="0 0 32 32" id="Camada_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#2e2d37;} </style> <path d="M6,2h20c2.2,0,4,1.8,4,4v20c0,2.2-1.8,4-4,4H6c-2.2,0-4-1.8-4-4V6C2,3.8,3.8,2,6,2z"></path> <g> <path class="st0" d="M21.3,9.7c-0.6,0-1.2,0.5-1.2,1.2c0,0.7,0.5,1.2,1.2,1.2c0.7,0,1.2-0.5,1.2-1.2C22.4,10.2,21.9,9.7,21.3,9.7z"></path> <path class="st0" d="M16,11.2c-2.7,0-4.9,2.2-4.9,4.9c0,2.7,2.2,4.9,4.9,4.9s4.9-2.2,4.9-4.9C21,13.4,18.8,11.2,16,11.2z M16,19.3 c-1.7,0-3.2-1.4-3.2-3.2c0-1.7,1.4-3.2,3.2-3.2c1.7,0,3.2,1.4,3.2,3.2C19.2,17.9,17.8,19.3,16,19.3z"></path> <path class="st0" d="M20,6h-8c-3.3,0-6,2.7-6,6v8c0,3.3,2.7,6,6,6h8c3.3,0,6-2.7,6-6v-8C26,8.7,23.3,6,20,6z M24.1,20 c0,2.3-1.9,4.1-4.1,4.1h-8c-2.3,0-4.1-1.9-4.1-4.1v-8c0-2.3,1.9-4.1,4.1-4.1h8c2.3,0,4.1,1.9,4.1,4.1V20z"></path> </g> </g>
+                        <svg viewBox="0 0 32 32" id="Camada_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#2e2d37;} </style> <path d="M6,2h20c2.2,0,4,1.8,4,4v20c0,2.2-1.8,4-4,4H6c-2.2,0-4-1.8-4-4V6C2,3.8,3.8,2,6,2z"></path> <g> <path class="st0" d="M21.3,9.7c-0.6,0-1.2,0.5-1.2,1.2c0,0.7,0.5,1.2,1.2,1.2c0.7,0,1.2-0.5,1.2-1.2C22.4,10.2,21.9,9.7,21.3,9.7z"></path> <path class="st0" d="M16,11.2c-2.7,0-4.9,2.2-4.9,4.9c0,2.7,2.2,4.9,4.9,4.9s4.9-2.2,4.9-4.9C21,13.4,18.8,11.2,16,11.2z M16,19.3 c-1.7,0-3.2-1.4-3.2-3.2c0-1.7,1.4-3.2,3.2-3.2c1.7,0,3.2,1.4,3.2,3.2C19.2,17.9,17.8,19.3,16,19.3z"></path> <path class="st0" d="M20,6h-8c-3.3,0-6,2.7-6,6v8c0,3.3,2.7,6,6,6h8c3.3,0,6-2.7,6-6v-8C26,8.7,23.3,6,20,6z M24.1,20 c0,2.3-1.9,4.1-4.1,4.1h-8c-2.3,0-4.1-1.9-4.1-4.1v-8c0-2.3,1.9-4.1,4.1-4.1h8c2.3,0,4.1,1.9,4.1,4.1V20z"></path> </g> </g>
                         </svg>
                     </a>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">
-                <ul>
+                <h4>Navegação</h4>
+                <ul class="footer-links">
                     <li><a href="#" class="footer-link">Home</a></li>
-                    <li><a href="#" class="footer-link">Profissionais</a></li>
+                    <li><a href="#" class="footer-link">Trabalhadores</a></li>
                     <li><a href="#" class="footer-link">Empresas</a></li>
                     <li><a href="#" class="footer-link">Sobre Nós</a></li>
                     <li><a href="#" class="footer-link">Como Funciona</a></li>
@@ -338,8 +225,8 @@
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">
-                <ul>
+                <h4>Suporte</h4>
+                <ul class="footer-links">
                     <li><a href="#" class="footer-link">Central de Ajuda</a></li>
                     <li><a href="#" class="footer-link">Contato</a></li>
                     <li><a href="#" class="footer-link">FAQ</a></li>
@@ -349,20 +236,18 @@
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">
-                <ul>
+                <h4>Legal</h4>
+                <ul class="footer-links">
                     <li><a href="#" class="footer-link">Termos de Uso</a></li>
                     <li><a href="#" class="footer-link">Política de Privacidade</a></li>
                     <li><a href="#" class="footer-link">Política de Cookies</a></li>
                     <li><a href="#" class="footer-link">Diretrizes da Comunidade</a></li>
                 </ul>
             </div>
-
+    
             <div class="footer-section">
-                <h3 class="footer-title">Baixe nosso App</h3>
-
-                <p class="footer-subtitle">Acesse nossa plataforma em qualquer lugar</p>
-
+                <h4>Baixe nosso App</h4>
+                <p class="app-description">Acesse nossa plataforma em qualquer lugar</p>
                 <div class="app-stores">
                     <a href="#" class="google-play"><svg width="119" height="36" viewBox="0 0 119 36" fill="none" role="img"><g clip-path="url(#clip0_160_6133)"><path d="M0.447388 6.3C0.447388 4.62914 1.10725 3.02671 2.28182 1.84523C3.45639 0.663748 5.04945 0 6.71055 0L112.289 0C113.951 0 115.544 0.663748 116.718 1.84523C117.893 3.02671 118.553 4.62914 118.553 6.3V28.8378C118.553 30.5087 117.893 32.1111 116.718 33.2926C115.544 34.4741 113.951 35.1378 112.289 35.1378H6.71055C5.04945 35.1378 3.45639 34.4741 2.28182 33.2926C1.10725 32.1111 0.447388 30.5087 0.447388 28.8378V6.3Z" fill="black"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M112.289 0.63H6.71055C5.21556 0.63 3.78181 1.22737 2.7247 2.2907C1.66758 3.35404 1.0737 4.79622 1.0737 6.3V28.8378C1.0737 30.3416 1.66758 31.7838 2.7247 32.8471C3.78181 33.9104 5.21556 34.5078 6.71055 34.5078H112.289C113.784 34.5078 115.218 33.9104 116.275 32.8471C117.332 31.7838 117.926 30.3416 117.926 28.8378V6.3C117.926 4.79622 117.332 3.35404 116.275 2.2907C115.218 1.22737 113.784 0.63 112.289 0.63ZM6.71055 0C5.04945 0 3.45639 0.663748 2.28182 1.84523C1.10725 3.02671 0.447388 4.62914 0.447388 6.3V28.8378C0.447388 30.5087 1.10725 32.1111 2.28182 33.2926C3.45639 34.4741 5.04945 35.1378 6.71055 35.1378H112.289C113.951 35.1378 115.544 34.4741 116.718 33.2926C117.893 32.1111 118.553 30.5087 118.553 28.8378V6.3C118.553 4.62914 117.893 3.02671 116.718 1.84523C115.544 0.663748 113.951 0 112.289 0H6.71055Z" fill="black"></path><path d="M60.1657 19.1583C58.0863 19.1583 56.4221 20.7486 56.4221 22.923C56.42 23.4181 56.5153 23.9087 56.7027 24.3665C56.8901 24.8244 57.1658 25.2403 57.5138 25.5904C57.8619 25.9405 58.2754 26.2178 58.7306 26.4063C59.1857 26.5948 59.6735 26.6907 60.1657 26.6886C62.245 26.6886 63.9084 25.0983 63.9084 22.923C63.9084 20.664 62.1618 19.1583 60.1657 19.1583ZM60.1657 25.0983C59.0839 25.0983 58.0863 24.1785 58.0863 22.8393C58.0863 21.501 59.0839 20.5803 60.1657 20.5803C61.2465 20.5803 62.245 21.501 62.245 22.8393C62.3283 24.1785 61.2465 25.0983 60.1657 25.0983ZM52.0978 19.1583C50.0185 19.1583 48.3551 20.7486 48.3551 22.923C48.353 23.418 48.4484 23.9085 48.6357 24.3663C48.823 24.8241 49.0986 25.24 49.4466 25.5901C49.7945 25.9402 50.2079 26.2175 50.663 26.406C51.118 26.5946 51.6057 26.6906 52.0978 26.6886C54.1772 26.6886 55.8405 25.0983 55.8405 22.923C55.7573 20.664 54.094 19.1583 52.0978 19.1583ZM52.0978 25.0983C51.0161 25.0983 50.0185 24.1785 50.0185 22.8393C50.0185 21.501 51.0161 20.5803 52.0978 20.5803C53.1787 20.5803 54.1772 21.501 54.1772 22.8393C54.1772 24.1785 53.1787 25.0983 52.0978 25.0983ZM42.3658 20.2464V21.8358H46.1917C46.1085 22.7565 45.7756 23.3415 45.2764 23.8428C44.7771 24.3459 43.8627 25.0146 42.3658 25.0146C40.0368 25.0146 38.2903 23.0904 38.2903 20.7486C38.2903 18.4059 40.12 16.4817 42.3658 16.4817C43.6963 16.4817 44.6116 16.983 45.1931 17.5689L46.2749 16.4817C45.3596 15.7284 44.0291 14.9751 42.1994 14.9751C41.4335 14.9703 40.6743 15.1185 39.9657 15.4111C39.2572 15.7037 38.6135 16.1349 38.072 16.6797C37.5304 17.2244 37.1017 17.8719 36.8108 18.5846C36.5199 19.2973 36.3726 20.061 36.3773 20.8314C36.3773 24.0948 39.1215 26.6886 42.1994 26.6886C43.8627 26.6886 45.1931 26.1027 46.1917 25.0983C47.1893 24.0948 47.6054 22.5891 47.6054 21.3336C47.6054 20.9151 47.6054 20.664 47.5221 20.3301L42.3658 20.2464ZM81.9561 21.501C81.6233 20.664 80.7911 19.1583 78.8782 19.1583C76.9653 19.1583 75.3851 20.6649 75.3851 22.923C75.3851 25.0146 76.9653 26.6886 79.1278 26.6886C80.792 26.6886 81.8729 25.6842 82.2057 25.0983L80.8744 24.2613C80.4583 24.8472 79.8767 25.2657 79.0446 25.2657C78.2125 25.2657 77.6309 24.8472 77.2149 24.1785L82.2048 22.0869L81.9561 21.5019V21.501ZM76.9653 22.7565C76.9653 21.3345 78.047 20.4975 78.8782 20.4975C79.4598 20.4975 80.0423 20.8314 80.2919 21.3345L76.9653 22.7565ZM72.8065 26.4375H74.3866V15.3945H72.8065V26.4375ZM70.2279 19.9953C69.9675 19.7292 69.6568 19.518 69.3142 19.3743C68.9716 19.2306 68.6039 19.1571 68.2326 19.1583C66.3197 19.1583 64.6555 20.7486 64.6555 22.923C64.6555 25.0146 66.3197 26.6886 68.2317 26.6886C68.6031 26.6898 68.971 26.6164 69.3138 26.4727C69.6566 26.3289 69.9674 26.1178 70.2279 25.8516H70.312V26.3538C70.312 27.7758 69.4799 28.6128 68.3158 28.6128C67.3173 28.6128 66.7348 27.9432 66.4029 27.2736L64.9892 27.8586C65.4044 28.863 66.4852 30.1176 68.3158 30.1176C70.2288 30.1176 71.8089 29.0304 71.8089 26.1864V19.4094H70.312L70.2288 19.9944L70.2279 19.9953ZM68.3149 25.0983C67.2341 25.0983 66.2365 24.1785 66.2365 22.8393C66.2365 21.501 67.1509 20.4975 68.3149 20.4975C69.3967 20.4975 70.312 21.501 70.312 22.8393C70.312 24.1785 69.3958 25.0983 68.3149 25.0983ZM89.6911 15.3936H85.7811V26.4366H87.3621V22.1706H89.6911C91.5208 22.1706 93.2674 20.8314 93.2674 18.7407C93.2674 16.6491 91.4376 15.3936 89.6911 15.3936ZM89.6911 20.6649H87.3621V16.8993H89.6911C90.8551 16.8993 91.604 17.9037 91.604 18.8244C91.5208 19.6605 90.8551 20.664 89.6911 20.664V20.6649ZM99.7551 19.1583C98.5901 19.1583 97.3429 19.6605 96.8436 20.9151L98.2573 21.501C98.5901 20.916 99.1726 20.664 99.7551 20.664C100.586 20.664 101.418 21.1662 101.418 22.086V22.1706C101.086 22.0032 100.503 21.7521 99.7551 21.7521C98.1741 21.7521 96.6772 22.6728 96.6772 24.2622C96.6772 25.7679 98.0077 26.6886 99.4223 26.6886C100.503 26.6886 101.086 26.1864 101.502 25.6005H101.585V26.4375H103.165V22.1706C103.082 20.1627 101.585 19.1583 99.7551 19.1583ZM99.5887 25.0983C99.0894 25.0983 98.2573 24.7635 98.2573 24.1785C98.2573 23.3415 99.1726 23.0067 99.9206 23.0067C100.586 23.0067 101.002 23.1741 101.418 23.4252C101.418 24.4296 100.503 25.0983 99.5887 25.0983ZM108.821 19.3257L106.908 24.0948H106.824L104.911 19.3257H103.082L105.992 26.019L104.329 29.7837H105.992L110.484 19.4094H108.821V19.3257ZM94.1818 26.4375H95.7628V15.3945H94.1818V26.4375ZM36.7889 12.5496V7.15946H38.6347C39.0517 7.15946 39.3693 7.18556 39.5885 7.23686C39.8954 7.30796 40.1576 7.43666 40.375 7.62296C40.6577 7.86326 40.868 8.17016 41.0067 8.54546C41.148 8.91806 41.2187 9.34466 41.2187 9.82526C41.2187 10.2339 41.1713 10.5975 41.0765 10.9134C40.9983 11.1938 40.8749 11.4596 40.7114 11.7C40.5779 11.8906 40.4119 12.0561 40.2211 12.1887C40.0457 12.3066 39.8328 12.3957 39.5814 12.4578C39.2997 12.5227 39.0113 12.5535 38.7224 12.5496H36.7889ZM37.4984 11.9133H38.6419C38.9953 11.9133 39.2718 11.88 39.4722 11.8143C39.6744 11.7477 39.8346 11.655 39.9545 11.5353C40.1365 11.3424 40.2705 11.1089 40.3455 10.854C40.4403 10.5678 40.4886 10.2204 40.4886 9.81446C40.4886 9.25016 40.3956 8.81726 40.2104 8.51576C40.0269 8.21246 39.8042 8.00906 39.5411 7.90556C39.3514 7.83266 39.0454 7.79576 38.624 7.79576H37.4984V11.9133ZM42.1179 7.91996V7.15946H42.7765V7.92086L42.1179 7.91996ZM42.1179 12.5496V8.64446H42.7765V12.5496H42.1179ZM43.5182 11.3841L44.1687 11.2806C44.2045 11.5434 44.3065 11.7441 44.472 11.8836C44.6402 12.024 44.8746 12.0933 45.1735 12.0933C45.4759 12.0933 45.7005 12.0321 45.8463 11.9097C45.9922 11.7846 46.0655 11.6388 46.0655 11.4723C46.067 11.4016 46.0499 11.3317 46.0159 11.2698C45.982 11.2078 45.9325 11.156 45.8723 11.1195C45.7819 11.0601 45.5573 10.9854 45.1994 10.8945C44.7163 10.7721 44.3816 10.6668 44.1946 10.5795C44.0209 10.4988 43.8737 10.3698 43.7705 10.2078C43.6754 10.0489 43.6258 9.86669 43.6274 9.68126C43.6274 9.50756 43.6667 9.34736 43.7446 9.19976C43.8251 9.05036 43.9334 8.92706 44.0703 8.82896C44.1723 8.75246 44.3118 8.68856 44.4863 8.63726C44.6653 8.58326 44.8549 8.55626 45.0572 8.55626C45.3614 8.55626 45.628 8.60126 45.857 8.68856C46.0888 8.77676 46.2597 8.89736 46.3688 9.04856C46.4789 9.19886 46.554 9.39956 46.5952 9.65156L45.9519 9.74066C45.9318 9.5561 45.8402 9.38695 45.6969 9.26996C45.5573 9.15746 45.3605 9.10076 45.1046 9.10076C44.8021 9.10076 44.5865 9.15116 44.4577 9.25106C44.3279 9.35186 44.2635 9.46976 44.2635 9.60476C44.2635 9.69026 44.2904 9.76676 44.344 9.83606C44.3977 9.90716 44.4818 9.96566 44.5964 10.0125C44.6617 10.0368 44.8558 10.0935 45.1779 10.1817C45.6432 10.3068 45.9671 10.4094 46.1496 10.4904C46.3348 10.5687 46.4798 10.6839 46.5845 10.836C46.6891 10.9881 46.7419 11.1771 46.7419 11.403C46.7419 11.6226 46.6775 11.8314 46.5478 12.0276C46.4114 12.229 46.2196 12.3861 45.9957 12.4794C45.7542 12.5847 45.4822 12.6378 45.177 12.6378C44.6733 12.6378 44.2877 12.5325 44.0228 12.3219C43.7589 12.1104 43.5907 11.7981 43.5182 11.3841ZM47.5239 14.0454V8.64536H48.1234V9.15206C48.2648 8.95406 48.424 8.80556 48.6021 8.70746C48.7801 8.60666 48.9958 8.55626 49.249 8.55626C49.58 8.55626 49.8726 8.64266 50.1258 8.81366C50.3799 8.98556 50.5714 9.22766 50.7003 9.54266C50.8291 9.85316 50.8935 10.1952 50.8935 10.5678C50.8935 10.9674 50.8219 11.3274 50.6788 11.6478C50.5365 11.9673 50.3298 12.2121 50.0569 12.384C49.7867 12.5532 49.5013 12.6378 49.2016 12.6378C48.9824 12.6378 48.7846 12.591 48.6093 12.4983C48.4439 12.4114 48.2983 12.2909 48.1816 12.1446V14.0454H47.5239ZM48.1198 10.6191C48.1198 11.1213 48.2209 11.493 48.4231 11.7333C48.6254 11.9736 48.8705 12.0933 49.1577 12.0933C49.4503 12.0933 49.6999 11.97 49.9066 11.7225C50.1169 11.4723 50.2216 11.0862 50.2216 10.5642C50.2216 10.0665 50.1187 9.69386 49.9147 9.44636C49.7125 9.19886 49.47 9.07466 49.1873 9.07466C48.9072 9.07466 48.6585 9.20696 48.441 9.47156C48.2263 9.73436 48.1198 10.1169 48.1198 10.6191ZM51.4456 10.5975C51.4456 9.87386 51.646 9.33836 52.045 8.99006C52.3788 8.70116 52.7859 8.55626 53.2664 8.55626C53.7996 8.55626 54.2363 8.73266 54.5745 9.08636C54.9136 9.43736 55.0827 9.92156 55.0827 10.5417C55.0827 11.0448 55.0066 11.4399 54.8563 11.7297C54.7078 12.0159 54.4895 12.2391 54.2014 12.3984C53.9155 12.558 53.5933 12.6405 53.2664 12.6378C52.7224 12.6378 52.2821 12.4623 51.9466 12.1122C51.6129 11.7612 51.4456 11.2572 51.4456 10.5975ZM52.122 10.5975C52.122 11.097 52.2303 11.4723 52.4477 11.7225C52.6642 11.97 52.9371 12.0933 53.2664 12.0933C53.5929 12.0933 53.864 11.9682 54.0806 11.7189C54.298 11.4687 54.4063 11.0871 54.4063 10.5759C54.4063 10.0926 54.2971 9.72716 54.0779 9.47966C53.9791 9.36004 53.855 9.26422 53.7145 9.19927C53.5741 9.13431 53.4209 9.10188 53.2664 9.10436C52.9371 9.10436 52.6642 9.22856 52.4477 9.47606C52.2303 9.72356 52.122 10.0971 52.122 10.5975ZM55.8575 12.5496V8.64446H56.4498V9.19976C56.7344 8.77136 57.1468 8.55626 57.6846 8.55626C57.919 8.55626 58.1337 8.59946 58.3288 8.68496C58.5256 8.76866 58.6733 8.87846 58.7708 9.01616C58.8683 9.15296 58.9363 9.31676 58.9748 9.50486C58.9998 9.62726 59.0115 9.84236 59.0115 10.1484V12.5496H58.3538V10.1736C58.3538 9.90446 58.3279 9.70376 58.2769 9.57056C58.2252 9.43535 58.1284 9.3224 58.0031 9.25106C57.8654 9.16822 57.7072 9.12639 57.5468 9.13046C57.2658 9.13046 57.0234 9.21956 56.8185 9.39866C56.6163 9.57776 56.5152 9.91706 56.5152 10.4166V12.5496H55.8575ZM60.2543 12.5496V8.64446H60.9128V12.5496H60.2543ZM60.2211 8.15936L60.7079 7.12976H61.5704L60.766 8.15936H60.2211ZM63.1863 12.5496L61.71 8.64446H62.4034L63.2373 10.9827C63.3268 11.2356 63.41 11.4975 63.4852 11.7702C63.5442 11.5632 63.6256 11.3166 63.7303 11.0277L64.5928 8.64446H65.2693L63.8001 12.5496H63.1863ZM68.5073 11.2923L69.1873 11.3769C69.0799 11.7765 68.8813 12.0861 68.5914 12.3066C68.3015 12.5271 67.9311 12.6378 67.4801 12.6378C66.9129 12.6378 66.4619 12.4623 66.1282 12.1122C65.7971 11.7585 65.6307 11.2653 65.6307 10.6299C65.6307 9.97286 65.7989 9.46346 66.1354 9.10076C66.4718 8.73806 66.9075 8.55626 67.4444 8.55626C67.9633 8.55626 68.3865 8.73446 68.7158 9.08996C69.045 9.44546 69.2097 9.94496 69.2097 10.5894L69.2061 10.7667H66.3107C66.3349 11.1951 66.4557 11.5236 66.6731 11.7513C66.8896 11.9799 67.1598 12.0933 67.4846 12.0933C67.7262 12.0933 67.932 12.0303 68.102 11.9025C68.272 11.7747 68.408 11.5713 68.5073 11.2923ZM66.3474 10.2213H68.5145C68.4858 9.89366 68.4026 9.64706 68.2666 9.48326C68.1695 9.3604 68.0453 9.26191 67.9038 9.19553C67.7624 9.12916 67.6075 9.09672 67.4515 9.10076C67.1491 9.10076 66.8941 9.20246 66.6874 9.40586C66.4825 9.60926 66.3698 9.88016 66.3474 10.2213ZM70.0024 12.5496V7.15946H70.66V12.5496H70.0024ZM76.4239 11.2923L77.1039 11.3769C76.9966 11.7765 76.7988 12.0861 76.5089 12.3066C76.2182 12.5271 75.8477 12.6378 75.3977 12.6378C74.8295 12.6378 74.3786 12.4623 74.0448 12.1122C73.7138 11.7585 73.5483 11.2653 73.5483 10.6299C73.5483 9.97286 73.7165 9.46346 74.052 9.10076C74.3884 8.73806 74.825 8.55626 75.361 8.55626C75.8799 8.55626 76.304 8.73446 76.6324 9.08996C76.9617 9.44546 77.1263 9.94496 77.1263 10.5894L77.1227 10.7667H74.2274C74.2524 11.1951 74.3732 11.5236 74.5897 11.7513C74.8063 11.9799 75.0765 12.0933 75.4013 12.0933C75.6428 12.0933 75.8486 12.0303 76.0186 11.9025C76.1886 11.7747 76.3246 11.5713 76.4239 11.2923ZM74.264 10.2213H76.432C76.4025 9.89366 76.3193 9.64706 76.1833 9.48326C76.0861 9.3604 75.9619 9.26191 75.8204 9.19553C75.679 9.12916 75.5242 9.09672 75.3681 9.10076C75.0657 9.10076 74.8116 9.20246 74.604 9.40586C74.3991 9.60926 74.2864 9.88016 74.264 10.2213ZM77.9343 12.5496V8.64446H78.5221V9.19346C78.6438 9.00176 78.8066 8.84786 79.0088 8.73266C79.211 8.61566 79.441 8.55626 79.6996 8.55626C79.9868 8.55626 80.2221 8.61656 80.4046 8.73626C80.5898 8.85686 80.7205 9.02426 80.7956 9.24026C81.1025 8.78486 81.5025 8.55626 81.9946 8.55626C82.3793 8.55626 82.6755 8.66426 82.883 8.88026C83.0897 9.09356 83.1935 9.42296 83.1935 9.86936V12.5496H82.5395V10.089C82.5395 9.82436 82.5171 9.63446 82.4733 9.51926C82.4315 9.40087 82.3502 9.3007 82.2433 9.23576C82.1246 9.16304 81.9877 9.12618 81.8487 9.12956C81.5758 9.12956 81.3495 9.22136 81.1687 9.40496C80.988 9.58586 80.8985 9.87836 80.8985 10.2798V12.5478H80.24V10.0116C80.24 9.71726 80.1863 9.49676 80.0789 9.35006C79.9716 9.20246 79.7971 9.12956 79.5528 9.12956C79.3707 9.12864 79.1921 9.17949 79.0375 9.27626C78.8792 9.37708 78.7594 9.52865 78.6975 9.70646C78.6268 9.89546 78.5919 10.1673 78.5919 10.5228V12.5478H77.9343V12.5496Z" fill="white"></path><path d="M9.67926 6.69336C9.51284 6.85986 9.2641 7.36206 9.2641 7.86336V27.2737C9.2641 27.7759 9.42963 28.2781 9.67926 28.4455L9.76247 28.5283L20.5754 17.6527V17.4853L9.67926 6.69336Z" fill="url(#paint0_linear_160_6133)"></path><path d="M24.2348 21.3336L20.6586 17.7363V17.5689L24.2348 13.9716H24.318L28.6432 16.398C29.8073 17.0667 29.8073 18.2385 28.6432 18.9072L24.2348 21.3336Z" fill="url(#paint1_linear_160_6133)"></path><path d="M24.318 21.2499L20.5754 17.4852L9.67926 28.4454C10.0953 28.8639 10.761 28.9467 11.509 28.5291L24.3189 21.249L24.318 21.2499Z" fill="url(#paint2_linear_160_6133)"></path><path d="M24.318 13.887L11.509 6.52504C10.8442 6.10744 10.0953 6.10744 9.67926 6.60964L20.5754 17.568L24.318 13.887Z" fill="url(#paint3_linear_160_6133)"></path><path opacity="0.2" d="M24.2348 21.2499L11.5099 28.53C10.8442 28.9476 10.1785 28.9476 9.84566 28.53L9.76245 28.6137L9.84566 28.6974C10.2617 29.115 10.8442 29.115 11.5099 28.6974L24.2348 21.2499Z" fill="black"></path><path opacity="0.12" d="M9.67926 28.4453C9.51284 28.1105 9.2641 27.7757 9.2641 27.2735V27.3572C9.2641 27.8594 9.42963 28.3616 9.67926 28.529V28.4453ZM28.6432 18.7406L24.2348 21.2498L24.318 21.3335L28.6432 18.908C29.2248 18.5732 29.5576 18.071 29.5576 17.5688C29.4744 18.071 29.1416 18.4058 28.6432 18.7406Z" fill="black"></path><path opacity="0.25" d="M11.509 6.77703L28.56 16.5654C29.1416 16.9002 29.4744 17.2341 29.4744 17.6526C29.4744 17.1504 29.1416 16.7328 28.56 16.3143L11.509 6.52503C10.3449 5.85543 9.3464 6.44133 9.3464 7.86333V7.94703C9.26408 6.52503 10.3449 6.02283 11.509 6.77613V6.77703Z" fill="white"></path></g><defs><linearGradient id="paint0_linear_160_6133" x1="19.669" y1="7.66536" x2="4.91195" y2="22.3361" gradientUnits="userSpaceOnUse"><stop stop-color="#00A0FF"></stop><stop offset="0.007" stop-color="#00A1FF"></stop><stop offset="0.26" stop-color="#00BEFF"></stop><stop offset="0.512" stop-color="#00D2FF"></stop><stop offset="0.76" stop-color="#00DFFF"></stop><stop offset="1" stop-color="#00E3FF"></stop></linearGradient><linearGradient id="paint1_linear_160_6133" x1="30.1893" y1="17.64" x2="9.03862" y2="17.64" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE000"></stop><stop offset="0.409" stop-color="#FFBD00"></stop><stop offset="0.775" stop-color="#FFA500"></stop><stop offset="1" stop-color="#FF9C00"></stop></linearGradient><linearGradient id="paint2_linear_160_6133" x1="22.2897" y1="19.5876" x2="2.27942" y2="39.4809" gradientUnits="userSpaceOnUse"><stop stop-color="#FF3A44"></stop><stop offset="1" stop-color="#C31162"></stop></linearGradient><linearGradient id="paint3_linear_160_6133" x1="6.97358" y1="0.183635" x2="15.9086" y2="9.06733" gradientUnits="userSpaceOnUse"><stop stop-color="#32A071"></stop><stop offset="0.069" stop-color="#2DA771"></stop><stop offset="0.476" stop-color="#15CF74"></stop><stop offset="0.801" stop-color="#06E775"></stop><stop offset="1" stop-color="#00F076"></stop></linearGradient><clipPath id="clip0_160_6133"><rect width="119" height="36" fill="white"></rect></clipPath></defs></svg>
                     </a>
@@ -376,15 +261,10 @@
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <p class="copyright">© 2024 TCC Platform. Todos os direitos reservados.</p>
-                <div class="footer-bottom-links">
-                    <a href="#" class="footer-bottom-link">Termos de Uso</a>
-                    <a href="#" class="footer-bottom-link">Política de Privacidade</a>
-                    <a href="#" class="footer-bottom-link">Cookies</a>
-                </div>
             </div>
         </div>
     </footer>
 
-    <script src="public/script.js"></script>
+    <script src="public/card/script.js"></script>
 </body>
 </html>

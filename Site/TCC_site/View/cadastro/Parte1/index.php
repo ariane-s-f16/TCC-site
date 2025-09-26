@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="public/style1.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <title>Cadastro</title>
 </head>
@@ -13,7 +13,7 @@
             <h1>Já tem uma conta?</h1>
 
             <div class="button1">
-                <a href="../../Entrar/index.html">Conectar</a>
+                <a href="index.php?url=entrar">Conectar</a>
             </div>
         </div>
 
@@ -40,11 +40,11 @@
             </div>
             
             <div class="button2">
-                <a href="../Parte2/index.html" class="cadastrar">Continuar</a>
+                <button class="cadastrar" type="button" onclick="salvarParte1()">Continuar</button>
             </div>
             
             <div class="mudarlogar2">
-                <p>Já tem uma conta? <a href="Views/Entrar/index.html">Conecte-se</a>.</p>
+                <p>Já tem uma conta? <a href=""index.php?url=entrar"">Conecte-se</a>.</p>
             </div>
         </form>
     </div>
