@@ -35,7 +35,7 @@
             </div>
 
             <div class="button2">
-                <a href="index.php?url=cadastro/parte1" class=entrar>Entrar</a>
+                <a href="#" onclick="fazerLogin()"class=entrar>Entrar</a>
             </div>
 
             <div class="mudarlogar2">
