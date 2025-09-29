@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="#" method="get">
+    <form action="/usuario/cadastro" method="get">
         <div class="input_foto">
             <label for="foto"></label>
             <input type="file" name="foto" id="foto">

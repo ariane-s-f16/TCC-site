@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="?url=login" method="post">
+        <form action="?url=/usuario/cadastro" method="post">
             <div class="titulo"><h1>Cadastro</h1></div>
 
             <div class="input_box">

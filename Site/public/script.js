@@ -59,7 +59,7 @@ function finalizarCadastro() {
 
     console.log("Dados enviados:", dados);
 
-    fetch("index.php?url=login", {
+    fetch("index.php?url=/usuario/cadastro", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)
@@ -95,7 +95,7 @@ function fazerLogin() {
 
     const dados = { email, password: senha };
 
-    fetch("index.php?url=login", {
+    fetch("index.php?url=/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)

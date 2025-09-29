@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="?url=login" method="post">
+    <form action="?url=/usuario/cadastro" method="post">
         <div class="titulo">
             <h1>Qual é seu perfil?</h2>
         </div>
