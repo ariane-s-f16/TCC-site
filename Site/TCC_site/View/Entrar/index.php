@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/style3.css">
+    <link rel="stylesheet" href="public/style9.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <title>Document</title>
 </head>
@@ -43,5 +43,6 @@
             </div>
         </form>
     </div>
+    <script src="public/script.js"></script>
 </body>
 </html>

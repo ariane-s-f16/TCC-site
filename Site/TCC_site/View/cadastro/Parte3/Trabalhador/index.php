@@ -21,6 +21,10 @@
             <input type="tel" name="telefone" id="telefone" placeholder="Telefone" maxlength="13">
         </div>
 
+        <div class="input_box">
+            <input type="cpf" name="cpf" id="cpf" placeholder="CPF" maxlength="13">
+        </div>
+
         <div class="select">
             <select name="ramo" id="ramo">
                 <option value="null">Profissâo</option>

@@ -20,7 +20,7 @@
 body{
     height: 100vh;
     width: 100%;
-    background-image: url("../../img/fundo.png");
+    background-image: url("img/fundo.png");
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -47,7 +47,7 @@ body{
     height: 100%;
     width: 50%;
     border-radius: 4px;
-    background-image: url("../../img/fundo2.png");
+    background-image: url("img/fundo2.png");
 }
 
 .mudarlogar h1{
@@ -187,14 +187,14 @@ i{
 
 @media screen and (max-width: 1750px) {
     .mudarlogar{
-        background-image: url("../../img/fundo2_1750.png");
+        background-image: url("img/fundo2.png");
         background-repeat: no-repeat;
     }
 }
 
 @media screen and (max-width: 1550px) {
     .mudarlogar{
-        background-image: url("../../img/fundo2_1550.png");
+        background-image: url("img/fundo2.png");
         background-repeat: no-repeat;
         background-size: cover;
     }

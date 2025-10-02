@@ -1,5 +1,4 @@
 console.log("script.js carregado!");
-
 // ======== Mostrar/ocultar senha ========
 function mostrarsenha() {
     const senha = document.querySelector('#senha');
@@ -22,18 +21,32 @@ function salvarParte1() {
         return;
     }
 
+    if (senha !== confSenha) {
+        alert("As senhas não conferem.");
+        return;
+    }
+
+    // Armazenamos no localStorage com nomes que o frontend entende
     const dados = { email, senha, confSenha };
     localStorage.setItem("cadastro", JSON.stringify(dados));
+
     window.location.href = "index.php?url=cadastro/parte2";
 }
 
 // ======== Cadastro Parte 2 ========
 function salvarParte2(tipoPerfil) {
     const dados = JSON.parse(localStorage.getItem("cadastro")) || {};
-    dados.perfil = tipoPerfil.toLowerCase(); // empresa, contratante ou trabalhador
+    
+    // Mapeamos o perfil para o que a API espera: empresa, prestador ou contratante
+    let tipo = tipoPerfil.toLowerCase();
+    if (tipo === "trabalhador") tipo = "prestador";
+
+    dados.perfil = tipo; 
     localStorage.setItem("cadastro", JSON.stringify(dados));
-    window.location.href = `index.php?url=cadastro/parte3/${tipoPerfil.toLowerCase()}`;
+
+    window.location.href = `index.php?url=cadastro/parte3/${tipo}`;
 }
+
 
 // ======== Cadastro Parte 3 – Finalização ========
 function finalizarCadastro() {
@@ -41,44 +54,90 @@ function finalizarCadastro() {
 
     const dados = {
         email: cadastro.email || '',
-        senha: cadastro.senha || '',
-        confSenha: cadastro.confSenha || '',
-        perfil: cadastro.perfil || '',
+        password: cadastro.senha || '',
+        type: cadastro.perfil || '',
         nome: document.getElementById("nome")?.value || '',
         telefone: document.getElementById("telefone")?.value || '',
+        cpf: document.getElementById("cpf")?.value || '',
         cnpj: document.getElementById("cnpj")?.value || '',
-        pais: document.getElementById("Pais")?.value || '',
+        localidade: document.getElementById("localidade")?.value || '',
+        uf: document.getElementById("Estado")?.value || '',
         estado: document.getElementById("Estado")?.value || '',
+        cep: document.getElementById("cep")?.value || '',
+        rua: document.getElementById("rua")?.value || '',
+        numero: document.getElementById("numero")?.value || '',
+        infoadd: document.getElementById("infoadd")?.value || '',
+        pais: document.getElementById("Pais")?.value || '',
         cidade: document.getElementById("Cidade")?.value || ''
     };
 
-    if (!dados.nome || !dados.telefone || !dados.pais || !dados.estado || !dados.cidade) {
+    // Validação dos campos obrigatórios
+    if (
+        !dados.nome ||
+        !dados.telefone ||
+        !dados.pais ||
+        !dados.estado ||
+        !dados.cidade ||
+        !dados.localidade ||
+        !dados.cep ||
+        !dados.rua ||
+        !dados.numero
+    ) {
         alert("Preencha todos os campos obrigatórios.");
         return;
     }
 
-    console.log("Dados enviados:", dados);
+    if (dados.password.length < 6) {
+        alert("A senha deve ter no mínimo 6 caracteres.");
+        return;
+    }
 
-    fetch("index.php?url=/usuario/cadastro", {
+    // Para contratante e prestador, CPF é obrigatório
+    if ((dados.type === "contratante" || dados.type === "prestador") && !dados.cpf) {
+        alert("O CPF é obrigatório.");
+        return;
+    }
+
+    // Para empresa, CNPJ é obrigatório
+    if (dados.type === "empresa" && !dados.cnpj) {
+        alert("O CNPJ é obrigatório para empresas.");
+        return;
+    }
+
+    console.log("Dados enviados para a API:", dados);
+
+    fetch("index.php?url=usuario/cadastro", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)
     })
-    .then(res => res.json())
-    .then(resposta => {
-        console.log("Resposta da API:", resposta);
+    .then(res => res.text())
+    .then(text => {
+        console.log("Resposta bruta da API:", text);
+        try {
+            const resposta = JSON.parse(text);
+            console.log("Resposta JSON:", resposta);
 
-        // Só vai para home se a API retornar sucesso
-        if (resposta.access_token) {
-            localStorage.removeItem("cadastro");
-            window.location.href = "index.php?url=home";
-        } else {
-            alert("Erro ao finalizar o cadastro: " + (resposta.message || "Verifique os dados."));
+            if (resposta.access_token) {
+                localStorage.removeItem("cadastro");
+                window.location.href = "index.php?url=home";
+            } else if (resposta.error && resposta.details) {
+                let msgs = [];
+                for (let campo in resposta.details) {
+                    msgs.push(`${campo}: ${resposta.details[campo].join(", ")}`);
+                }
+                alert("Erro de validação:\n" + msgs.join("\n"));
+            } else {
+                alert("Erro ao finalizar cadastro: " + (resposta.message || "Verifique os dados."));
+            }
+        } catch (e) {
+            console.error("Erro ao parsear JSON da API:", e);
+            alert("Erro na resposta da API. Veja o console para detalhes.");
         }
     })
     .catch(err => {
         console.error("Erro ao enviar dados:", err);
-        alert("Erro ao finalizar o cadastro.");
+        alert("Erro ao finalizar o cadastro. Verifique o console.");
     });
 }
 
