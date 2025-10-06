@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="public/style9.css">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!-----><link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
             <div class="titulo"><h1>Entrar</h1></div>
             
             <div class="input_box">
-                <input type="email" name="email" id="email" placeholder="Email" autofocus maxlength=30>
+                <input class="email" type="email" name="email" id="email" placeholder="Email" autofocus maxlength=30>
                 <i class="bx bxs-user"></i>
             </div>
     

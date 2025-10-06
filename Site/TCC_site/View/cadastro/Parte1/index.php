@@ -40,7 +40,7 @@
             </div>
             
             <div class="button2">
-                <button class="cadastrar" type="button" onclick="salvarParte1()">Continuar</button>
+                <button class="cadastrar" type="button" id="next-btn" onclick="salvarParte1()">Continuar</button>
             </div>
             
             <div class="mudarlogar2">

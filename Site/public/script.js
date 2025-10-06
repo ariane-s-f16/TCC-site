@@ -11,10 +11,22 @@ function mostrarsenhaconf() {
 }
 
 // ======== Cadastro Parte 1 ========
-function salvarParte1() {
-    const email = document.getElementById("email")?.value || '';
-    const senha = document.getElementById("senha")?.value || '';
-    const confSenha = document.getElementById("confisenha")?.value || '';
+async function verificarEmail(email) {
+    try {
+        const response = await fetch(`index.php?url=check-email&valor=${encodeURIComponent(email)}`);
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error("Erro ao verificar e-mail:", err);
+        return { success: false, errors: { valor: ["Erro ao verificar e-mail."] } };
+    }
+}
+
+// ==================== Cadastro Parte 1 ====================
+async function salvarParte1() {
+    const email = document.getElementById("email")?.value.trim();
+    const senha = document.getElementById("senha")?.value.trim();
+    const confSenha = document.getElementById("confisenha")?.value.trim();
 
     if (!email || !senha || !confSenha) {
         alert("Preencha todos os campos obrigatórios.");
@@ -26,12 +38,25 @@ function salvarParte1() {
         return;
     }
 
-    // Armazenamos no localStorage com nomes que o frontend entende
+    // === Verifica se e-mail já está cadastrado ===
+    const data = await verificarEmail(email);
+    if (!data.success) {
+        const msg = data.errors?.valor?.[0] || "Este e-mail já está cadastrado.";
+        alert(msg);
+        return; // Impede o avanço
+    }
+
+    // === Se passou na verificação ===
     const dados = { email, senha, confSenha };
     localStorage.setItem("cadastro", JSON.stringify(dados));
+    console.log("Parte 1 salva no localStorage:", dados);
 
+    // Redireciona para a parte 2
     window.location.href = "index.php?url=cadastro/parte2";
 }
+    
+    
+
 
 // ======== Cadastro Parte 2 ========
 function salvarParte2(tipoPerfil) {
@@ -49,9 +74,13 @@ function salvarParte2(tipoPerfil) {
 
 
 // ======== Cadastro Parte 3 – Finalização ========
-function finalizarCadastro() {
+async function finalizarCadastro() {
     const cadastro = JSON.parse(localStorage.getItem("cadastro")) || {};
 
+    const fotoInput = document.getElementById("foto");
+    const arquivoFoto = fotoInput?.files?.[0] || null;
+
+    // Montagem dos dados
     const dados = {
         email: cadastro.email || '',
         password: cadastro.senha || '',
@@ -68,78 +97,57 @@ function finalizarCadastro() {
         numero: document.getElementById("numero")?.value || '',
         infoadd: document.getElementById("infoadd")?.value || '',
         pais: document.getElementById("Pais")?.value || '',
-        cidade: document.getElementById("Cidade")?.value || ''
+        cidade: document.getElementById("Cidade")?.value || '',
+        id_ramo: document.getElementById("id_ramo")?.value || ''
     };
 
-    // Validação dos campos obrigatórios
-    if (
-        !dados.nome ||
-        !dados.telefone ||
-        !dados.pais ||
-        !dados.estado ||
-        !dados.cidade ||
-        !dados.localidade ||
-        !dados.cep ||
-        !dados.rua ||
-        !dados.numero
-    ) {
+    // Validações básicas
+    if (!dados.nome || !dados.telefone || !dados.localidade || !dados.estado || !dados.rua || !dados.numero) {
         alert("Preencha todos os campos obrigatórios.");
         return;
     }
 
-    if (dados.password.length < 6) {
-        alert("A senha deve ter no mínimo 6 caracteres.");
+    if (!arquivoFoto) {
+        alert("Selecione uma foto antes de continuar.");
         return;
     }
 
-    // Para contratante e prestador, CPF é obrigatório
-    if ((dados.type === "contratante" || dados.type === "prestador") && !dados.cpf) {
-        alert("O CPF é obrigatório.");
-        return;
+    // Cria FormData para suportar arquivo
+    const formData = new FormData();
+    for (const chave in dados) {
+        formData.append(chave, dados[chave]);
     }
+    formData.append("foto", arquivoFoto);
 
-    // Para empresa, CNPJ é obrigatório
-    if (dados.type === "empresa" && !dados.cnpj) {
-        alert("O CNPJ é obrigatório para empresas.");
-        return;
-    }
+    console.log(" Dados sendo enviados:", Object.fromEntries(formData));
 
-    console.log("Dados enviados para a API:", dados);
+    try {
+        const response = await fetch("index.php?url=usuario/cadastro", {
+            method: "POST",
+            body: formData, //  NÃO usar Content-Type aqui
+        });
 
-    fetch("index.php?url=usuario/cadastro", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados)
-    })
-    .then(res => res.text())
-    .then(text => {
-        console.log("Resposta bruta da API:", text);
-        try {
-            const resposta = JSON.parse(text);
-            console.log("Resposta JSON:", resposta);
+        const texto = await response.text();
+        console.log(" Resposta bruta:", texto);
 
-            if (resposta.access_token) {
-                localStorage.removeItem("cadastro");
-                window.location.href = "index.php?url=home";
-            } else if (resposta.error && resposta.details) {
-                let msgs = [];
-                for (let campo in resposta.details) {
-                    msgs.push(`${campo}: ${resposta.details[campo].join(", ")}`);
-                }
-                alert("Erro de validação:\n" + msgs.join("\n"));
-            } else {
-                alert("Erro ao finalizar cadastro: " + (resposta.message || "Verifique os dados."));
-            }
-        } catch (e) {
-            console.error("Erro ao parsear JSON da API:", e);
-            alert("Erro na resposta da API. Veja o console para detalhes.");
+        const resposta = JSON.parse(texto);
+        console.log(" Resposta JSON:", resposta);
+
+        if (resposta.access_token) {
+            alert("Cadastro concluído com sucesso!");
+            localStorage.removeItem("cadastro");
+            window.location.href = "index.php?url=home";
+        } else if (resposta.error) {
+            alert("Erro: " + (resposta.details ? JSON.stringify(resposta.details) : resposta.error));
+        } else {
+            alert("Erro ao finalizar cadastro. Verifique o console.");
         }
-    })
-    .catch(err => {
-        console.error("Erro ao enviar dados:", err);
-        alert("Erro ao finalizar o cadastro. Verifique o console.");
-    });
+    } catch (err) {
+        console.error(" Erro ao enviar cadastro:", err);
+        alert("Erro de comunicação com o servidor.");
+    }
 }
+
 
 
 // ======== Login ========
