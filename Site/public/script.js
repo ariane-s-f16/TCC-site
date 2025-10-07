@@ -79,6 +79,10 @@ async function finalizarCadastro() {
 
     const fotoInput = document.getElementById("foto");
     const arquivoFoto = fotoInput?.files?.[0] || null;
+    const idRamoInput = document.getElementById("id_ramo");
+        if (idRamoInput && idRamoInput.value) {
+            formData.append("id_ramo", idRamoInput.value);
+        }
 
     // Montagem dos dados
     const dados = {
@@ -98,7 +102,7 @@ async function finalizarCadastro() {
         infoadd: document.getElementById("infoadd")?.value || '',
         pais: document.getElementById("Pais")?.value || '',
         cidade: document.getElementById("Cidade")?.value || '',
-        id_ramo: document.getElementById("id_ramo")?.value || ''
+        
     };
 
     // Validações básicas

@@ -95,43 +95,73 @@ class Core
     private function makeRequest(string $method, string $url, array $data = []): string
     {
         $ch = curl_init();
-
-        switch ($method) {
-            case 'GET':
-                if (!empty($data)) {
-                    $url .= '?' . http_build_query($data);
-                }
+    
+        // Detecta se há upload de arquivo (via FormData)
+        $hasFile = false;
+        foreach ($_FILES as $file) {
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                $hasFile = true;
                 break;
-            case 'POST':
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-                break;
-            case 'PUT':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-                break;
-            case 'DELETE':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                break;
-            default:
-                return json_encode(['erro' => 'Método HTTP não suportado']);
+            }
         }
-
+    
+        // Se for POST e houver arquivo, usa multipart/form-data
+        if ($method === 'POST' && $hasFile) {
+            $postFields = [];
+    
+            // Adiciona campos normais
+            foreach ($_POST as $key => $value) {
+                $postFields[$key] = $value;
+            }
+    
+            // Adiciona arquivos
+            foreach ($_FILES as $key => $file) {
+                $postFields[$key] = new CURLFile($file['tmp_name'], $file['type'], $file['name']);
+            }
+    
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+            $headers = ['Accept: application/json'];
+    
+        } else {
+            // JSON padrão (sem arquivo)
+            switch ($method) {
+                case 'GET':
+                    if (!empty($data)) {
+                        $url .= '?' . http_build_query($data);
+                    }
+                    break;
+                case 'POST':
+                    curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                    break;
+                case 'PUT':
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                    break;
+                case 'DELETE':
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                    break;
+            }
+            $headers = [
+                'Content-Type: application/json',
+                'Accept: application/json',
+            ];
+        }
+    
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Accept: application/json',
-        ]);
-
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    
         $result = curl_exec($ch);
         $error = curl_error($ch);
         curl_close($ch);
-
+    
         if ($error) {
             return json_encode(['erro' => 'Erro ao acessar a API: ' . $error]);
         }
-
+    
         return $result;
     }
+    
 }
