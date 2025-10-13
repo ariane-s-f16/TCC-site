@@ -12,17 +12,25 @@ function mostrarsenhaconf() {
 }
 
 // ====================== Cadastro Parte 1 ======================
+// ======== Cadastro Parte 1 ========
 async function verificarEmail(email) {
     try {
+        console.log(" Verificando e-mail:", email);
+
         const response = await fetch(`index.php?url=check-email&valor=${encodeURIComponent(email)}`);
+        console.log(" Status da resposta:", response.status);
+
         const data = await response.json();
+        console.log(" Dados recebidos da API (check-email):", data);
+
         return data;
     } catch (err) {
-        console.error("Erro ao verificar e-mail:", err);
+        console.error(" Erro ao verificar e-mail:", err);
         return { success: false, errors: { valor: ["Erro ao verificar e-mail."] } };
     }
 }
 
+// ==================== Cadastro Parte 1 ====================
 async function salvarParte1() {
     const email = document.getElementById("email")?.value.trim();
     const senha = document.getElementById("senha")?.value.trim();
@@ -38,17 +46,25 @@ async function salvarParte1() {
         return;
     }
 
+    console.log("➡️ Iniciando verificação do e-mail antes de salvar Parte 1...");
+
+    // === Verifica se e-mail já está cadastrado ===
     const data = await verificarEmail(email);
+
+    console.log("📬 Resultado final da verificação:", data);
+
     if (!data.success) {
         const msg = data.errors?.valor?.[0] || "Este e-mail já está cadastrado.";
         alert(msg);
-        return;
+        return; // Impede o avanço
     }
 
+    // === Se passou na verificação ===
     const dados = { email, senha, confSenha };
     localStorage.setItem("cadastro", JSON.stringify(dados));
-    console.log("Parte 1 salva no localStorage:", dados);
+    console.log("💾 Parte 1 salva no localStorage:", dados);
 
+    // Redireciona para a parte 2
     window.location.href = "index.php?url=cadastro/parte2";
 }
 
@@ -231,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 🔹 Máscara de telefone ((00) 00000-0000)
+    //  Máscara de telefone ((00) 00000-0000)
     const telefoneInput = document.getElementById("telefone");
     if (telefoneInput) {
         telefoneInput.addEventListener("input", () => {
