@@ -23,16 +23,19 @@
             <div class="input_box">
                 <input type="email" name="email" id="email" placeholder="Email" autofocus maxlength=30>
                 <i class="bx bxs-user"></i>
+                <span class="erro-msg" id="erro-email"></span>
             </div>
             
             <div class="input_box">
                 <input type="password" name="senha" id="senha" placeholder="Senha" maxlength="30">
                 <i class="bx bxs-lock-alt" onclick="mostrarsenha()"></i>
+                <span class="erro-msg" id="erro-senha"></span>
             </div>
             
             <div class="input_boxF">
                 <input type="password" id="confisenha" placeholder="Confirmar Senha" maxlength="30">
                 <i class="bx bxs-lock-alt" onclick="mostrarsenhaconf()"></i>
+
             </div>
             
             <div class="input_termos">

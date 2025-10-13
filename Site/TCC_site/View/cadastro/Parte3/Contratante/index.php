@@ -18,38 +18,38 @@
         </div>
         
         <div class="input_box">
-            <input type="tel"  name="telefone" id="telefone" placeholder="Telefone">
+            <input type="text"  name="telefone" id="telefone" placeholder="Telefone">
         </div>
         <div class="input_box">
-            <input type="cpf"  name="cpf" id="cpf" placeholder="CPF">
+            <input type="text"  name="cpf" id="cpf" placeholder="CPF">
         </div>
        
         <div class="input_box">
-            <input type="localidade"  name="localidade" id="localidade" placeholder="Localidade">
+            <input type="text"  name="localidade" id="localidade" placeholder="Localidade"  >
         </div>
         <div class="input_box">
-            <input type="cep"  name="cep" id="cep" placeholder="CEP">
+            <input type="text"  name="cep" id="cep" placeholder="CEP">
         </div>
         <div class="input_box">
-            <input type="rua"  name="rua" id="rua" placeholder="Rua">
+            <input type="text"  name="rua" id="rua" placeholder="Rua" >
         </div>
         <div class="input_box">
-            <input type="numero"  name="numero" id="numero" placeholder="Numero">
+            <input type="text"  name="numero" id="numero" placeholder="Numero" >
         </div>
         <div class="input_box">
-            <input type="infoadd"  name="infoadd" id="infoadd" placeholder="Informações Adicionais">
+            <input type="text"  name="infoadd" id="infoadd" placeholder="Informações Adicionais">
         </div>
         
         
         
         
         <div class="selects">
-            <select name="pais" id="Pais" required>
+            <select name="pais" id="Pais" required >
                 <option value="Null">País</option>
                 <option value="brasil">Brasil</option>
             </select>
 
-            <select name="estado" id="Estado" required>
+            <select name="estado" id="Estado" required >
                 <option value="Null">Estado</option>
                 <option value="SP">SP</option>
             </select>

@@ -8,10 +8,11 @@
     <title>Document</title>
 </head>
 <body>
+
     <header>
         <div class="nav-container">
             <div class="left-nav-container">
-                <div class="lg-div"><img src="public/img/logo.png" alt=""></div>
+                <div class="lg-div"><img src="../img/logo.png" alt=""></div>
 
                 <div class="buscador-div">
                     <input class="buscador" id="buscador">
@@ -24,30 +25,28 @@
                 </div>
             </div>
             
-            <div class="rigth-nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="#" class="nav-a">Home</a></li>
-                        <li><a href="#" class="nav-a">Trabalhadores</a></li>
-                        <li><a href="#" class="nav-a">Empresas</a></li>
-                        <li><a href="#" class="nav-a">Sobre</a></li>
-                    </ul>
-                    
-                    <a href="#" class="perfil">
-                        <div class="ft-perfil">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="prf-svg" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                            </svg>
-                        </div>
-                        Diego
-                    </a>                
-    
-                    <a href="#" class="favoritos">
-                        <span class="material-symbols-outlined">favorite</span>
-                    </a>
-                </nav>
-            </div>            
+            <nav class="right-nav-container">
+                <ul class="nav-links">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/trabalhadores" class="nav-link">Trabalhadores</a></li>
+                    <li><a href="/empresas" class="nav-link">Empresas</a></li>
+                    <li><a href="/sobre" class="nav-link">Sobre</a></li>
+                </ul>
+
+                <button class="perfil-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="perfil-name">Diego</span>
+                </button>
+
+                <button class="favoritos-btn" aria-label="Favoritos">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+            </nav>
         </div>
     </header>
 
@@ -83,24 +82,21 @@
             </div>
 
             <div class="timeline">
-                
                 <div class="timeline-line"></div>
 
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="passos-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" 
-                                      d="M12 1C8.96243 1 6.5 3.46243 6.5 6.5C6.5 9.53757 8.96243 12 12 12C15.0376 12 17.5 9.53757 17.5 6.5C17.5 3.46243 15.0376 1 12 1ZM8.5 6.5C8.5 4.567 10.067 3 12 3C13.933 3 15.5 4.567 15.5 6.5C15.5 8.433 13.933 10 12 10C10.067 10 8.5 8.433 8.5 6.5Z" 
-                                      fill="#000000"/>
-                                <path d="M8 14C4.68629 14 2 16.6863 2 20V22C2 22.5523 2.44772 23 3 23C3.55228 23 4 22.5523 4 22V20C4 17.7909 5.79086 16 8 16H16C18.2091 16 20 17.7909 20 20V22C20 22.5523 20.4477 23 21 23C21.5523 23 22 22.5523 22 22V20C22 16.6863 19.3137 14 16 14H8Z" 
-                                      fill="#000000"/>
-                            </svg>
+                        <div class="tml_cont-header">
+                            <div class="timeline-icon primary">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="tml_cont-title">Crie seu perfil</h2>
                         </div>
 
-                        <div class="passos-text">
-                            <h2 class="timeline-title">Crie seu perfil</h2>
-                            <p class="timeline-subtitle">
+                        <div class="timeline-text">
+                            <p class="tml_cont-subtitle">
                                 Profissionais e empresas podem se cadastrar de forma prática, 
                                 apresentando seus serviços, qualificações e experiências.
                             </p>
@@ -114,33 +110,41 @@
                 
                 <div class="timeline-item">
                     <div class="timeline-content reverse">
-                        <div class="passos-text">
-                            <h2 class="timeline-title">Compartilhe seus projetos</h2>
-                            <p class="timeline-subtitle">
+                        <div class="tml_cont-header">
+                            <div class="timeline-icon accent">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                </svg>
+                            </div>
+                            <h2 class="tml_cont-title">Compartilhe seus projetos</h2>
+                        </div>
+
+                        <div class="timeline-text">
+                            <p class="tml_cont-subtitle">
                                 Publique seus trabalhos já realizados ou descreva os serviços que oferece, 
                                 facilitando a divulgação para um público mais amplo.
                             </p>
                         </div>
-
-                        <div class="passos-icon">
-                            <svg id="compartilhar" viewBox="-1 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>share</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-312.000000, -726.000000)" fill="#000000"> <path d="M331,750 C329.343,750 328,748.657 328,747 C328,745.343 329.343,744 331,744 C332.657,744 334,745.343 334,747 C334,748.657 332.657,750 331,750 L331,750 Z M317,742 C315.343,742 314,740.657 314,739 C314,737.344 315.343,736 317,736 C318.657,736 320,737.344 320,739 C320,740.657 318.657,742 317,742 L317,742 Z M331,728 C332.657,728 334,729.343 334,731 C334,732.657 332.657,734 331,734 C329.343,734 328,732.657 328,731 C328,729.343 329.343,728 331,728 L331,728 Z M331,742 C329.23,742 327.685,742.925 326.796,744.312 L321.441,741.252 C321.787,740.572 322,739.814 322,739 C322,738.497 321.903,738.021 321.765,737.563 L327.336,734.38 C328.249,735.37 329.547,736 331,736 C333.762,736 336,733.762 336,731 C336,728.238 333.762,726 331,726 C328.238,726 326,728.238 326,731 C326,731.503 326.097,731.979 326.235,732.438 L320.664,735.62 C319.751,734.631 318.453,734 317,734 C314.238,734 312,736.238 312,739 C312,741.762 314.238,744 317,744 C318.14,744 319.179,743.604 320.02,742.962 L320,743 L326.055,746.46 C326.035,746.64 326,746.814 326,747 C326,749.762 328.238,752 331,752 C333.762,752 336,749.762 336,747 C336,744.238 333.762,742 331,742 L331,742 Z" id="share" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
-                        </div>
                     </div>
 
-                    <div class="timeline-number">
+                    <div class="timeline-number reverse">
                         2
                     </div>
                 </div>
             
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="passos-icon">
-                            <svg id="star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <div class="tml_cont-header">
+                            <div class="timeline-icon primary">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="tml_cont-title">Seja encontrado com facilidade</h2>
                         </div>
                         
-                        <div class="passos-text">
-                            <h2 class="timeline-title">Seja encontrado com facilidade</h2>
-                            <p class="timeline-subtitle">
+                        <div class="timeline-text">
+                            <p class="tml_cont-subtitle">
                                 Clientes em busca de mão de obra qualificada poderão localizar seu perfil diretamente na plataforma, 
                                 sem depender de indicações informais.
                             </p>
@@ -154,16 +158,20 @@
             
                 <div class="timeline-item">
                     <div class="timeline-content reverse">
-                        <div class="passos-text">
-                            <h2 class="timeline-title">Receba avaliações</h2>
-                            <p class="timeline-subtitle">
+                        <div class="tml_cont-header">
+                            <div class="timeline-icon accent">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="tml_cont-title">Receba avaliações</h2>
+                        </div>
+                        
+                        <div class="timeline-text">
+                            <p class="tml_cont-subtitle">
                                 Após a conclusão de cada serviço, os clientes podem avaliar sua performance com estrelas, 
                                 ajudando a destacar sua reputação e credibilidade.
                             </p>
-                        </div>
-
-                        <div class="passos-icon">
-                            <svg id="star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                         </div>
                     </div>
 
@@ -174,13 +182,17 @@
             
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="passos-icon">
-                            <svg id="invest" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M40.9999 27.0007L40.9999 15.0007L29 15.0007" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6 37.0002L16.3385 24.5002L26.1846 30.5002L41 15.0002" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <div class="tml_cont-header">
+                            <div class="timeline-icon primary">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                            </div>
+                            <h2 class="tml_cont-title">Expanda suas oportunidades</h2>
                         </div>
                         
-                        <div class="passos-text">
-                            <h2 class="timeline-title">Expanda suas oportunidades</h2>
-                            <p class="timeline-subtitle">
+                        <div class="timeline-text">
+                            <p class="tml_cont-subtitle">
                                 Com maior visibilidade e reconhecimento, você terá mais chances de ser contratado 
                                 para novos serviços por pessoas e empresas de diferentes portes.
                             </p>
@@ -193,7 +205,12 @@
                 </div>
             </div>   
 
-            <div class="cf-button">Comece agora mesmo</div>
+            <div class="cta_timeline-container">
+                <h3 class="cta_tml_cont-title">Oportunidades esperam por você</h3>
+                <p class="cta_tml_cont-subtitle">Junte-se à nossa plataforma e transforme a forma de contratar e oferecer serviços em todo o Brasil</p>
+                <button class="cta_tml-button">Comece agora mesmo</button>
+            </div>
+
         </section>
 
         <section class="servicos_destaque-section">
@@ -205,58 +222,56 @@
             </div>
 
             <div class="sv_des-cards_home">
-                <div class="card">
+                <div class="sv_des-card">
                     <div class="servico-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
                             <path d="M3 21h18"/>
                             <path d="M5 21V7l8-4v18"/>
                             <path d="M19 21V11l-6-4"/>
                         </svg>
                     </div>
     
-                    <div class="card-text">
-                        <h3 class="card-title">Pedreiros</h3>
-                        <p class="card-subtitle">
+                    <div class="sv_des-card-text">
+                        <h3 class="sv_des-card-title">Pedreiros</h3>
+                        <p class="sv_des-card-subtitle">
                             rofissionais especializados em alvenaria, fundações e estruturas de concreto.
                         </p>
                     </div>
     
-                    <button class="card-button">Saiba Mais</button>
+                    <button class="sv_des-card-button">Saiba Mais</button>
                 </div>
     
-                <div class="card">
+                <div class="sv_des-card">
                     <div class="servico-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
                             <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                         </svg>
                     </div>
     
-                    <div class="card-text">
-                        <h3 class="card-title">Eletricistas</h3>
-                        <p class="card-subtitle">
+                    <div class="sv_des-card-text">
+                        <h3 class="sv_des-card-title">Eletricistas</h3>
+                        <p class="sv_des-card-subtitle">
                             Especialistas em instalações elétricas residenciais, comerciais e industriais.
                         </p>
                     </div>
                     
-                    <button class="card-button">Saiba Mais</button>
+                    <button class="sv_des-card-button">Saiba Mais</button>
                 </div>
     
-                <div class="card">
+                <div class="sv_des-card">
                     <div class="servico-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-paint-bucket" viewBox="0 0 16 16">
-                            <path d="M6.192 2.78c-.458-.677-.927-1.248-1.35-1.643a3 3 0 0 0-.71-.515c-.217-.104-.56-.205-.882-.02-.367.213-.427.63-.43.896-.003.304.064.664.173 1.044.196.687.556 1.528 1.035 2.402L.752 8.22c-.277.277-.269.656-.218.918.055.283.187.593.36.903.348.627.92 1.361 1.626 2.068.707.707 1.441 1.278 2.068 1.626.31.173.62.305.903.36.262.05.64.059.918-.218l5.615-5.615c.118.257.092.512.05.939-.03.292-.068.665-.073 1.176v.123h.003a1 1 0 0 0 1.993 0H14v-.057a1 1 0 0 0-.004-.117c-.055-1.25-.7-2.738-1.86-3.494a4 4 0 0 0-.211-.434c-.349-.626-.92-1.36-1.627-2.067S8.857 3.052 8.23 2.704c-.31-.172-.62-.304-.903-.36-.262-.05-.64-.058-.918.219zM4.16 1.867c.381.356.844.922 1.311 1.632l-.704.705c-.382-.727-.66-1.402-.813-1.938a3.3 3.3 0 0 1-.131-.673q.137.09.337.274m.394 3.965c.54.852 1.107 1.567 1.607 2.033a.5.5 0 1 0 .682-.732c-.453-.422-1.017-1.136-1.564-2.027l1.088-1.088q.081.181.183.365c.349.627.92 1.361 1.627 2.068.706.707 1.44 1.278 2.068 1.626q.183.103.365.183l-4.861 4.862-.068-.01c-.137-.027-.342-.104-.608-.252-.524-.292-1.186-.8-1.846-1.46s-1.168-1.32-1.46-1.846c-.147-.265-.225-.47-.251-.607l-.01-.068zm2.87-1.935a2.4 2.4 0 0 1-.241-.561c.135.033.324.11.562.241.524.292 1.186.8 1.846 1.46.45.45.83.901 1.118 1.31a3.5 3.5 0 0 0-1.066.091 11 11 0 0 1-.76-.694c-.66-.66-1.167-1.322-1.458-1.847z"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 4.5C6 3.56538 6 3.09808 6.20096 2.75C6.33261 2.52197 6.52197 2.33261 6.75 2.20096C7.09808 2 7.56538 2 8.5 2H15.5C16.4346 2 16.9019 2 17.25 2.20096C17.478 2.33261 17.6674 2.52197 17.799 2.75C18 3.09808 18 3.56538 18 4.5C18 5.43462 18 5.90192 17.799 6.25C17.6674 6.47803 17.478 6.66739 17.25 6.79904C16.9019 7 16.4346 7 15.5 7H8.5C7.56538 7 7.09808 7 6.75 6.79904C6.52197 6.66739 6.33261 6.47803 6.20096 6.25C6 5.90192 6 5.43462 6 4.5Z" fill="#fff"></path> <path d="M5.00214 3.93909C4.84746 4.07647 4.75 4.27687 4.75 4.50002C4.75 4.72318 4.84746 4.92357 5.00214 5.06095C4.99998 4.89619 4.99999 4.72205 5 4.54025V4.4598C4.99999 4.278 4.99998 4.10385 5.00214 3.93909Z" fill="#fff"></path> <path d="M10 16V20C10 20.9428 10 21.4142 10.2929 21.7071C10.5858 22 11.0572 22 12 22C12.9428 22 13.4142 22 13.7071 21.7071C14 21.4142 14 20.9428 14 20V16C14 15.0572 14 14.5858 13.7071 14.2929C13.4142 14 12.9428 14 12 14C11.0572 14 10.5858 14 10.2929 14.2929C10 14.5858 10 15.0572 10 16Z" fill="#fff"></path> <path d="M18.9944 5.25H19.0453C19.4999 5.25 19.8051 5.25037 20.0416 5.26579C20.2718 5.2808 20.3843 5.30776 20.4583 5.3369C20.781 5.46395 21.0364 5.71937 21.1635 6.04208C21.1926 6.11609 21.2196 6.22858 21.2346 6.45878C21.25 6.6953 21.2504 7.00044 21.2504 7.4551C21.2504 8.29243 21.2398 8.52185 21.179 8.69392C21.0747 8.98918 20.8634 9.23455 20.5869 9.38148C20.4257 9.4671 20.2004 9.5116 19.3724 9.63581L15.249 10.2543C14.4763 10.3702 13.8277 10.4675 13.3152 10.6116C12.7721 10.7643 12.2916 10.9923 11.9166 11.4278C11.5334 11.8727 11.3753 12.4055 11.3071 13.0062C11.5113 12.9999 11.727 13 11.9458 13H12.0546C12.3196 13 12.5799 12.9999 12.8208 13.011C12.8708 12.6902 12.9482 12.5286 13.0532 12.4067C13.1626 12.2796 13.3307 12.1654 13.7212 12.0556C14.1321 11.94 14.6865 11.8555 15.5182 11.7307L19.714 11.1014C20.3648 11.0044 20.8716 10.9288 21.2907 10.7061C21.8991 10.3829 22.3639 9.84304 22.5934 9.19346C22.7514 8.74599 22.751 8.23353 22.7504 7.57559L22.7504 7.43098C22.7504 7.00661 22.7504 6.65233 22.7314 6.3612C22.7116 6.05823 22.6691 5.77171 22.5592 5.49258C22.2797 4.78261 21.7177 4.22069 21.0078 3.94117C20.7286 3.83128 20.4421 3.78872 20.1392 3.76897C19.848 3.74999 19.4937 3.74999 19.0694 3.75H18.9944C19.0002 3.96867 19.0002 4.20681 19.0002 4.45976V4.54024C19.0002 4.7932 19.0002 5.03133 18.9944 5.25Z" fill="#fff"></path> </g></svg>
                     </div>
     
-                    <div class="card-text">
-                        <h3 class="card-title">Pintores</h3>
-                        <p class="card-subtitle">
+                    <div class="sv_des-card-text">
+                        <h3 class="sv_des-card-title">Pintores</h3>
+                        <p class="sv_des-card-subtitle">
                             Profissionais em pintura residencial, comercial e acabamentos especiais.
                         </p>
                     </div>
                     
     
-                    <button class="card-button">Saiba Mais</button>
+                    <button class="sv_des-card-button">Saiba Mais</button>
                 </div>
             </div>
         </section>
@@ -432,5 +447,6 @@
     </footer>
 
     <script src="public/script.js"></script>
+
 </body>
 </html>

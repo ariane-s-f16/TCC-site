@@ -8,6 +8,7 @@
     --color5: #4e64ad;
     --color6: #3434a3;
     --color7: #6989f0;
+    --error-color: #e74c3c;
 }
 
 *{
@@ -125,6 +126,17 @@ input::placeholder{
     color: var(--color2);
 }
 
+/* ====================== ERRO ====================== */
+input.input-error {
+    border-bottom: 2px solid var(--error-color) !important;
+    color: var(--error-color);
+}
+
+input.input-error::placeholder {
+    color: var(--error-color);
+    opacity: 1;
+}
+
 i{
     cursor: pointer;
     font-size: 20px;
@@ -181,20 +193,24 @@ i{
     background-color: var(--color5);
 }
 
+.cadastrar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 .mudarlogar2{
     display: none;
 }
 
+/* ====================== MEDIA QUERIES ====================== */
 @media screen and (max-width: 1750px) {
     .mudarlogar{
-        background-image: url("img/fundo2.png");
         background-repeat: no-repeat;
     }
 }
 
 @media screen and (max-width: 1550px) {
     .mudarlogar{
-        background-image: url("img/fundo2.png");
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -218,13 +234,10 @@ i{
         font-size: 30px;
     }
 
-    .input_box{
+    .input_box, .input_boxF{
         height: 8%;
     }
 
-    .input_boxF{
-        height: 8%;
-    }
     .button2{
         margin-top: 10%;
     }
@@ -288,7 +301,6 @@ i{
 }
 
 @media screen and (max-width: 550px){
-
     .titulo h1{
         font-size: 30px;
     }

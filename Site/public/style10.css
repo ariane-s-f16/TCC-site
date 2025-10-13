@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    color: #1a202c;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 640px;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 64px 48px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+  }
+  
+  .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+  }
+  
+  .icon {
+    width: 40px;
+    height: 40px;
+    color: white;
+    stroke-width: 2;
+  }
+  
+  .title {
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #1a202c;
+    line-height: 1.2;
+  }
+  
+  .description {
+    font-size: 18px;
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #334155;
+  }
+  
+  .input {
+    width: 100%;
+    height: 64px;
+    padding: 0 20px;
+    font-size: 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.2s;
+    color: #1a202c;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+  
+  .input::placeholder {
+    color: #94a3b8;
+  }
+  
+  .code-inputs {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  
+  .code-input {
+    width: 72px;
+    height: 80px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.2s;
+    color: #1a202c;
+  }
+  
+  .code-input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+  
+  .button {
+    width: 100%;
+    height: 64px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  
+  .button-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+  
+  .button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+  }
+  
+  .button-primary:active {
+    transform: translateY(0);
+  }
+  
+  .link {
+    text-align: center;
+    color: #667eea;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+  }
+  
+  .resend-section {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .resend-text {
+    font-size: 16px;
+    color: #64748b;
+  }
+  
+  .link-button {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.2s;
+  }
+  
+  .link-button:hover {
+    color: #764ba2;
+    text-decoration: underline;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 640px) {
+    .card {
+      padding: 48px 32px;
+    }
+  
+    .title {
+      font-size: 32px;
+    }
+  
+    .description {
+      font-size: 16px;
+    }
+  
+    .code-inputs {
+      gap: 8px;
+    }
+  
+    .code-input {
+      width: 56px;
+      height: 64px;
+      font-size: 24px;
+    }
+  }
+  
