@@ -1,17 +1,28 @@
 console.log("script.js carregado!");
 
 // ====================== Mostrar/Ocultar Senha ======================
+/**
+ * Alterna a exibição da senha no input de senha principal.
+ */
 function mostrarsenha() {
     const senha = document.querySelector('#senha');
     if (senha) senha.type = senha.type === 'password' ? 'text' : 'password';
 }
 
+/**
+ * Alterna a exibição da senha no input de confirmação de senha.
+ */
 function mostrarsenhaconf() {
     const csenha = document.querySelector('#confisenha');
     if (csenha) csenha.type = csenha.type === 'password' ? 'text' : 'password';
 }
 
 // ====================== Funções de Erro Visual ======================
+/**
+ * Exibe uma mensagem de erro em um input, limpando seu valor.
+ * @param {HTMLElement} input - O input a ser alterado
+ * @param {string} mensagem - A mensagem de erro
+ */
 function mostrarErro(input, mensagem) {
     if (!input) return;
     input.value = "";
@@ -19,6 +30,10 @@ function mostrarErro(input, mensagem) {
     input.classList.add("erro");
 }
 
+/**
+ * Limpa o erro visual de um input, restaurando o placeholder original.
+ * @param {HTMLElement} input - O input a ser restaurado
+ */
 function limparErro(input) {
     if (!input) return;
     input.classList.remove("erro");
@@ -29,6 +44,11 @@ function limparErro(input) {
 }
 
 // ====================== Cadastro Parte 1 ======================
+/**
+ * Verifica se o e-mail já está cadastrado via API.
+ * @param {string} email - O e-mail a ser verificado
+ * @returns {Promise<Object>} - Retorna um objeto com a propriedade "exists"
+ */
 async function verificarEmail(email) {
     try {
         const response = await fetch(`index.php?url=check-email&valor=${encodeURIComponent(email)}`);
@@ -40,6 +60,9 @@ async function verificarEmail(email) {
     }
 }
 
+/**
+ * Salva os dados da primeira parte do cadastro e valida entradas.
+ */
 async function salvarParte1() {
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
@@ -74,9 +97,15 @@ async function salvarParte1() {
 }
 
 // ====================== Cadastro Parte 2 ======================
+/**
+ * Salva o tipo de perfil escolhido na segunda parte do cadastro.
+ * Converte "trabalhador" para "prestador" para manter consistência.
+ * @param {string} tipoPerfil - Tipo de perfil selecionado
+ */
 function salvarParte2(tipoPerfil) {
     const dados = JSON.parse(localStorage.getItem("cadastro")) || {};
     let tipo = tipoPerfil.toLowerCase();
+    // Ajuste: "trabalhador" será tratado como "prestador"
     if (tipo === "trabalhador") tipo = "prestador";
     dados.perfil = tipo;
     localStorage.setItem("cadastro", JSON.stringify(dados));
@@ -84,6 +113,9 @@ function salvarParte2(tipoPerfil) {
 }
 
 // ====================== Cadastro Parte 3 ======================
+/**
+ * Finaliza o cadastro do usuário enviando dados via FormData para o backend.
+ */
 async function finalizarCadastro() {
     const cadastro = JSON.parse(localStorage.getItem("cadastro")) || {};
     const fotoInput = document.getElementById("foto");
@@ -109,6 +141,7 @@ async function finalizarCadastro() {
         cidade: document.getElementById("Cidade")?.value || '',
     };
 
+    // Validação dos campos obrigatórios
     if (!dados.nome || !dados.telefone || !dados.localidade || !dados.estado || !dados.rua || !dados.numero) {
         alert("Preencha todos os campos obrigatórios.");
         return;
@@ -149,6 +182,9 @@ async function finalizarCadastro() {
 }
 
 // ====================== Login ======================
+/**
+ * Realiza o login do usuário via API.
+ */
 function fazerLogin() {
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
@@ -186,6 +222,7 @@ function fazerLogin() {
 
 // ====================== Seleção de Perfil (Parte 2) ======================
 document.addEventListener('DOMContentLoaded', () => {
+    // Mapeamento das classes dos botões de perfil
     ['Empresa', 'trabalhador', 'Contratante'].forEach(classe => {
         document.querySelectorAll(`.${classe}`).forEach(botao => {
             botao.addEventListener('click', (e) => {
@@ -195,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Atualizar nome do perfil no header
+    // Atualiza o nome do usuário logado no header
     const perfilNameSpan = document.querySelector('.perfil-name');
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
     if (perfilNameSpan) {
@@ -212,10 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cidade = document.getElementById("Cidade");
     const estado = document.getElementById("Estado");
 
+    // Inicializa campos como somente leitura até buscar CEP
     [rua, localidade, cidade, estado].forEach(c => {
         if (c) { c.readOnly = true; c.style.backgroundColor = "#f9f9f9"; }
     });
 
+    // Máscara e busca automática do CEP
     if (cepInput) {
         cepInput.setAttribute("data-placeholder", cepInput.placeholder || "");
         cepInput.addEventListener("input", () => {
@@ -252,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Máscara de telefone
     if (telefoneInput) {
         telefoneInput.setAttribute("data-placeholder", telefoneInput.placeholder || "");
         telefoneInput.addEventListener("input", () => {

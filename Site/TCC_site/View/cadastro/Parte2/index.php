@@ -21,7 +21,7 @@
         </div>
 
         <div class="button">
-            <a href="#"   class="trabalhador">Trabalhador</a>
+            <a href="#"   class="prestador">Trabalhador</a>
         </div>
 
         <div class="button">
