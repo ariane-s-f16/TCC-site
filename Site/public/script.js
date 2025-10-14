@@ -1,74 +1,32 @@
-console.log("script.js carregado!");
+console.log(" script.js carregado!");
 
 // ====================== Mostrar/Ocultar Senha ======================
-/**
- * Alterna a exibição da senha no input de senha principal.
- */
 function mostrarsenha() {
     const senha = document.querySelector('#senha');
     if (senha) senha.type = senha.type === 'password' ? 'text' : 'password';
 }
 
-/**
- * Alterna a exibição da senha no input de confirmação de senha.
- */
 function mostrarsenhaconf() {
     const csenha = document.querySelector('#confisenha');
     if (csenha) csenha.type = csenha.type === 'password' ? 'text' : 'password';
 }
 
 // ====================== Funções de Erro Visual ======================
-/**
- * Exibe erro em email ou senha com placeholder vermelho.
- * Confirmação de senha apenas mostra mensagem, sem placeholder vermelho.
- * @param {HTMLElement} input - Input que receberá a mensagem de erro
- * @param {string} mensagem - Mensagem de erro a exibir
- */
 function mostrarErro(input, mensagem) {
     if (!input) return;
-
-    // Email e senha principal recebem estilo de erro
-    if (input.id === 'email' || input.id === 'senha') {
-        if (!input.dataset.originalPlaceholder) {
-            input.dataset.originalPlaceholder = input.placeholder || '';
-        }
-        input.value = '';
-        input.placeholder = mensagem;
-        input.classList.add('input-error');
-    } else {
-        // Confirme senha ou outros inputs apenas alteram placeholder
-        input.value = '';
-        input.placeholder = mensagem;
-    }
-
-    // Remove erro automaticamente ao digitar
-    const limparOnInput = () => {
-        limparErro(input);
-        input.removeEventListener('input', limparOnInput);
-    };
-    input.addEventListener('input', limparOnInput);
+    input.value = "";
+    input.placeholder = mensagem;
+    input.classList.add("input-error");
 }
 
-/**
- * Remove erro visual de email ou senha e restaura placeholder original.
- * @param {HTMLElement} input - Input que terá erro removido
- */
 function limparErro(input) {
     if (!input) return;
-    if (input.id === 'email' || input.id === 'senha') {
-        input.classList.remove('input-error');
-        if (input.dataset.originalPlaceholder) {
-            input.placeholder = input.dataset.originalPlaceholder;
-        }
-    }
+    input.classList.remove("input-error");
+    const original = input.getAttribute("data-placeholder");
+    if (original !== null) input.placeholder = original;
 }
 
 // ====================== Cadastro Parte 1 ======================
-/**
- * Verifica se o e-mail já está cadastrado via API.
- * @param {string} email - O e-mail a ser verificado
- * @returns {Promise<Object>} - Retorna um objeto com a propriedade "exists"
- */
 async function verificarEmail(email) {
     try {
         const response = await fetch(`index.php?url=check-email&valor=${encodeURIComponent(email)}`);
@@ -80,9 +38,6 @@ async function verificarEmail(email) {
     }
 }
 
-/**
- * Salva os dados da primeira parte do cadastro e valida entradas.
- */
 async function salvarParte1() {
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
@@ -96,19 +51,25 @@ async function salvarParte1() {
 
     if (!email) { mostrarErro(emailInput, "Email obrigatório"); temErro = true; }
     if (!senha) { mostrarErro(senhaInput, "Senha obrigatória"); temErro = true; }
-    if (!confSenha) { mostrarErro(confSenhaInput, "Confirme a senha"); temErro = true; }
+
     if (temErro) return;
 
+    if (!confSenha) {
+        confSenhaInput.value = "";
+        confSenhaInput.placeholder = "Confirme a senha";
+        return;
+    }
+
     if (senha !== confSenha) {
-        mostrarErro(confSenhaInput, "Senhas diferentes");
+        confSenhaInput.value = "";
+        confSenhaInput.placeholder = "Senhas diferentes";
         return;
     }
 
     const data = await verificarEmail(email);
-
     if (data.exists) {
-        mostrarErro(emailInput, "Email já cadastrado");
-        return;
+        mostrarErro(emailInput, "Este email já está sendo usado");
+        return; // NÃO avança
     }
 
     const dados = { email, senha, confSenha };
@@ -117,11 +78,6 @@ async function salvarParte1() {
 }
 
 // ====================== Cadastro Parte 2 ======================
-/**
- * Salva o tipo de perfil escolhido na segunda parte do cadastro.
- * Converte "trabalhador" para "prestador" para manter consistência.
- * @param {string} tipoPerfil - Tipo de perfil selecionado
- */
 function salvarParte2(tipoPerfil) {
     const dados = JSON.parse(localStorage.getItem("cadastro")) || {};
     let tipo = tipoPerfil.toLowerCase();
@@ -132,9 +88,6 @@ function salvarParte2(tipoPerfil) {
 }
 
 // ====================== Cadastro Parte 3 ======================
-/**
- * Finaliza o cadastro do usuário enviando dados via FormData para o backend.
- */
 async function finalizarCadastro() {
     const cadastro = JSON.parse(localStorage.getItem("cadastro")) || {};
     const fotoInput = document.getElementById("foto");
@@ -160,7 +113,6 @@ async function finalizarCadastro() {
         cidade: document.getElementById("Cidade")?.value || '',
     };
 
-    // Validação dos campos obrigatórios
     if (!dados.nome || !dados.telefone || !dados.localidade || !dados.estado || !dados.rua || !dados.numero) {
         alert("Preencha todos os campos obrigatórios.");
         return;
@@ -201,9 +153,6 @@ async function finalizarCadastro() {
 }
 
 // ====================== Login ======================
-/**
- * Realiza o login do usuário via API.
- */
 function fazerLogin() {
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
@@ -239,90 +188,75 @@ function fazerLogin() {
     });
 }
 
-// ====================== Seleção de Perfil (Parte 2) ======================
-document.addEventListener('DOMContentLoaded', () => {
-    ['Empresa', 'prestador', 'Contratante'].forEach(classe => {
-        document.querySelectorAll(`.${classe}`).forEach(botao => {
-            botao.addEventListener('click', (e) => {
-                e.preventDefault();
-                salvarParte2(classe);
-            });
-        });
-    });
-
-    // Atualiza o nome do usuário logado no header
-    const perfilNameSpan = document.querySelector('.perfil-name');
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
-    if (perfilNameSpan) {
-        perfilNameSpan.textContent = usuarioLogado.nome || "Usuário";
-    }
-});
-
-// ====================== Máscaras e CEP automático ======================
+// ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
     const cepInput = document.getElementById("cep");
     const telefoneInput = document.getElementById("telefone");
+    const cpfInput = document.getElementById("cpf");
     const rua = document.getElementById("rua");
     const localidade = document.getElementById("localidade");
     const cidade = document.getElementById("Cidade");
     const estado = document.getElementById("Estado");
 
-    [rua, localidade, cidade, estado].forEach(c => {
-        if (c) { c.readOnly = true; c.style.backgroundColor = "#f9f9f9"; }
-    });
+    // Exibir nome do usuário logado no header
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (usuarioLogado && usuarioLogado.nome) {
+        const perfilNameSpan = document.querySelector(".perfil-name");
+        if (perfilNameSpan) perfilNameSpan.textContent = usuarioLogado.nome;
+    }
 
-    if (cepInput) {
-        cepInput.setAttribute("data-placeholder", cepInput.placeholder || "");
-        cepInput.addEventListener("input", () => {
-            let valor = cepInput.value.replace(/\D/g, "");
-            if (valor.length > 8) valor = valor.slice(0, 8);
-            cepInput.value = valor.length > 5 ? valor.slice(0, 5) + "-" + valor.slice(5) : valor;
-        });
-
-        cepInput.addEventListener("blur", async function() {
-            const cep = this.value.replace(/\D/g, '');
-            if (cep.length !== 8) { mostrarErro(cepInput, "CEP inválido"); return; }
-
-            try {
-                const response = await fetch(`index.php?url=cep/${cep}`);
-                if (!response.ok) throw new Error("Erro ao buscar o CEP.");
-                const data = await response.json();
-
-                if (!data || Object.keys(data).length === 0) { mostrarErro(cepInput, "CEP não encontrado"); return; }
-
-                if (rua) rua.value = data.logradouro || "";
-                if (localidade) localidade.value = data.localidade || "";
-                if (cidade) cidade.value = data.localidade || "";
-                if (estado) estado.value = data.uf || "";
-
-                [rua, localidade, cidade, estado].forEach(c => {
-                    if (c) { c.readOnly = false; c.style.backgroundColor = "#fff"; }
-                });
-
-                limparErro(cepInput);
-            } catch (err) {
-                console.error("Erro ao buscar CEP:", err);
-                mostrarErro(cepInput, "Erro ao buscar CEP");
-            }
+    // ---------- Máscara CPF ----------
+    if (cpfInput) {
+        cpfInput.addEventListener("input", () => {
+            let v = cpfInput.value.replace(/\D/g, "");
+            if (v.length > 11) v = v.slice(0, 11);
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            cpfInput.value = v;
         });
     }
 
-    // Máscara de telefone
+    // ---------- Máscara Telefone ----------
     if (telefoneInput) {
-        telefoneInput.setAttribute("data-placeholder", telefoneInput.placeholder || "");
         telefoneInput.addEventListener("input", () => {
-            let valor = telefoneInput.value.replace(/\D/g, "");
-            if (valor.length > 11) valor = valor.slice(0, 11);
+            let v = telefoneInput.value.replace(/\D/g, "");
+            if (v.length > 11) v = v.slice(0, 11);
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+            v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
+            telefoneInput.value = v;
+        });
+    }
 
-            if (valor.length > 10) {
-                telefoneInput.value = `(${valor.slice(0,2)}) ${valor.slice(2,7)}-${valor.slice(7,11)}`;
-            } else if (valor.length > 6) {
-                telefoneInput.value = `(${valor.slice(0,2)}) ${valor.slice(2,6)}-${valor.slice(6)}`;
-            } else if (valor.length > 2) {
-                telefoneInput.value = `(${valor.slice(0,2)}) ${valor.slice(2)}`;
-            } else if (valor.length > 0) {
-                telefoneInput.value = `(${valor}`;
+    // ---------- CEP + Busca Automática ----------
+    if (cepInput) {
+        cepInput.addEventListener("input", async () => {
+            let v = cepInput.value.replace(/\D/g, "");
+            if (v.length > 8) v = v.slice(0, 8);
+            cepInput.value = v.replace(/(\d{5})(\d)/, "$1-$2");
+
+            if (v.length === 8) {
+                try {
+                    const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
+                    const data = await res.json();
+                    if (!data.erro) {
+                        if (rua) rua.value = data.logradouro;
+                        if (localidade) localidade.value = data.bairro;
+                        if (cidade) cidade.value = data.localidade;
+                        if (estado) estado.value = data.uf;
+                    }
+                } catch {
+                    console.warn("Erro ao buscar CEP");
+                }
             }
         });
     }
+
+    // ---------- Limpar erro ao digitar ----------
+    ["email", "senha"].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener("input", () => limparErro(input));
+        }
+    });
 });
