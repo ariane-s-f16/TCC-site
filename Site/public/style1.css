@@ -127,9 +127,16 @@ input::placeholder{
 }
 
 /* ====================== ERRO ====================== */
-input.input-error {
-    border-bottom: 2px solid var(--error-color) !important;
-    color: var(--error-color);
+
+    input.input-error {
+        border-bottom: 2px solid var(--error-color) !important; /* Borda vermelha */
+        color: var(--color1); /* Mantém o texto digitado normal */
+    }
+    
+   
+input.input-error::placeholder {
+    color: var(--error-color); /* Placeholder vermelho */
+    opacity: 1; /* Garantir visibilidade */
 }
 
 input.input-error::placeholder {

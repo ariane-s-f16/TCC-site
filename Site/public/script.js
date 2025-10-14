@@ -19,27 +19,47 @@ function mostrarsenhaconf() {
 
 // ====================== Funções de Erro Visual ======================
 /**
- * Exibe uma mensagem de erro em um input, limpando seu valor.
- * @param {HTMLElement} input - O input a ser alterado
- * @param {string} mensagem - A mensagem de erro
+ * Exibe erro em email ou senha com placeholder vermelho.
+ * Confirmação de senha apenas mostra mensagem, sem placeholder vermelho.
+ * @param {HTMLElement} input - Input que receberá a mensagem de erro
+ * @param {string} mensagem - Mensagem de erro a exibir
  */
 function mostrarErro(input, mensagem) {
     if (!input) return;
-    input.value = "";
-    input.placeholder = mensagem;
-    input.classList.add("erro");
+
+    // Email e senha principal recebem estilo de erro
+    if (input.id === 'email' || input.id === 'senha') {
+        if (!input.dataset.originalPlaceholder) {
+            input.dataset.originalPlaceholder = input.placeholder || '';
+        }
+        input.value = '';
+        input.placeholder = mensagem;
+        input.classList.add('input-error');
+    } else {
+        // Confirme senha ou outros inputs apenas alteram placeholder
+        input.value = '';
+        input.placeholder = mensagem;
+    }
+
+    // Remove erro automaticamente ao digitar
+    const limparOnInput = () => {
+        limparErro(input);
+        input.removeEventListener('input', limparOnInput);
+    };
+    input.addEventListener('input', limparOnInput);
 }
 
 /**
- * Limpa o erro visual de um input, restaurando o placeholder original.
- * @param {HTMLElement} input - O input a ser restaurado
+ * Remove erro visual de email ou senha e restaura placeholder original.
+ * @param {HTMLElement} input - Input que terá erro removido
  */
 function limparErro(input) {
     if (!input) return;
-    input.classList.remove("erro");
-    const original = input.getAttribute("data-placeholder");
-    if (original !== null) {
-        input.placeholder = original;
+    if (input.id === 'email' || input.id === 'senha') {
+        input.classList.remove('input-error');
+        if (input.dataset.originalPlaceholder) {
+            input.placeholder = input.dataset.originalPlaceholder;
+        }
     }
 }
 
@@ -68,9 +88,9 @@ async function salvarParte1() {
     const senhaInput = document.getElementById("senha");
     const confSenhaInput = document.getElementById("confisenha");
 
-    const email = emailInput?.value.trim();
-    const senha = senhaInput?.value.trim();
-    const confSenha = confSenhaInput?.value.trim();
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value.trim();
+    const confSenha = confSenhaInput.value.trim();
 
     let temErro = false;
 
@@ -105,7 +125,6 @@ async function salvarParte1() {
 function salvarParte2(tipoPerfil) {
     const dados = JSON.parse(localStorage.getItem("cadastro")) || {};
     let tipo = tipoPerfil.toLowerCase();
-    // Ajuste: "trabalhador" será tratado como "prestador"
     if (tipo === "trabalhador") tipo = "prestador";
     dados.perfil = tipo;
     localStorage.setItem("cadastro", JSON.stringify(dados));
@@ -188,8 +207,8 @@ async function finalizarCadastro() {
 function fazerLogin() {
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
-    const email = emailInput?.value || '';
-    const senha = senhaInput?.value || '';
+    const email = emailInput.value || '';
+    const senha = senhaInput.value || '';
 
     if (!email || !senha) {
         if (!email) mostrarErro(emailInput, "Digite seu e-mail");
@@ -222,8 +241,7 @@ function fazerLogin() {
 
 // ====================== Seleção de Perfil (Parte 2) ======================
 document.addEventListener('DOMContentLoaded', () => {
-    // Mapeamento das classes dos botões de perfil
-    ['Empresa', 'trabalhador', 'Contratante'].forEach(classe => {
+    ['Empresa', 'prestador', 'Contratante'].forEach(classe => {
         document.querySelectorAll(`.${classe}`).forEach(botao => {
             botao.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -249,12 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cidade = document.getElementById("Cidade");
     const estado = document.getElementById("Estado");
 
-    // Inicializa campos como somente leitura até buscar CEP
     [rua, localidade, cidade, estado].forEach(c => {
         if (c) { c.readOnly = true; c.style.backgroundColor = "#f9f9f9"; }
     });
 
-    // Máscara e busca automática do CEP
     if (cepInput) {
         cepInput.setAttribute("data-placeholder", cepInput.placeholder || "");
         cepInput.addEventListener("input", () => {
