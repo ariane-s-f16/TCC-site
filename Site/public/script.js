@@ -1,4 +1,4 @@
-console.log(" script.js carregado!");
+console.log("✅ script.js carregado!");
 
 // ====================== Mostrar/Ocultar Senha ======================
 function mostrarsenha() {
@@ -138,7 +138,12 @@ async function finalizarCadastro() {
         const resposta = JSON.parse(texto);
 
         if (resposta.access_token) {
-            localStorage.setItem("usuarioLogado", JSON.stringify({ nome: dados.nome, email: dados.email }));
+            // Salva nome e token no localStorage
+            localStorage.setItem("usuarioLogado", JSON.stringify({ 
+                nome: dados.nome, 
+                email: dados.email, 
+                access_token: resposta.access_token 
+            }));
             localStorage.removeItem("cadastro");
             window.location.href = "index.php?url=home";
         } else if (resposta.error) {
@@ -153,7 +158,7 @@ async function finalizarCadastro() {
 }
 
 // ====================== Login ======================
-function fazerLogin() {
+async function fazerLogin() {
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
     const email = emailInput.value || '';
@@ -167,29 +172,68 @@ function fazerLogin() {
 
     const dados = { email, password: senha };
 
-    fetch("index.php?url=/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados)
-    })
-    .then(res => res.json())
-    .then(resposta => {
+    try {
+        const res = await fetch("index.php?url=/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados)
+        });
+
+        const resposta = await res.json();
+
         if (resposta.access_token) {
-            localStorage.setItem("usuarioLogado", JSON.stringify({ nome: resposta.nome || 'Usuário', email }));
+            localStorage.setItem("usuarioLogado", JSON.stringify({ 
+                nome: resposta.nome || 'Usuário', 
+                email, 
+                access_token: resposta.access_token 
+            }));
+            atualizarNomeHeader(resposta.nome || 'Usuário');
             window.location.href = "index.php?url=home";
         } else {
             mostrarErro(emailInput, "Email ou senha incorretos");
             mostrarErro(senhaInput, "Email ou senha incorretos");
         }
-    })
-    .catch(err => {
+    } catch (err) {
         console.error("Erro no login:", err);
         alert("Erro ao tentar entrar.");
-    });
+    }
+}
+
+// ====================== Atualizar Nome do Header ======================
+async function atualizarNomeHeader(nomeUsuario = null) {
+    const perfilNameSpan = document.querySelector(".perfil-name");
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
+
+    if (nomeUsuario) {
+        perfilNameSpan.textContent = nomeUsuario;
+    } else if (usuarioLogado.nome) {
+        perfilNameSpan.textContent = usuarioLogado.nome;
+    } else if (usuarioLogado.access_token) {
+        try {
+            const res = await fetch("index.php?url=usuario/info", {
+                headers: {
+                    "Authorization": "Bearer " + usuarioLogado.access_token
+                }
+            });
+            if (!res.ok) throw new Error("Erro ao buscar usuário");
+            const data = await res.json();
+            if (data.nome) {
+                perfilNameSpan.textContent = data.nome;
+                localStorage.setItem("usuarioLogado", JSON.stringify({ ...usuarioLogado, nome: data.nome }));
+            }
+        } catch (err) {
+            console.error("Erro ao buscar nome do usuário:", err);
+            perfilNameSpan.textContent = "Usuário";
+        }
+    } else {
+        perfilNameSpan.textContent = "Usuário";
+    }
 }
 
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
+    atualizarNomeHeader(); // Atualiza o nome ao carregar qualquer página
+
     const cepInput = document.getElementById("cep");
     const telefoneInput = document.getElementById("telefone");
     const cpfInput = document.getElementById("cpf");
@@ -197,13 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const localidade = document.getElementById("localidade");
     const cidade = document.getElementById("Cidade");
     const estado = document.getElementById("Estado");
-
-    // Exibir nome do usuário logado no header
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (usuarioLogado && usuarioLogado.nome) {
-        const perfilNameSpan = document.querySelector(".perfil-name");
-        if (perfilNameSpan) perfilNameSpan.textContent = usuarioLogado.nome;
-    }
 
     // ---------- Máscara CPF ----------
     if (cpfInput) {
@@ -237,26 +274,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (v.length === 8) {
                 try {
-                    const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
-                    const data = await res.json();
-                    if (!data.erro) {
-                        if (rua) rua.value = data.logradouro;
-                        if (localidade) localidade.value = data.bairro;
-                        if (cidade) cidade.value = data.localidade;
-                        if (estado) estado.value = data.uf;
-                    }
-                } catch {
-                    console.warn("Erro ao buscar CEP");
-                }
-            }
-        });
-    }
-
-    // ---------- Limpar erro ao digitar ----------
-    ["email", "senha"].forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-            input.addEventListener("input", () => limparErro(input));
-        }
-    });
-});
+                    const res = await fetch(`https://viacep.com.br/ws/${v
