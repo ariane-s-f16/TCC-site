@@ -1,3 +1,5 @@
+
+
 console.log("✅ script.js carregado!");
 
 // ====================== Mostrar/Ocultar Senha ======================
@@ -17,23 +19,28 @@ function mostrarErro(input, mensagem) {
     input.value = "";
     input.placeholder = mensagem;
     input.classList.add("input-error");
+    input.style.borderColor = "red";
+    input.style.setProperty("--placeholder-color", "red");
+    input.style.color = "red";
 }
 
 function limparErro(input) {
     if (!input) return;
     input.classList.remove("input-error");
+    input.style.borderColor = "";
+    input.style.color = "";
     const original = input.getAttribute("data-placeholder");
     if (original !== null) input.placeholder = original;
 }
 
-// ====================== Limpar erro ao digitar ======================
+// Limpar erro ao digitar
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', () => limparErro(input));
     });
 });
 
-// ====================== Cadastro Parte 1 ======================
+// ====================== Parte 1 ======================
 async function verificarEmail(email) {
     try {
         const response = await fetch(`index.php?url=check-email&valor=${encodeURIComponent(email)}`);
@@ -55,11 +62,9 @@ async function salvarParte1() {
     const confSenha = confSenhaInput.value.trim();
 
     let temErro = false;
-
     if (!email) { mostrarErro(emailInput, "Email obrigatório"); temErro = true; }
     if (!senha) { mostrarErro(senhaInput, "Senha obrigatória"); temErro = true; }
     if (!confSenha) { mostrarErro(confSenhaInput, "Confirme a senha"); temErro = true; }
-
     if (temErro) return;
 
     if (senha !== confSenha) {
@@ -73,32 +78,56 @@ async function salvarParte1() {
         return;
     }
 
+    // Salva dados da Parte 1
     const dados = { email, senha, confSenha };
     localStorage.setItem("cadastro", JSON.stringify(dados));
+    console.log(" Dados carregados da Parte 1:", dados);
+
     window.location.href = "index.php?url=cadastro/parte2";
 }
 
-// ====================== Cadastro Parte 2 ======================
+// ====================== Parte 2 ======================
 function salvarParte2(tipoPerfil) {
-    const dados = JSON.parse(localStorage.getItem("cadastro")) || {};
+    const dados = JSON.parse(localStorage.getItem("cadastro"));
+    if (!dados) {
+        alert("Complete a Parte 1 primeiro!");
+        window.location.href = "index.php?url=cadastro/parte1";
+        return;
+    }
+
+    if (!tipoPerfil) {
+        alert("Selecione um tipo de perfil antes de continuar.");
+        return;
+    }
+
     let tipo = tipoPerfil.toLowerCase();
     if (tipo === "trabalhador") tipo = "prestador";
+
     dados.perfil = tipo;
+
     localStorage.setItem("cadastro", JSON.stringify(dados));
+    console.log(" Dados atualizados na Parte 2:", dados);
+
     window.location.href = `index.php?url=cadastro/parte3/${tipo}`;
 }
 
-// ====================== Cadastro Parte 3 ======================
+// ====================== Parte 3 ======================
 async function finalizarCadastro() {
-    const cadastro = JSON.parse(localStorage.getItem("cadastro")) || {};
+    const cadastro = JSON.parse(localStorage.getItem("cadastro"));
+    if (!cadastro) {
+        alert("Complete as etapas anteriores do cadastro.");
+        window.location.href = "index.php?url=cadastro/parte1";
+        return;
+    }
+
     const fotoInput = document.getElementById("foto");
     const arquivoFoto = fotoInput?.files?.[0] || null;
 
     const formData = new FormData();
     const dados = {
-        email: cadastro.email || '',
-        password: cadastro.senha || '',
-        type: cadastro.perfil || '',
+        email: cadastro.email,
+        password: cadastro.senha,
+        type: cadastro.perfil,
         nome: document.getElementById("nome")?.value || '',
         telefone: document.getElementById("telefone")?.value || '',
         cpf: document.getElementById("cpf")?.value || '',
@@ -113,7 +142,7 @@ async function finalizarCadastro() {
         cidade: document.getElementById("Cidade")?.value || '',
     };
 
-    // Validação obrigatória
+    // Validação básica
     for (const key of ['nome','telefone','localidade','uf','rua','numero']) {
         if (!dados[key]) {
             const input = document.getElementById(key);
@@ -127,17 +156,25 @@ async function finalizarCadastro() {
         return;
     }
 
+    // Adiciona dados e arquivo ao FormData
     for (const chave in dados) formData.append(chave, dados[chave]);
     formData.append("foto", arquivoFoto);
 
     try {
         const response = await fetch("index.php?url=usuario/cadastro", {
             method: "POST",
-            body: formData,
+            body: formData
         });
 
         const texto = await response.text();
-        const resposta = JSON.parse(texto);
+        let resposta;
+        try {
+            resposta = JSON.parse(texto);
+        } catch {
+            console.error("Resposta do servidor não é JSON:", texto);
+            alert("Erro no servidor. Tente novamente.");
+            return;
+        }
 
         if (resposta.access_token) {
             localStorage.setItem("usuarioLogado", JSON.stringify({ 
@@ -155,7 +192,6 @@ async function finalizarCadastro() {
         alert("Erro de comunicação com o servidor.");
     }
 }
-
 // ====================== Login ======================
 async function fazerLogin() {
     const emailInput = document.getElementById("email");
@@ -163,9 +199,17 @@ async function fazerLogin() {
     const email = emailInput.value.trim();
     const senha = senhaInput.value.trim();
 
-    if (!email) mostrarErro(emailInput, "Digite seu e-mail");
-    if (!senha) mostrarErro(senhaInput, "Digite sua senha");
-    if (!email || !senha) return;
+    // Validação simples
+    let valido = true;
+    if (!email) {
+        mostrarErro(emailInput, "Digite seu e-mail");
+        valido = false;
+    }
+    if (!senha) {
+        mostrarErro(senhaInput, "Digite sua senha");
+        valido = false;
+    }
+    if (!valido) return;
 
     const dados = { email, password: senha };
 
@@ -176,59 +220,85 @@ async function fazerLogin() {
             body: JSON.stringify(dados)
         });
 
-        const resposta = await res.json();
+        // Verifica se retornou HTML (erro de rota)
+        const texto = await res.text();
+        if (texto.startsWith("<!DOCTYPE")) {
+            throw new Error("Resposta inesperada (HTML recebido no lugar de JSON)");
+        }
+
+        const resposta = JSON.parse(texto);
+        console.log("🔹 Resposta do servidor:", resposta);
 
         if (resposta.access_token) {
-            localStorage.setItem("usuarioLogado", JSON.stringify({ 
-                nome: resposta.nome || 'Usuário', 
-                email, 
-                access_token: resposta.access_token 
-            }));
-            atualizarNomeHeader(resposta.nome || 'Usuário');
+            // tenta pegar nome do backend
+            let nomeUsuario = resposta.nome;
+
+            // se o backend não mandou o nome, tenta recuperar dos cadastros salvos
+            if (!nomeUsuario || nomeUsuario.toLowerCase() === "usuário") {
+                const parte1 = JSON.parse(localStorage.getItem("dadosParte1") || "{}");
+                const parte3 = JSON.parse(localStorage.getItem("dadosParte3") || "{}");
+                nomeUsuario = parte3.nome || parte1.nome || "Usuário";
+            }
+
+            // Salva no localStorage
+            const usuarioLogado = {
+                nome: nomeUsuario,
+                email: email,
+                access_token: resposta.access_token
+            };
+            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+
+            console.log("✅ Usuário salvo:", usuarioLogado);
+
+            // Atualiza nome imediatamente
+            const span = document.querySelector(".perfil-name");
+            if (span) span.textContent = nomeUsuario;
+
+            // Redireciona
             window.location.href = "index.php?url=home";
         } else {
             mostrarErro(emailInput, "Email ou senha incorretos");
             mostrarErro(senhaInput, "Email ou senha incorretos");
         }
     } catch (err) {
-        console.error("Erro no login:", err);
-        alert("Erro ao tentar entrar.");
+        console.error("❌ Erro no login:", err);
+        alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
     }
 }
 
-// ====================== Atualizar Nome do Header ======================
-async function atualizarNomeHeader(nomeUsuario = null) {
-    const perfilNameSpan = document.querySelector(".perfil-name");
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
-
-    if (!perfilNameSpan) return;
-
-    if (nomeUsuario && nomeUsuario !== "Usuário") {
-        perfilNameSpan.textContent = nomeUsuario;
-    } else if (usuarioLogado.nome && usuarioLogado.nome !== "Usuário") {
-        perfilNameSpan.textContent = usuarioLogado.nome;
-    } else if (usuarioLogado.access_token) {
-        try {
-            const res = await fetch("index.php?url=usuario/info", {
-                headers: { "Authorization": "Bearer " + usuarioLogado.access_token }
-            });
-            if (!res.ok) throw new Error("Erro ao buscar usuário");
-            const data = await res.json();
-            if (data.nome && data.nome !== "Usuário") {
-                perfilNameSpan.textContent = data.nome;
-                localStorage.setItem("usuarioLogado", JSON.stringify({ ...usuarioLogado, nome: data.nome }));
-            }
-        } catch (err) {
-            console.error("Erro ao buscar nome do usuário:", err);
-            perfilNameSpan.textContent = "Usuário";
-        }
-    } else {
-        perfilNameSpan.textContent = "Usuário";
-    }
-
-    console.log("Nome atualizado no header:", perfilNameSpan.textContent);
+// ============================
+// FUNÇÃO PARA MOSTRAR ERRO DE INPUT
+// ============================
+function mostrarErro(input, mensagem) {
+    input.classList.add("erro-input");
+    input.placeholder = mensagem;
+    input.style.borderColor = "red";
+    input.style.color = "red";
+    input.addEventListener("input", () => {
+        input.classList.remove("erro-input");
+        input.placeholder = "";
+        input.style.borderColor = "";
+        input.style.color = "";
+    });
 }
 
+// ============================
+// ATUALIZA NOME NO HEADER
+// ============================
+function atualizarNomeHeader() {
+    const span = document.querySelector(".perfil-name");
+    if (!span) return;
+
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
+    const nome = usuarioLogado.nome || "Usuário";
+    span.textContent = nome;
+
+    console.log("🟢 Nome atualizado no header:", nome);
+}
+
+document.addEventListener("DOMContentLoaded", atualizarNomeHeader);
+// Chame no DOMContentLoaded da home
+document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
     atualizarNomeHeader();
@@ -284,6 +354,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (err) {
                     console.error("Erro ao buscar CEP:", err);
                 }
+            }
+        });
+    }
+
+    // ---------- Busca por trabalhadores e empresas ----------
+    const buscador = document.getElementById('buscador');
+    if (buscador) {
+        let resultadosDiv = document.createElement('div');
+        resultadosDiv.id = 'resultados-busca';
+        resultadosDiv.style.position = 'absolute';
+        resultadosDiv.style.background = '#fff';
+        resultadosDiv.style.width = buscador.offsetWidth + 'px';
+        resultadosDiv.style.maxHeight = '200px';
+        resultadosDiv.style.overflowY = 'auto';
+        resultadosDiv.style.border = '1px solid #ccc';
+        resultadosDiv.style.zIndex = '1000';
+        resultadosDiv.style.display = 'none';
+        buscador.parentNode.appendChild(resultadosDiv);
+
+        buscador.addEventListener('input', async () => {
+            const termo = buscador.value.trim().toLowerCase();
+            resultadosDiv.innerHTML = '';
+
+            if (termo.length === 0) {
+                resultadosDiv.style.display = 'none';
+                return;
+            }
+
+            try {
+                const res = await fetch(`index.php?url=usuario/buscar&termo=${encodeURIComponent(termo)}`);
+                const usuarios = await res.json();
+
+                if (!usuarios.length) {
+                    resultadosDiv.style.display = 'none';
+                    return;
+                }
+
+                usuarios.forEach(u => {
+                    const item = document.createElement('div');
+                    item.textContent = `${u.nome} (${u.tipo})`;
+                    item.style.padding = '5px 10px';
+                    item.style.cursor = 'pointer';
+                    item.addEventListener('click', () => {
+                        window.location.href = `index.php?url=perfil/${u.id}`;
+                    });
+                    resultadosDiv.appendChild(item);
+                });
+
+                resultadosDiv.style.display = 'block';
+            } catch (err) {
+                console.error('Erro ao buscar usuários:', err);
+                resultadosDiv.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!buscador.contains(e.target) && !resultadosDiv.contains(e.target)) {
+                resultadosDiv.style.display = 'none';
             }
         });
     }

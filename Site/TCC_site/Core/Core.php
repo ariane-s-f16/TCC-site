@@ -59,6 +59,7 @@ class Core
             'cadastro/parte3/contratante' => 'cadastro/Parte3/Contratante/index.php',
             'esqueci_senha/codigo' => 'esqueci_senha/codigo/index.php',
             'esqueci_senha/verificacao' => 'esqueci_senha/verificacao/index.php',
+            'Trabalhadores' => 'Trabalhadores/index.php',
             // adicione mais rotas aqui
         ];
 

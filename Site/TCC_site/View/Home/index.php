@@ -28,7 +28,7 @@
             <nav class="right-nav-container">
                 <ul class="nav-links">
                     <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/trabalhadores" class="nav-link">Trabalhadores</a></li>
+                    <li><a href="index.php?url=Trabalhadores" class="nav-link">Trabalhadores</a></li>
                     <li><a href="/empresas" class="nav-link">Empresas</a></li>
                     <li><a href="/sobre" class="nav-link">Sobre</a></li>
                 </ul>
@@ -38,7 +38,7 @@
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span class="perfil-name">Diego</span>
+                    <span class="perfil-name"> Usuario</span>
                 </button>
 
                 <button class="favoritos-btn" aria-label="Favoritos">

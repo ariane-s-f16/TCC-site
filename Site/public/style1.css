@@ -120,6 +120,7 @@ input{
     outline: none;
     border: none;
     border-bottom: 2px solid var(--color3);
+    transition: all 0.3s ease;
 }
 
 input::placeholder{
@@ -127,17 +128,24 @@ input::placeholder{
 }
 
 /* ====================== ERRO ====================== */
-
-   /* Quando o campo está com erro */
-   .input-error {
-    border-bottom: 2px solid red !important;
-    color: red !important;
+.input-error {
+    border: 2px solid var(--error-color) !important;
+    color: var(--error-color) !important;
+    animation: shake 0.2s ease-in-out 2;
 }
 
 .input-error::placeholder {
-    color: red !important;
+    color: var(--error-color) !important;
     opacity: 1;
 }
+
+/* Animação leve de erro */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
 i{
     cursor: pointer;
     font-size: 20px;
@@ -188,6 +196,7 @@ i{
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background 0.3s;
 }
 
 .cadastrar:hover{
