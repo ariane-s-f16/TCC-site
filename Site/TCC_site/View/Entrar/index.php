@@ -31,7 +31,7 @@
             </div>
 
             <div class="esqueceu_senha">
-                <a href="?url=esqueci_senha/esqueci_senha.php">Esqueceu a Senha?</a></p>
+                <a href="index.php?url=esqueci_senha/codigo">Esqueceu a Senha?</a></p>
             </div>
 
             <div class="button2">

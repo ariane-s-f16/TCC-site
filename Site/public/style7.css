@@ -1,7 +1,6 @@
 html {
   font-size: 16px;
   scrollbar-gutter: auto;
-  background-color: #fbfbff;
   scroll-behavior: smooth;
 }
 
@@ -172,7 +171,7 @@ header {
 }
 
 .hero-section{
-  background: linear-gradient(135deg, #2563eb 0%, rgb(37, 100, 235, 0.9) 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #2564ebe6 100%);
   height: 600px;
   width: 100%;
   display: flex;
@@ -245,7 +244,6 @@ header {
 .como_funciona-section{
   position: relative;
   width: 100%;
-  margin-bottom: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -388,6 +386,7 @@ header {
   padding: 2%;
   text-align: center;
   background-color: #2563eb;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .cta_tml_cont-title{
@@ -409,6 +408,7 @@ header {
   padding: 1.5rem 1.5rem;
   border-radius: 8px;
   font-weight: 700;
+  margin-bottom: 2%;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -433,9 +433,13 @@ header {
 .servicos_destaque-section{
   height: 100%;
   width: 100%;
+  padding: 7% 0% 10%;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .sv_des-cards_home{
@@ -472,11 +476,16 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s;
+}
+
+.sv_des-card:hover .servico-icon{
+  transform: scale(1.05);
 }
 
 .servico-icon svg{
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 55%;
+  width: 55%;
 }
 
 .sv_des-card-text{
@@ -502,4 +511,105 @@ header {
   font-size: 1rem;
   font-weight: 700;
   border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.sv_des-card-button:hover{
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background-color: #3a7afe;
+}
+
+.soft-wave-divider{
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 12%;
+  display: block;
+}
+
+.soft-wave-divider.bottom{
+  bottom: -10%;
+  transform: rotate(180deg);
+}
+
+.motivos_escolhas-section{
+  padding-top: 8%;
+  margin-bottom: 10%;
+  background-color: #2563eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.motivos_escolhas-section .section-title{
+  color: #fbfbff;
+}
+
+.motivos_escolhas-section .section-subtitle{
+  color: #fbfbffc0;
+}
+
+.mt_es-cards_home{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 75%;
+  margin-bottom: 10%;
+}
+
+.mt_es-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fbfbff;
+  width: 28%;
+  padding: 2.5rem;
+  border-radius: 10px;
+  margin-right: 3%;
+}
+
+.mt_es-icon{
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 15%;
+  background-color: #3a7afe;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mt_es-icon svg{
+  width: 55%;
+  height: 55%;
+}
+
+.mt_es-icon svg path{
+  color: #fbfbffea;
+}
+
+.mt_es-card-text{
+  text-align: center;
+}
+
+.mt_es-card-title{
+  margin-bottom: 5%;
+}
+
+.mt_es-linha {
+  height: 3px;
+  width: 80%;
+  margin: 2% 0;
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.3) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 2px;
 }

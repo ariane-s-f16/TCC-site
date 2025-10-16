@@ -174,14 +174,14 @@ i{
 
 @media screen and (max-width: 1750px) {
     .mudarcadastro{
-        background-image: url("../../img/fundo2_1750.png");
+        background-image: url("img/fundo2_1750.png");
         background-repeat: no-repeat;
     }
 }
 
 @media screen and (max-width: 1550px) {
     .mudarcadastro{
-        background-image: url("../../img/fundo2_1550.png");
+        background-image: url("img/fundo2_1550.png");
         background-repeat: no-repeat;
         background-size: cover;
     }

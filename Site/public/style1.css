@@ -129,14 +129,14 @@ input::placeholder{
 /* ====================== ERRO ====================== */
 
    /* Quando o campo está com erro */
-.erro-input {
-    border: 2px solid red;
-    color: red;
+   .input-error {
+    border-bottom: 2px solid red !important;
+    color: red !important;
 }
 
-/* Placeholder vermelho */
-.erro-input::placeholder {
-    color: red;
+.input-error::placeholder {
+    color: red !important;
+    opacity: 1;
 }
 i{
     cursor: pointer;
