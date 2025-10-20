@@ -11,7 +11,7 @@
     <header>
         <div class="nav-container">
             <div class="left-nav-container">
-                <div class="lg-div"><img src="img/logo.png" alt=""></div>
+                <div class="lg-div"><img src="public/img/logo.png" alt=""></div>
 
                 <div class="buscador-div">
                     <input class="buscador" id="buscador">
@@ -27,7 +27,7 @@
             <nav class="right-nav-container">
                 <ul class="nav-links">
                     <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="index.php?url=Home/Trabalhadores" class="nav-link">Trabalhadores</a></li>
+                    <li><a href="index.php?url=trabalhadores" class="nav-link">Trabalhadores</a></li>
                     <li><a href="/empresas" class="nav-link">Empresas</a></li>
                     <li><a href="/sobre" class="nav-link">Sobre</a></li>
                 </ul>
@@ -37,7 +37,7 @@
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span class="perfil-name">Diego</span>
+                    <span class="perfil-name"></span>
                 </button>
 
                 <button class="favoritos-btn" aria-label="Favoritos">
@@ -70,7 +70,7 @@
             </div>
 
             <div class="hero-img">
-                <img src="../img/img-home.png">
+                <img src="public/img/img-home.png">
             </div>
         </section>
 

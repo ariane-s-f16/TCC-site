@@ -8,31 +8,39 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
+<header>
         <div class="nav-container">
+            <!-- Left Nav -->
             <div class="left-nav-container">
-                <div class="lg-div"><img src="public/img/logo.png" alt=""></div>
+                <div class="lg-div">
+                    <img src="public/img/logo.png" alt="Logo">
+                </div>
 
+                <!-- Buscador -->
                 <div class="buscador-div">
-                    <input class="buscador" id="buscador">
-                    <label class="bs-label">Busque por trabalhadores e empresas</label>
+                    <input class="buscador" id="buscador" placeholder="Busque por trabalhadores e empresas">
                     <label for="buscador" class="bs-svg">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" heigth="px" width="20px" xmlns="http://www.w3.org/2000/svg">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">
                             <path d="M456.69 421.39 362.6 327.3a173.81 173.81 0 0 0 34.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.81 173.81 0 0 0 327.3 362.6l94.09 94.09a25 25 0 0 0 35.3-35.3zM97.92 222.72a124.8 124.8 0 1 1 124.8 124.8 124.95 124.95 0 0 1-124.8-124.8z"></path>
                         </svg>
                     </label>
+
+                    <!-- Container de resultados -->
+                    <div id="resultados-busca" class="resultados-busca"></div>
                 </div>
             </div>
-            
+
+            <!-- Right Nav -->
             <div class="rigth-nav-container">
                 <nav>
                     <ul>
-                        <li><a href="#" class="nav-a">Home</a></li>
+                        <li><a href="index.php?url=home" class="nav-a">Home</a></li>
                         <li><a href="#" class="nav-a">Trabalhadores</a></li>
                         <li><a href="#" class="nav-a">Empresas</a></li>
                         <li><a href="#" class="nav-a">Sobre</a></li>
                     </ul>
                     
+                    <!-- Perfil -->
                     <a href="#" class="perfil">
                         <div class="ft-perfil">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="prf-svg" viewBox="0 0 16 16">
@@ -40,9 +48,10 @@
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                             </svg>
                         </div>
-                        Diego
+                        <span class="perfil-name"></span>
                     </a>                
-    
+
+                    <!-- Favoritos -->
                     <a href="#" class="favoritos">
                         <span class="material-symbols-outlined">favorite</span>
                     </a>

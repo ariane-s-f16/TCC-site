@@ -1,6 +1,4 @@
-
-
-console.log("script.js testar essa porra!");
+console.log("script.js carregado!");
 
 // ====================== Mostrar/Ocultar Senha ======================
 function mostrarsenha() {
@@ -44,8 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function verificarEmail(email) {
     try {
         const response = await fetch(`index.php?url=check-email&valor=${encodeURIComponent(email)}`);
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (err) {
         console.error("Erro ao verificar e-mail:", err);
         return { exists: false };
@@ -61,11 +58,12 @@ async function salvarParte1() {
     const senha = senhaInput.value.trim();
     const confSenha = confSenhaInput.value.trim();
 
-    let temErro = false;
-    if (!email) { mostrarErro(emailInput, "Email obrigatório"); temErro = true; }
-    if (!senha) { mostrarErro(senhaInput, "Senha obrigatória"); temErro = true; }
-    if (!confSenha) { mostrarErro(confSenhaInput, "Confirme a senha"); temErro = true; }
-    if (temErro) return;
+    if (!email || !senha || !confSenha) {
+        if (!email) mostrarErro(emailInput, "Email obrigatório");
+        if (!senha) mostrarErro(senhaInput, "Senha obrigatória");
+        if (!confSenha) mostrarErro(confSenhaInput, "Confirme a senha");
+        return;
+    }
 
     if (senha !== confSenha) {
         mostrarErro(confSenhaInput, "Senhas diferentes");
@@ -78,10 +76,9 @@ async function salvarParte1() {
         return;
     }
 
-    // Salva dados da Parte 1
     const dados = { email, senha, confSenha };
     localStorage.setItem("cadastro", JSON.stringify(dados));
-    console.log(" Dados carregados da Parte 1:", dados);
+    console.log("Dados carregados da Parte 1:", dados);
 
     window.location.href = "index.php?url=cadastro/parte2";
 }
@@ -100,212 +97,15 @@ function salvarParte2(tipoPerfil) {
         return;
     }
 
-    let tipo = tipoPerfil.toLowerCase();
-   
-
-    dados.perfil = tipo;
+    dados.perfil = tipoPerfil.toLowerCase();
     localStorage.setItem("cadastro", JSON.stringify(dados));
 
-    const destino = `index.php?url=cadastro/Parte3/${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`;
+    const destino = `index.php?url=cadastro/Parte3/${tipoPerfil.charAt(0).toUpperCase() + tipoPerfil.slice(1)}`;
     console.log("➡️ Redirecionando para:", destino);
     window.location.href = destino;
 }
 
-
-// ====================== Parte 3 ======================
-async function finalizarCadastro() {
-    console.log("🚀 Função finalizarCadastro() foi chamada!");
-
-    const cadastro = JSON.parse(localStorage.getItem("cadastro"));
-    console.log("📦 Dados atuais no localStorage:", cadastro);
-
-    if (!cadastro) {
-        alert("Complete as etapas anteriores do cadastro.");
-        window.location.href = "index.php?url=cadastro/parte1";
-        return;
-    }
-
-    const fotoInput = document.getElementById("foto");
-    const arquivoFoto = fotoInput?.files?.[0] || null;
-
-    const formData = new FormData();
-    const dados = {
-        email: cadastro.email,
-        password: cadastro.senha,
-        type: cadastro.perfil,
-        nome: document.getElementById("nome")?.value || '',
-        telefone: document.getElementById("telefone")?.value || '',
-        cpf: document.getElementById("cpf")?.value || '',
-        cnpj: document.getElementById("cnpj")?.value || '',
-        localidade: document.getElementById("localidade")?.value || '',
-        uf: document.getElementById("Estado")?.value || '',
-        cep: document.getElementById("cep")?.value || '',
-        rua: document.getElementById("rua")?.value || '',
-        numero: document.getElementById("numero")?.value || '',
-        infoadd: document.getElementById("infoadd")?.value || '',
-        pais: document.getElementById("Pais")?.value || '',
-        cidade: document.getElementById("Cidade")?.value || '',
-    };
-
-    console.log("🧩 Dados do formulário coletados:", dados);
-
-    // Validação básica
-    for (const key of ['nome','telefone','localidade','uf','rua','numero']) {
-        if (!dados[key]) {
-            const input = document.getElementById(key);
-            mostrarErro(input, "Campo obrigatório");
-            console.warn(`⚠️ Campo obrigatório faltando: ${key}`);
-            return;
-        }
-    }
-
-    if (!arquivoFoto) {
-        alert("Selecione uma foto antes de continuar.");
-        console.warn("⚠️ Nenhum arquivo de foto selecionado!");
-        return;
-    }
-
-    // Adiciona dados e arquivo ao FormData
-    for (const chave in dados) formData.append(chave, dados[chave]);
-    formData.append("foto", arquivoFoto);
-
-    console.log("📨 Enviando dados ao servidor...");
-
-    try {
-        const response = await fetch("index.php?url=usuario/cadastro", {
-            method: "POST",
-            body: formData
-        });
-
-        const texto = await response.text();
-        console.log("🧾 Resposta bruta do servidor:", texto);
-
-        let resposta;
-        try {
-            resposta = JSON.parse(texto);
-        } catch {
-            console.error("❌ Resposta do servidor não é JSON:", texto);
-            alert("Erro no servidor. Tente novamente.");
-            return;
-        }
-
-        console.log("✅ Resposta parseada:", resposta);
-
-        if (resposta.access_token) {
-            localStorage.setItem("usuarioLogado", JSON.stringify({ 
-                nome: dados.nome, 
-                email: dados.email, 
-                access_token: resposta.access_token 
-            }));
-            localStorage.removeItem("cadastro");
-            console.log("🎉 Cadastro finalizado com sucesso!");
-            window.location.href = "index.php?url=home";
-        } else {
-            console.warn("⚠️ Erro no cadastro. Resposta sem token.");
-            alert("Erro ao finalizar cadastro.");
-        }
-    } catch (err) {
-        console.error("🚨 Erro ao enviar cadastro:", err);
-        alert("Erro de comunicação com o servidor.");
-    }
-}
-
-// 🔹 Torna a função global para o onclick funcionar
-window.finalizarCadastro = finalizarCadastro;
-
-// ====================== Login ======================
-async function fazerLogin() {
-    const emailInput = document.getElementById("email");
-    const senhaInput = document.getElementById("senha");
-    const email = emailInput.value.trim();
-    const senha = senhaInput.value.trim();
-
-    // Validação simples
-    let valido = true;
-    if (!email) {
-        mostrarErro(emailInput, "Digite seu e-mail");
-        valido = false;
-    }
-    if (!senha) {
-        mostrarErro(senhaInput, "Digite sua senha");
-        valido = false;
-    }
-    if (!valido) return;
-
-    const dados = { email, password: senha };
-
-    try {
-        const res = await fetch("index.php?url=/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dados)
-        });
-
-        // Verifica se retornou HTML (erro de rota)
-        const texto = await res.text();
-        if (texto.startsWith("<!DOCTYPE")) {
-            throw new Error("Resposta inesperada (HTML recebido no lugar de JSON)");
-        }
-
-        const resposta = JSON.parse(texto);
-        console.log("🔹 Resposta do servidor:", resposta);
-
-        if (resposta.access_token) {
-            // tenta pegar nome do backend
-            let nomeUsuario = resposta.nome;
-
-            // se o backend não mandou o nome, tenta recuperar dos cadastros salvos
-            if (!nomeUsuario || nomeUsuario.toLowerCase() === "usuário") {
-                const parte1 = JSON.parse(localStorage.getItem("dadosParte1") || "{}");
-                const parte3 = JSON.parse(localStorage.getItem("dadosParte3") || "{}");
-                nomeUsuario = parte3.nome || parte1.nome || "Usuário";
-            }
-
-            // Salva no localStorage
-            const usuarioLogado = {
-                nome: nomeUsuario,
-                email: email,
-                access_token: resposta.access_token
-            };
-            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
-
-            console.log(" Usuário salvo:", usuarioLogado);
-
-            // Atualiza nome imediatamente
-            const span = document.querySelector(".perfil-name");
-            if (span) span.textContent = nomeUsuario;
-
-            // Redireciona
-            window.location.href = "index.php?url=home";
-        } else {
-            mostrarErro(emailInput, "Email ou senha incorretos");
-            mostrarErro(senhaInput, "Email ou senha incorretos");
-        }
-    } catch (err) {
-        console.error(" Erro no login:", err);
-        alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
-    }
-}
-
-// ============================
-// FUNÇÃO PARA MOSTRAR ERRO DE INPUT
-// ============================
-function mostrarErro(input, mensagem) {
-    input.classList.add("erro-input");
-    input.placeholder = mensagem;
-    input.style.borderColor = "red";
-    input.style.color = "red";
-    input.addEventListener("input", () => {
-        input.classList.remove("erro-input");
-        input.placeholder = "";
-        input.style.borderColor = "";
-        input.style.color = "";
-    });
-}
-
-// ============================
-// ATUALIZA NOME NO HEADER
-// ============================
+// ====================== Parte 3 / Header ======================
 function atualizarNomeHeader() {
     const span = document.querySelector(".perfil-name");
     if (!span) return;
@@ -314,126 +114,306 @@ function atualizarNomeHeader() {
     const nome = usuarioLogado.nome || "Usuário";
     span.textContent = nome;
 
-    console.log(" Nome atualizado no header:", nome);
+    console.log("Nome atualizado no header:", nome);
 }
 
-document.addEventListener("DOMContentLoaded", atualizarNomeHeader);
-// Chame no DOMContentLoaded da home
-document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
+// ====================== Login ======================
+async function fazerLogin() {
+    const emailInput = document.getElementById("email");
+    const senhaInput = document.getElementById("senha");
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value.trim();
+
+    if (!email || !senha) {
+        if (!email) mostrarErro(emailInput, "Digite seu e-mail");
+        if (!senha) mostrarErro(senhaInput, "Digite sua senha");
+        return;
+    }
+
+    try {
+        const res = await fetch("index.php?url=/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password: senha })
+        });
+
+        // Se status não for 200, lançar erro
+        if (!res.ok) {
+            throw new Error(`Erro ${res.status}: ${res.statusText}`);
+        }
+
+        // Ler o texto cru
+        const texto = await res.text();
+        if (!texto) throw new Error("Servidor não retornou dados. Verifique sua rota ou servidor.");
+
+        // Transformar em JSON
+        const resposta = JSON.parse(texto);
+
+        if (resposta.access_token) {
+            const usuarioLogado = { 
+                nome: resposta.logado?.name || resposta.logado?.nome || email, 
+                email, 
+                access_token: resposta.access_token 
+            };
+            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+            atualizarNomeHeader();
+            window.location.href = "index.php?url=home";
+        } else if (resposta.error) {
+            mostrarErro(emailInput, resposta.error);
+            mostrarErro(senhaInput, resposta.error);
+        } else {
+            mostrarErro(emailInput, "Email ou senha incorretos");
+            mostrarErro(senhaInput, "Email ou senha incorretos");
+        }
+    } catch (err) {
+        console.error("Erro no login:", err);
+        alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
+    }
+}
+
+// ====================== Finalizar Cadastro ======================
+async function finalizarCadastro() {
+    const cadastro = JSON.parse(localStorage.getItem("cadastro"));
+    if (!cadastro) {
+        alert("Complete as etapas anteriores do cadastro.");
+        window.location.href = "index.php?url=cadastro/parte1";
+        return;
+    }
+
+    // Pega os campos do formulário
+    const nome = document.getElementById("nome")?.value.trim() || "";
+    const telefone = document.getElementById("telefone")?.value.trim() || "";
+    const cpf = document.getElementById("cpf")?.value.trim() || "";
+    const cep = document.getElementById("cep")?.value.trim() || "";
+    const rua = document.getElementById("rua")?.value.trim() || "";
+    const numero = document.getElementById("numero")?.value.trim() || "";
+    const bairro = document.getElementById("localidade")?.value.trim() || "";
+    const cidade = document.getElementById("Cidade")?.value.trim() || "";
+    const estado = document.getElementById("Estado")?.value.trim() || "";
+    const infoadd = document.getElementById("infoadd")?.value.trim() || "";
+
+    if (!nome || !cpf || !cep) {
+        alert("Preencha os campos obrigatórios: Nome, CPF e CEP.");
+        return;
+    }
+
+    const dadosCadastro = {
+        nome,
+        email: cadastro.email,
+        senha: cadastro.senha,
+        tipo: cadastro.perfil,
+        telefone,
+        cpf,
+        cep,
+        rua,
+        numero,
+        bairro,
+        cidade,
+        estado,
+        infoadd
+    };
+
+    try {
+        const res = await fetch("index.php?url=usuario/cadastrar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dadosCadastro)
+        });
+
+        if (!res.ok) {
+            const text = await res.text();
+            console.error("Erro ao cadastrar:", text);
+            alert("Erro ao cadastrar. Verifique os dados e tente novamente.");
+            return;
+        }
+
+        const resposta = await res.json();
+
+        if (resposta.success) {
+            // Salva usuário logado no localStorage
+            const usuarioLogado = { 
+                nome: dadosCadastro.nome, // ⬅️ garante que o nome será exibido no header
+                email: dadosCadastro.email, 
+                access_token: resposta.access_token || "temporario" 
+            };
+            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+
+            // Atualiza o header com o nome do usuário
+            atualizarNomeHeader();
+
+            alert("Cadastro finalizado com sucesso!");
+            window.location.href = "index.php?url=home";
+        } else {
+            alert(resposta.message || "Erro ao finalizar cadastro.");
+        }
+
+    } catch (err) {
+        console.error("Erro ao finalizar cadastro:", err);
+        alert("Erro ao finalizar cadastro. Verifique sua conexão.");
+    }
+}
+
+
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
     atualizarNomeHeader();
 
-    const cepInput = document.getElementById("cep");
-    const telefoneInput = document.getElementById("telefone");
     const cpfInput = document.getElementById("cpf");
+    const telefoneInput = document.getElementById("telefone");
+    const cepInput = document.getElementById("cep");
     const rua = document.getElementById("rua");
-    const localidade = document.getElementById("localidade");
+    const bairro = document.getElementById("localidade");
     const cidade = document.getElementById("Cidade");
     const estado = document.getElementById("Estado");
 
-    // ---------- Máscara CPF ----------
-    if (cpfInput) {
-        cpfInput.addEventListener("input", () => {
-            let v = cpfInput.value.replace(/\D/g, "");
-            if (v.length > 11) v = v.slice(0, 11);
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-            cpfInput.value = v;
-        });
-    }
+    // Máscara CPF
+    if (cpfInput) cpfInput.addEventListener("input", () => {
+        let v = cpfInput.value.replace(/\D/g, "").slice(0, 11);
+        v = v.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        cpfInput.value = v;
+    });
 
-    // ---------- Máscara Telefone ----------
-    if (telefoneInput) {
-        telefoneInput.addEventListener("input", () => {
-            let v = telefoneInput.value.replace(/\D/g, "");
-            if (v.length > 11) v = v.slice(0, 11);
-            v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-            v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
-            telefoneInput.value = v;
-        });
-    }
+    // Máscara Telefone
+    if (telefoneInput) telefoneInput.addEventListener("input", () => {
+        let v = telefoneInput.value.replace(/\D/g, "").slice(0, 11);
+        v = v.replace(/^(\d{2})(\d)/g, "($1) $2").replace(/(\d{5})(\d{4})$/, "$1-$2");
+        telefoneInput.value = v;
+    });
 
-    // ---------- CEP + Busca Automática ----------
-    if (cepInput) {
-        cepInput.addEventListener("input", async () => {
-            let v = cepInput.value.replace(/\D/g, "");
-            if (v.length > 8) v = v.slice(0, 8);
-            cepInput.value = v.replace(/(\d{5})(\d)/, "$1-$2");
+    // Preenchimento CEP automático
+    if (cepInput) cepInput.addEventListener("input", async () => {
+        let v = cepInput.value.replace(/\D/g, "").slice(0, 8);
+        cepInput.value = v.replace(/(\d{5})(\d)/, "$1-$2");
+        if (v.length === 8) {
+            try {
+                const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
+                const data = await res.json();
+                if (!data.erro) {
+                    // Campos readonly
+                    rua.value = data.logradouro || '';
+                    bairro.value = data.bairro || '';
 
-            if (v.length === 8) {
-                try {
-                    const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
-                    const data = await res.json();
-                    if (!data.erro) {
-                        rua.value = data.logradouro || '';
-                        localidade.value = data.bairro || '';
-                        cidade.value = data.localidade || '';
-                        estado.value = data.uf || '';
-                    }
-                } catch (err) {
-                    console.error("Erro ao buscar CEP:", err);
+                    // Preencher selects e bloquear edição
+                    estado.innerHTML = `<option value="${data.uf}">${data.uf}</option>`;
+                    cidade.innerHTML = `<option value="${data.localidade}">${data.localidade}</option>`;
+                    estado.disabled = true;
+                    cidade.disabled = true;
                 }
+            } catch (err) {
+                console.error("Erro ao buscar CEP:", err);
             }
-        });
-    }
+        }
+    });
 
-    // ---------- Busca por trabalhadores e empresas ----------
+    // ====================== Buscador ======================
     const buscador = document.getElementById('buscador');
-    if (buscador) {
-        let resultadosDiv = document.createElement('div');
-        resultadosDiv.id = 'resultados-busca';
-        resultadosDiv.style.position = 'absolute';
-        resultadosDiv.style.background = '#fff';
-        resultadosDiv.style.width = buscador.offsetWidth + 'px';
-        resultadosDiv.style.maxHeight = '200px';
-        resultadosDiv.style.overflowY = 'auto';
-        resultadosDiv.style.border = '1px solid #ccc';
-        resultadosDiv.style.zIndex = '1000';
-        resultadosDiv.style.display = 'none';
-        buscador.parentNode.appendChild(resultadosDiv);
+    if (!buscador) return;
 
-        buscador.addEventListener('input', async () => {
-            const termo = buscador.value.trim().toLowerCase();
-            resultadosDiv.innerHTML = '';
+    let resultadosDiv = document.createElement('div');
+    resultadosDiv.id = 'resultados-busca';
+    resultadosDiv.style.position = 'absolute';
+    resultadosDiv.style.background = '#fff';
+    resultadosDiv.style.width = buscador.offsetWidth + 'px';
+    resultadosDiv.style.maxHeight = '400px';
+    resultadosDiv.style.overflowY = 'auto';
+    resultadosDiv.style.border = '1px solid #ccc';
+    resultadosDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+    resultadosDiv.style.borderRadius = '8px';
+    resultadosDiv.style.zIndex = '1000';
+    resultadosDiv.style.display = 'none';
+    buscador.parentNode.appendChild(resultadosDiv);
 
-            if (termo.length === 0) {
+    buscador.addEventListener('input', async () => {
+        const termo = buscador.value.trim().toLowerCase();
+        resultadosDiv.innerHTML = '';
+
+        if (termo.length === 0) {
+            resultadosDiv.style.display = 'none';
+            return;
+        }
+
+        try {
+            const res = await fetch(`index.php?url=usuario/buscar&termo=${encodeURIComponent(termo)}`);
+            const usuarios = await res.json();
+
+            if (!usuarios.length) {
                 resultadosDiv.style.display = 'none';
                 return;
             }
 
-            try {
-                const res = await fetch(`index.php?url=usuario/buscar&termo=${encodeURIComponent(termo)}`);
-                const usuarios = await res.json();
+            usuarios.forEach(u => {
+                const card = document.createElement('div');
+                card.classList.add('card-busca');
+                card.style.display = 'flex';
+                card.style.alignItems = 'center';
+                card.style.padding = '10px';
+                card.style.margin = '5px';
+                card.style.cursor = 'pointer';
+                card.style.borderBottom = '1px solid #eee';
+                card.style.transition = 'background 0.2s';
 
-                if (!usuarios.length) {
-                    resultadosDiv.style.display = 'none';
-                    return;
-                }
+                card.addEventListener('mouseenter', () => card.style.background = '#f5f5f5');
+                card.addEventListener('mouseleave', () => card.style.background = '#fff');
 
-                usuarios.forEach(u => {
-                    const item = document.createElement('div');
-                    item.textContent = `${u.nome} (${u.tipo})`;
-                    item.style.padding = '5px 10px';
-                    item.style.cursor = 'pointer';
-                    item.addEventListener('click', () => {
-                        window.location.href = `index.php?url=perfil/${u.id}`;
-                    });
-                    resultadosDiv.appendChild(item);
+                card.addEventListener('click', () => {
+                    window.location.href = `index.php?url=perfil/${u.id}`;
                 });
 
-                resultadosDiv.style.display = 'block';
-            } catch (err) {
-                console.error('Erro ao buscar usuários:', err);
-                resultadosDiv.style.display = 'none';
-            }
-        });
+                const img = document.createElement('img');
+                img.src = u.foto || 'public/img/avatar.png';
+                img.alt = u.nome;
+                img.style.width = '50px';
+                img.style.height = '50px';
+                img.style.borderRadius = '50%';
+                img.style.objectFit = 'cover';
+                img.style.marginRight = '10px';
 
-        document.addEventListener('click', (e) => {
-            if (!buscador.contains(e.target) && !resultadosDiv.contains(e.target)) {
-                resultadosDiv.style.display = 'none';
-            }
-        });
-    }
+                const info = document.createElement('div');
+                const nome = document.createElement('div');
+                nome.textContent = u.nome;
+                nome.style.fontWeight = 'bold';
+                const cargo = document.createElement('div');
+                cargo.textContent = u.cargo || u.tipo;
+                cargo.style.fontSize = '0.9em';
+                cargo.style.color = '#555';
+                const local = document.createElement('div');
+                local.textContent = `${u.cidade || ''}${u.cidade && u.estado ? ', ' : ''}${u.estado || ''}`;
+                local.style.fontSize = '0.8em';
+                local.style.color = '#888';
+
+                info.appendChild(nome);
+                info.appendChild(cargo);
+                info.appendChild(local);
+
+                card.appendChild(img);
+                card.appendChild(info);
+                resultadosDiv.appendChild(card);
+            });
+
+            resultadosDiv.style.display = 'block';
+        } catch (err) {
+            console.error('Erro ao buscar usuários:', err);
+            resultadosDiv.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!buscador.contains(e.target) && !resultadosDiv.contains(e.target)) {
+            resultadosDiv.style.display = 'none';
+        }
+    });
 });
+
+function esqueci_senha(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value;
+  // Simular envio de email
+  console.log('Enviando código para:', email);
+  // Redirecionar para página de verificação
+  window.location.href = 'index.php?url=esqueci_senha/verificacao? email=' + encodeURIComponent(email);
+}
+
+
+
+
+

@@ -21,16 +21,20 @@ body {
 }
 
 header {
-  background-color: #2563eb;
+  background-color: #0049ff;
   width: 100%;
   height: 4.375rem;
   display: flex;
   justify-content: center;
   align-items: center;
   position: sticky;
-  top: 0;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
               0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+header.header-passed-hero {
+  height: 4.375rem; /* se quiser manter a mesma altura */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .nav-container {
@@ -171,8 +175,8 @@ header {
 }
 
 .hero-section{
-  background: linear-gradient(135deg, #2563eb 0%, #2564ebe6 100%);
-  height: 600px;
+  background: linear-gradient(135deg, #0049ff 0%, #0049ffe6 100%);
+  padding: 6% 0% 6%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -220,7 +224,7 @@ header {
 
 .cta-button.primeiro{
   background-color: #fff;
-  color: #2563eb;
+  color: #0049ff;
 }
 
 .cta-button.segundo{
@@ -230,15 +234,15 @@ header {
 }
 
 .cta-button.primeiro:hover{
-  transform: translateY(-2%);
+  transform: translateY(-0.5rem);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   background-color: #fbfbff;
 }
 
 .cta-button.segundo:hover{
-  transform: translateY(-4%);
+  transform: translateY(-0.5rem);
   background-color: #fbfbff;
-  color: #2563eb;
+  color: #0049ff;
 }
 
 .como_funciona-section{
@@ -291,7 +295,7 @@ header {
   transform: translateX(-50%);
   width: 4px;
   height: 100%;
-  background-color: #2563eb;
+  background-color: #0049ff;
 }
 
 .timeline-item{
@@ -312,7 +316,7 @@ header {
 
 .timeline-content:hover,
 .timeline-number:hover .timeline-content{
-  transform: translateY(-2%);
+  transform: translateY(-0.5rem);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
@@ -338,7 +342,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #2563eb;
+  background-color: #0049ff;
   color: #fff;
 }
 
@@ -349,7 +353,7 @@ header {
 }
 
 .timeline-icon{
-  border: 2px solid #2563eb33;
+  border: 2px solid #0049ff33;
   border-radius: 50%;
   width: 3.5rem;
   height: 3.5rem;
@@ -393,7 +397,7 @@ header {
   width: 100%;
   padding: 2%;
   text-align: center;
-  background-color: #2563eb;
+  background-color: #0049ff;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
@@ -411,7 +415,7 @@ header {
 .cta_tml-button{
   background-color: #fff;
   border: none;
-  color: #2563eb;
+  color: #0049ff;
   font-size: 1rem;
   padding: 1.5rem 1.5rem;
   border-radius: 8px;
@@ -422,7 +426,7 @@ header {
 }
 
 .cta_tml-button:hover{
-  transform: translateY(-2%);
+  transform: translateY(-0.5rem);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   background-color: #fbfbff;
 }
@@ -435,7 +439,7 @@ header {
   transform: translate(-50%, -100%);
   width: 4px;
   height: 20vh;
-  background-color: #2563eb;
+  background-color: #0049ff;
 }
 
 .servicos_destaque-section{
@@ -513,7 +517,7 @@ header {
 }
 
 .sv_des-card-button{
-  background-color: #2563eb;
+  background-color: #0049ff;
   color: #fff;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -545,7 +549,7 @@ header {
 .motivos_escolhas-section{
   padding-top: 8%;
   margin-bottom: 10%;
-  background-color: #2563eb;
+  background-color: #0049ff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -665,7 +669,7 @@ header {
   white-space: nowrap;
   color: #fff;
   border: none;
-  background-color: #2563eb;
+  background-color: #0049ff;
   transition: all 0.3s;
 }
 
@@ -676,12 +680,12 @@ header {
 
 .cta_section-button.sec{
   background-color: transparent;
-  border: 2px solid #2563eb;
-  color: #2563eb;
+  border: 2px solid #0049ff;
+  color: #0049ff;
 }
 
 .cta_section-button.sec:hover{
-  background-color: #2563eb;
+  background-color: #0049ff;
   color: #fff;
 }
 
@@ -744,10 +748,15 @@ footer{
 
 .social-link svg{
   height: 3rem;
+  transition: all 0.3s;
+}
+
+.social-link svg:hover{
+  transform: translateY(-0.5rem);
 }
 
 .social-link svg g{
-  fill: #2563eb;
+  fill: #3a7afe;
 }
 
 .footer-title{
@@ -762,4 +771,9 @@ footer{
   color: #ffffffb3;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.footer-link:hover{
+  color: #3a7afe;
+  text-decoration: underline;
 }

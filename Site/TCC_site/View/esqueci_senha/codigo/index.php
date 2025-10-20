@@ -20,7 +20,7 @@
         Digite seu endereço de e-mail e enviaremos um código de verificação para redefinir sua senha.
       </p>
 
-      <form class="form" onsubmit="handleForgotPassword(event)">
+      <form class="form" onsubmit="esqueci_senha(event)">
         <div class="form-group">
           <label for="email" class="label">Endereço de E-mail</label>
           <input 
@@ -42,15 +42,7 @@
     </div>
   </div>
 
-  <script>
-    function handleForgotPassword(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      // Simular envio de email
-      console.log('Enviando código para:', email);
-      // Redirecionar para página de verificação
-      window.location.href = 'index.php?url=esqueci_senha/codigo?email=' + encodeURIComponent(email);
-    }
+ 
   </script>
 </body>
 </html>

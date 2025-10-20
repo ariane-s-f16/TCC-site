@@ -25,13 +25,13 @@
         </div>
        
         <div class="input_box">
-            <input type="text"  name="localidade" id="localidade" placeholder="Localidade"  >
+            <input type="text"  name="localidade" id="localidade" placeholder="Localidade" readonly  >
         </div>
         <div class="input_box">
             <input type="text"  name="cep" id="cep" placeholder="CEP">
         </div>
         <div class="input_box">
-            <input type="text"  name="rua" id="rua" placeholder="Rua" >
+            <input type="text"  name="rua" id="rua" placeholder="Rua" readonly >
         </div>
         <div class="input_box">
             <input type="text"  name="numero" id="numero" placeholder="Numero" >
@@ -44,19 +44,15 @@
         
         
         <div class="selects">
-            <select name="pais" id="Pais" required >
-                <option value="Null">País</option>
-                <option value="brasil">Brasil</option>
-            </select>
-
-            <select name="estado" id="Estado" required >
-                <option value="Null">Estado</option>
-                <option value="SP">SP</option>
+           
+            <select name="estado" id="Estado" required disabled >
+                <option value="">Estado</option>
+               
             </select>
         
-            <select name="cidade" id="Cidade" required>
-                <option value="Null">Cidade</option>
-                <option value="Jau">Jaú</option>
+            <select name="cidade" id="Cidade" required disabled>
+                <option value="">Cidade</option>
+                
             </select>
         </div>
 
