@@ -1,6 +1,6 @@
 
 
-console.log("✅ script.js carregado!");
+console.log("script.js carregado  !");
 
 // ====================== Mostrar/Ocultar Senha ======================
 function mostrarsenha() {
@@ -91,7 +91,7 @@ function salvarParte2(tipoPerfil) {
     const dados = JSON.parse(localStorage.getItem("cadastro"));
     if (!dados) {
         alert("Complete a Parte 1 primeiro!");
-        window.location.href = "index.php?url=cadastro/parte1";
+        window.location.href = "index.php?url=cadastro/Parte1";
         return;
     }
 
@@ -104,12 +104,13 @@ function salvarParte2(tipoPerfil) {
     if (tipo === "trabalhador") tipo = "prestador";
 
     dados.perfil = tipo;
-
     localStorage.setItem("cadastro", JSON.stringify(dados));
-    console.log(" Dados atualizados na Parte 2:", dados);
 
-    window.location.href = `index.php?url=cadastro/parte3/${tipo}`;
+    const destino = `index.php?url=cadastro/Parte3/${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`;
+    console.log("➡️ Redirecionando para:", destino);
+    window.location.href = destino;
 }
+
 
 // ====================== Parte 3 ======================
 async function finalizarCadastro() {
@@ -248,7 +249,7 @@ async function fazerLogin() {
             };
             localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
 
-            console.log("✅ Usuário salvo:", usuarioLogado);
+            console.log(" Usuário salvo:", usuarioLogado);
 
             // Atualiza nome imediatamente
             const span = document.querySelector(".perfil-name");
@@ -261,7 +262,7 @@ async function fazerLogin() {
             mostrarErro(senhaInput, "Email ou senha incorretos");
         }
     } catch (err) {
-        console.error("❌ Erro no login:", err);
+        console.error(" Erro no login:", err);
         alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
     }
 }
@@ -293,7 +294,7 @@ function atualizarNomeHeader() {
     const nome = usuarioLogado.nome || "Usuário";
     span.textContent = nome;
 
-    console.log("🟢 Nome atualizado no header:", nome);
+    console.log(" Nome atualizado no header:", nome);
 }
 
 document.addEventListener("DOMContentLoaded", atualizarNomeHeader);
