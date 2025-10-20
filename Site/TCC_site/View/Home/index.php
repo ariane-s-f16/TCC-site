@@ -8,11 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-
     <header>
         <div class="nav-container">
             <div class="left-nav-container">
-                <div class="lg-div"><img src="../img/logo.png" alt=""></div>
+                <div class="lg-div"><img src="img/logo.png" alt=""></div>
 
                 <div class="buscador-div">
                     <input class="buscador" id="buscador">
@@ -28,7 +27,7 @@
             <nav class="right-nav-container">
                 <ul class="nav-links">
                     <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="index.php?url=Trabalhadores" class="nav-link">Trabalhadores</a></li>
+                    <li><a href="index.php?url=Home/Trabalhadores" class="nav-link">Trabalhadores</a></li>
                     <li><a href="/empresas" class="nav-link">Empresas</a></li>
                     <li><a href="/sobre" class="nav-link">Sobre</a></li>
                 </ul>
@@ -38,7 +37,7 @@
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span class="perfil-name"> Usuario</span>
+                    <span class="perfil-name">Diego</span>
                 </button>
 
                 <button class="favoritos-btn" aria-label="Favoritos">
@@ -215,8 +214,8 @@
 
         <section class="servicos_destaque-section">
             <div class="section-text">
-                <h2 class="section-title">Serviços em Destaque</h2>
-                <p class="section-subtitle">
+                <h2 class="section-title se">Serviços em Destaque</h2>
+                <p class="section-subtitle se">
                     Encontre profissionais qualificados nas principais áreas da construção civil
                 </p>
             </div>
@@ -274,6 +273,9 @@
                     <button class="sv_des-card-button">Saiba Mais</button>
                 </div>
             </div>
+            <svg class="soft-wave-divider" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,80 C300,120 900,40 1200,80 L1200,120 L0,120 Z" fill="#2563eb"></path>
+            </svg>
         </section>
 
         <section class="motivos_escolhas-section">
@@ -283,94 +285,106 @@
             </div>
 
             <div class="mt_es-cards_home">
-                <div class="card">
+                <div class="mt_es-card">
                     <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 3C12 7.97056 16.0294 12 21 12C16.0294 12 12 16.0294 12 21C12 16.0294 7.97056 12 3 12C7.97056 12 12 7.97056 12 3Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 3C12 7.97056 16.0294 12 21 12C16.0294 12 12 16.0294 12 21C12 16.0294 7.97056 12 3 12C7.97056 12 12 7.97056 12 3Z" stroke="#fbfbffea" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Agilidade e praticidade</h3>
-                        <p class="card-subtitle">Contato rápido entre clientes e profissionais, sem burocracia desnecessária.</p>
+                    <div class="mt_es-card-text">
+                        <h3 class="mt_es-card-title">Agilidade e praticidade</h3>
+                        <p class="mt_es-card-subtitle">Contato rápido entre clientes e profissionais, sem burocracia desnecessária.</p>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="mt_es-card">
                     <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z" fill="#1C274C"></path> </g></svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM10 17L6 13L7.41 11.59L10 14.17L16.59 7.58L18 9L10 17Z" fill="currentColor"/>
+                        </svg>
                     </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Qualidade e confiabilidade
-                        <p class="card-subtitle">Perfis cuidadosamente avaliados por clientes anteriores para garantir excelência.</p>
+                    <div class="mt_es-card-text">
+                        <h3 class="mt_es-card-title">Qualidade e confiabilidade</h3>
+                        <p class="mt_es-card-subtitle">Perfis cuidadosamente avaliados por clientes anteriores para garantir excelência.</p>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="mt_es-card">
                     <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.75 12C9.75 10.7574 10.7574 9.75 12 9.75C13.2426 9.75 14.25 10.7574 14.25 12C14.25 13.2426 13.2426 14.25 12 14.25C10.7574 14.25 9.75 13.2426 9.75 12Z" fill="#1C274C"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 13.6394 2.42496 14.1915 3.27489 15.2957C4.97196 17.5004 7.81811 20 12 20C16.1819 20 19.028 17.5004 20.7251 15.2957C21.575 14.1915 22 13.6394 22 12C22 10.3606 21.575 9.80853 20.7251 8.70433C19.028 6.49956 16.1819 4 12 4C7.81811 4 4.97196 6.49956 3.27489 8.70433C2.42496 9.80853 2 10.3606 2 12ZM12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25Z" fill="#1C274C"></path> </g></svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM12 6C15.31 6 18 8.69 18 12S15.31 18 12 18 6 15.31 6 12 8.69 6 12 6ZM12 8C9.79 8 8 9.79 8 12S9.79 16 12 16 16 14.21 16 12 14.21 8 12 8Z" fill="currentColor"/>
+                        </svg>
                     </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Maior visibilidade
-                        <p class="card-subtitle">Exponha seus serviços a milhares de clientes potenciais em todo o país.</p>
+                    <div class="mt_es-card-text">
+                        <h3 class="mt_es-card-tile">Maior visibilidade</h3>
+                        <p class="mt_es-card-subtitle">Exponha seus serviços a milhares de clientes potenciais em todo o país.</p>
                     </div>
                 </div>
 
                 <div class="mt_es-linha"></div>
 
-                <div class="card">
+                <div class="mt_es-card">
                     <div class="mt_es-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 2L2 7L12 12L22 7L12 2ZM2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Flexibilidade para qualquer projeto
-                        <p class="card-subtitle">De pequenos serviços domésticos a grandes empreendimentos corporativos.</p>
+                    <div class="mt_es-card-text">
+                        <h3 class="mt_es-card-title">Flexibilidade para qualquer projeto</h3>
+                        <p class="mt_es-card-subtitle">De pequenos serviços domésticos a grandes empreendimentos corporativos.</p>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="mt_es-card">
                     <div class="mt_es-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" fill="currentColor"/>
+                        </svg>
                     </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Credibilidade consolidada
-                        <p class="card-subtitle">Construa uma reputação sólida baseada em confiança e resultados comprovados.</p>
+                    <div class="mt_es-card-text">
+                        <h3 class="mt_es-card-title">Credibilidade consolidada</h3>
+                        <p class="mt_es-card-subtitle">Construa uma reputação sólida baseada em confiança e resultados comprovados.</p>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="mt_es-card">
                     <div class="mt_es-icon">
-                        <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} </style> <path class="st0" d="M2,28V4c0-1.1,0.9-2,2-2h24c1.1,0,2,0.9,2,2v24c0,1.1-0.9,2-2,2H4C2.9,30,2,29.1,2,28z"></path> <line class="st0" x1="30" y1="20" x2="2" y2="20"></line> <polyline class="st0" points="8,27 6,25 8,23 "></polyline> <polyline class="st0" points="24,23 26,25 24,27 "></polyline> <line class="st0" x1="6" y1="9" x2="16" y2="9"></line> <line class="st0" x1="6" y1="13" x2="12" y2="13"></line> </g></svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM7 10H9V12H7V10ZM11 10H17V12H11V10ZM7 14H9V16H7V14ZM11 14H17V16H11V14Z" fill="currentColor"/>
+                        </svg>
                     </div>
-                    <div class="card-text">
-                        <h3 class="card-title">Interface intuitiva
-                        <p class="card-subtitle">Plataforma simples, prática e acessível para todos os níveis de usuário.</p>
+                    <div class="mt_es-card-text">
+                        <h3 class="mt_es-card-title">Interface intuitiva</h3>
+                        <p class="mt_es-card-subtitle">Plataforma simples, prática e acessível para todos os níveis de usuário.</p>
                     </div>
                 </div>
             </div>
+
+            <svg class="soft-wave-divider bottom" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,80 C300,120 900,40 1200,80 L1200,120 L0,120 Z" fill="#2563eb"></path>
+            </svg>
         </section>
 
         <section class="cta-section">
             <div class="section-text">
-                <h2 class="section-title">Pronto para começar?</h2>
-                <p class="section-subtitle">Conecte-se com quem precisa do seu trabalho e com quem pode realizá-lo.</p>
+                <h2 class="section-title se">Pronto para começar?</h2>
+                <p class="section-subtitle se">Conecte-se com quem precisa do seu trabalho e com quem pode realizá-lo.</p>
             </div>
 
             <div class="cta-buttons">
-                <button class="cta-button-primeiro">Contratar para Meu Projeto</button>
-                <button class="cta-button-segundo">Oferecer Meus Serviços</button>
+                <button class="cta_section-button pri">Contratar para Meu Projeto</button>
+                <button class="cta_section-button sec">Oferecer Meus Serviços</button>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
+            <div class="footer-section pri">
                 <div class="ft-logo">
                     <img src="../img/logo.png" alt="logo OPI">
                     <h3 class="footer-title-logo">TCC Plataforma</h3>
                 </div>
 
-                <p class="footer-subtitle">Aqui, profissionais e empresas podem expor seus serviços com facilidade, enquanto clientes encontram mão de obra qualificada para diferentes tipos de projetos, sem burocracia e com mais confiança.</p>
+                <p class="footer-subtitle">Profissionais divulgam seus serviços e clientes encontram mão de obra qualificada com facilidade e confiança.</p>
                 
                 <div class="social-links">
                     <a href="#" class="social-link">
@@ -388,7 +402,7 @@
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">
+                <h4 class="footer-title">Navegação</h4>
                 <ul>
                     <li><a href="#" class="footer-link">Home</a></li>
                     <li><a href="#" class="footer-link">Profissionais</a></li>
@@ -399,7 +413,7 @@
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">
+                <h4 class="footer-title">Suporte</h4>
                 <ul>
                     <li><a href="#" class="footer-link">Central de Ajuda</a></li>
                     <li><a href="#" class="footer-link">Contato</a></li>
@@ -410,7 +424,7 @@
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">
+                <h4 class="footer-title">Política</h4>
                 <ul>
                     <li><a href="#" class="footer-link">Termos de Uso</a></li>
                     <li><a href="#" class="footer-link">Política de Privacidade</a></li>
@@ -419,8 +433,8 @@
                 </ul>
             </div>
 
-            <div class="footer-section">
-                <h3 class="footer-title">Baixe nosso App</h3>
+            <div class="footer-section end">
+                <h4 class="footer-title">Baixe nosso App</h4>
 
                 <p class="footer-subtitle">Acesse nossa plataforma em qualquer lugar</p>
 
@@ -447,6 +461,5 @@
     </footer>
 
     <script src="public/script.js"></script>
-
 </body>
 </html>

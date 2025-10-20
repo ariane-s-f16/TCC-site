@@ -1,6 +1,6 @@
 
 
-console.log("script.js carregado  !");
+console.log("script.js testar essa porra!");
 
 // ====================== Mostrar/Ocultar Senha ======================
 function mostrarsenha() {
@@ -101,7 +101,7 @@ function salvarParte2(tipoPerfil) {
     }
 
     let tipo = tipoPerfil.toLowerCase();
-    if (tipo === "trabalhador") tipo = "prestador";
+   
 
     dados.perfil = tipo;
     localStorage.setItem("cadastro", JSON.stringify(dados));
@@ -114,7 +114,11 @@ function salvarParte2(tipoPerfil) {
 
 // ====================== Parte 3 ======================
 async function finalizarCadastro() {
+    console.log("🚀 Função finalizarCadastro() foi chamada!");
+
     const cadastro = JSON.parse(localStorage.getItem("cadastro"));
+    console.log("📦 Dados atuais no localStorage:", cadastro);
+
     if (!cadastro) {
         alert("Complete as etapas anteriores do cadastro.");
         window.location.href = "index.php?url=cadastro/parte1";
@@ -143,23 +147,29 @@ async function finalizarCadastro() {
         cidade: document.getElementById("Cidade")?.value || '',
     };
 
+    console.log("🧩 Dados do formulário coletados:", dados);
+
     // Validação básica
     for (const key of ['nome','telefone','localidade','uf','rua','numero']) {
         if (!dados[key]) {
             const input = document.getElementById(key);
             mostrarErro(input, "Campo obrigatório");
+            console.warn(`⚠️ Campo obrigatório faltando: ${key}`);
             return;
         }
     }
 
     if (!arquivoFoto) {
         alert("Selecione uma foto antes de continuar.");
+        console.warn("⚠️ Nenhum arquivo de foto selecionado!");
         return;
     }
 
     // Adiciona dados e arquivo ao FormData
     for (const chave in dados) formData.append(chave, dados[chave]);
     formData.append("foto", arquivoFoto);
+
+    console.log("📨 Enviando dados ao servidor...");
 
     try {
         const response = await fetch("index.php?url=usuario/cadastro", {
@@ -168,14 +178,18 @@ async function finalizarCadastro() {
         });
 
         const texto = await response.text();
+        console.log("🧾 Resposta bruta do servidor:", texto);
+
         let resposta;
         try {
             resposta = JSON.parse(texto);
         } catch {
-            console.error("Resposta do servidor não é JSON:", texto);
+            console.error("❌ Resposta do servidor não é JSON:", texto);
             alert("Erro no servidor. Tente novamente.");
             return;
         }
+
+        console.log("✅ Resposta parseada:", resposta);
 
         if (resposta.access_token) {
             localStorage.setItem("usuarioLogado", JSON.stringify({ 
@@ -184,15 +198,21 @@ async function finalizarCadastro() {
                 access_token: resposta.access_token 
             }));
             localStorage.removeItem("cadastro");
+            console.log("🎉 Cadastro finalizado com sucesso!");
             window.location.href = "index.php?url=home";
         } else {
+            console.warn("⚠️ Erro no cadastro. Resposta sem token.");
             alert("Erro ao finalizar cadastro.");
         }
     } catch (err) {
-        console.error("Erro ao enviar cadastro:", err);
+        console.error("🚨 Erro ao enviar cadastro:", err);
         alert("Erro de comunicação com o servidor.");
     }
 }
+
+// 🔹 Torna a função global para o onclick funcionar
+window.finalizarCadastro = finalizarCadastro;
+
 // ====================== Login ======================
 async function fazerLogin() {
     const emailInput = document.getElementById("email");

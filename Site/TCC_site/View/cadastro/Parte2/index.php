@@ -17,15 +17,15 @@
         </div>
 
         <div class="button">
-            <a href="#"class="Empresa">Empresa</a>
+            <a href="#"class="Empresa" onclick="salvarParte2('empresa')">Empresa</a>
         </div>
 
         <div class="button">
-            <a href="#"   class="prestador">Trabalhador</a>
+            <a href="#"   class="prestador" onclick="salvarParte2('prestador')">Trabalhador</a>
         </div>
 
         <div class="button">
-            <a href="#"  class="Contratante">Contratante</a>
+            <a href="#"  class="Contratante" onclick="salvarParte2('contratante')">Contratante</a>
         </div>
         
     </form>

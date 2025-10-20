@@ -9,6 +9,8 @@ html {
   padding: 0px;
   box-sizing: border-box;
   color: #2e2d37;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -16,8 +18,6 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #fbfbff;
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 header {
@@ -257,14 +257,22 @@ header {
 }
 
 .section-title{
-  font-size: 3rem;
+  font-size: 3rem;  
   font-weight: 700;
   margin-bottom: 4%;
+}
+
+.section-title.se{
+  font-size: 3.5rem;
 }
 
 .section-subtitle{
   font-size: 1.1rem;
   color: #6a6977;
+}
+
+.section-subtitle.se{
+  font-size: 1.25rem;
 }
 
 .timeline{
@@ -481,6 +489,7 @@ header {
 
 .sv_des-card:hover .servico-icon{
   transform: scale(1.05);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
 .servico-icon svg{
@@ -565,21 +574,36 @@ header {
   flex-direction: column;
   align-items: center;
   background-color: #fbfbff;
+  border: 1px solid #e5e7eb;
   width: 28%;
   padding: 2.5rem;
   border-radius: 10px;
   margin-right: 3%;
+  box-shadow: 0 5px 15px 0 rgba(37, 99, 235, 0.2);
+  transition: all 0.3s;
+}
+
+.mt_es-card:hover{
+  transform: translateY(-0.5rem);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.25);
+  border-color: #2563eb33;
 }
 
 .mt_es-icon{
   width: 5rem;
   height: 5rem;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
   background-color: #3a7afe;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s;
+}
+
+.mt_es-card:hover .mt_es-icon{
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
 .mt_es-icon svg{
@@ -596,7 +620,13 @@ header {
 }
 
 .mt_es-card-title{
+  font-size: 1.25rem;
   margin-bottom: 5%;
+}
+
+.mt_es-card-subtitle{
+  font-size: 1rem;
+  color: #6a6977;
 }
 
 .mt_es-linha {
@@ -612,4 +642,124 @@ header {
     rgba(255, 255, 255, 0) 100%
   );
   border-radius: 2px;
+}
+
+.cta-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.cta-buttons{
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+}
+
+.cta_section-button{
+  padding: 1.125rem 2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  white-space: nowrap;
+  color: #fff;
+  border: none;
+  background-color: #2563eb;
+  transition: all 0.3s;
+}
+
+.cta_section-button:hover{
+  transform: translateY(-0.5rem);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.cta_section-button.sec{
+  background-color: transparent;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+}
+
+.cta_section-button.sec:hover{
+  background-color: #2563eb;
+  color: #fff;
+}
+
+footer{
+  background-color: #1e293b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-content{
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  padding: 3%;
+}
+
+.footer-section{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.footer-section{
+  margin-right: 8%;
+}
+
+.footer-section.end{
+  margin: 0;
+}
+
+.footer-section ul li{
+  list-style: none;
+  margin-bottom: 10%;
+}
+
+.ft-logo{
+  display: flex;
+  gap: 2%;
+  margin-bottom: 5%;
+}
+
+.ft-logo img{
+  height: 2.5rem;
+}
+
+.footer-title-logo{
+  font-size: 1.5rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.footer-subtitle{
+  font-size: 0.875rem;
+  color: #ffffffb3;
+  line-height: 1.6;
+  padding-left: 2%;
+  margin-bottom: 7%;
+}
+
+.social-link svg{
+  height: 3rem;
+}
+
+.social-link svg g{
+  fill: #2563eb;
+}
+
+.footer-title{
+  font-size: 1.125rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+}
+
+.footer-link{
+  font-size: 0.875rem;
+  color: #ffffffb3;
+  text-decoration: none;
+  white-space: nowrap;
 }
