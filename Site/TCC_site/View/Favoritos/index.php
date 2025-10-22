@@ -1,287 +1,164 @@
-<?php
-require_once __DIR__ . '/../../Core/Core.php';
-
-$core = new Core();
-
-// Requisição para a API que retorna todos os usuários
-$response = $core->makeRequest('GET', $core->apiBaseUrl . '/api/usuarios'); // Ajuste a rota da sua API
-$usuarios = json_decode($response, true);
-
-// Caso não retorne nada, inicializa array vazio
-if (!$usuarios || !is_array($usuarios)) {
-    $usuarios = [];
-}
-
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/style8.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <title>Document</title>
+    <link rel="stylesheet" href="public/style11.css">
+    <title>Favoritos</title>
 </head>
 <body>
-    
-<header>
+    <header>
         <div class="nav-container">
-            <!-- Left Nav -->
             <div class="left-nav-container">
-                <div class="lg-div">
-                    <img src="public/img/logo.png" alt="Logo">
-                </div>
+                <div class="lg-div"><img src="public/img/logo.png" alt=""></div>
 
-                <!-- Buscador -->
                 <div class="buscador-div">
-                    <input class="buscador" id="buscador" placeholder="Busque por trabalhadores e empresas">
+                    <input class="buscador" id="buscador">
+                    <label class="bs-label">Busque por trabalhadores e empresas</label>
                     <label for="buscador" class="bs-svg">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" heigth="px" width="20px" xmlns="http://www.w3.org/2000/svg">
                             <path d="M456.69 421.39 362.6 327.3a173.81 173.81 0 0 0 34.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.81 173.81 0 0 0 327.3 362.6l94.09 94.09a25 25 0 0 0 35.3-35.3zM97.92 222.72a124.8 124.8 0 1 1 124.8 124.8 124.95 124.95 0 0 1-124.8-124.8z"></path>
                         </svg>
                     </label>
-
-                    <!-- Container de resultados -->
-                    <div id="resultados-busca" class="resultados-busca"></div>
                 </div>
             </div>
+            
+            <nav class="right-nav-container">
+                <ul class="nav-links">
+                    <li><a href="index.php?url=home" class="nav-link">Home</a></li>
+                    <li><a href="index.php?url=trabalhadores" class="nav-link">Trabalhadores</a></li>
+                    <li><a href="/empresas" class="nav-link">Empresas</a></li>
+                    <li><a href="/sobre" class="nav-link">Sobre</a></li>
+                </ul>
 
-            <!-- Right Nav -->
-            <div class="rigth-nav-container">
-                <nav>
-                    <ul>
-                        <li><a href="index.php?url=home" class="nav-a">Home</a></li>
-                        <li><a href="#" class="nav-a">Trabalhadores</a></li>
-                        <li><a href="#" class="nav-a">Empresas</a></li>
-                        <li><a href="#" class="nav-a">Sobre</a></li>
-                    </ul>
-                    
-                    <!-- Perfil -->
-                     
-                    <a href="#" class="perfil">
-                        <div class="ft-perfil">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="prf-svg" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                            </svg>
-                        </div>
-                        <span class="perfil-name"><?= htmlspecialchars($nomeUsuario) ?></span>
-                    </a>                
+                <button class="perfil-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="perfil-name">Diego</span>
+                </button>
 
-                    <!-- Favoritos -->
-                    <a href="#" class="favoritos">
-                    <a href="index.php?url=favoritos"> <span class="material-symbols-outlined">favorite</span></a>
-                    </a>
-                </nav>
-            </div>            
+                <button class="favoritos-btn" aria-label="Favoritos">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="#fff" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+            </nav>
         </div>
     </header>
-       
-    <div class="historico"></div>
-    
 
+    <main class="home-main">
+        <section class="hero-section">
+            <div class="hero-text">
+                <h1 class="hero-title">Meus Favoritos</h1>
+                <p class="hero-subtitle">Profissionais e empresas que você salvou para contato futuro</p>
+            </div>
+        </section>
 
-    <div class="title"><h1>Trabalhadores em todo o Brasil</h1></div>
-    <div class="usuarios-container" style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <?php foreach ($usuarios as $u): ?>
-        <?php
-        // Identifica o tipo de usuário e pega os dados corretos
-        $nome = 'Usuário';
-        $foto = 'public/img/fundo.png';
-        $tipo = $u['type'] ?? 'N/A';
-        $cidade = '';
-        $estado = '';
-
-        if ($tipo === 'empresa' && isset($u['user'])) {
-            $nome = $u['user']['nome'] ?? $u['user']['name'] ?? 'Empresa';
-            $foto = $u['user']['foto'] ?? 'public/img/avatar.png';
-            $cidade = $u['user']['cidade'] ?? '';
-            $estado = $u['user']['estado'] ?? '';
-        } elseif ($tipo === 'prestador' && isset($u['user'])) {
-            $nome = $u['user']['nome'] ?? $u['user']['name'] ?? 'Prestador';
-            $foto = $u['user']['foto'] ?? 'public/img/avatar.png';
-            $cidade = $u['user']['cidade'] ?? '';
-            $estado = $u['user']['estado'] ?? '';
-        } elseif ($tipo === 'contratante' && isset($u['user'])) {
-            $nome = $u['user']['nome'] ?? $u['user']['name'] ?? 'Contratante';
-            $foto = $u['user']['foto'] ?? 'public/img/avatar.png';
-            $cidade = $u['user']['cidade'] ?? '';
-            $estado = $u['user']['estado'] ?? '';
-        }
-        ?>
-        <div class="card-usuario" style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; width: 250px; text-align: center;">
-            <img src="<?= htmlspecialchars($foto) ?>" alt="<?= htmlspecialchars($nome) ?>" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-            <h3><?= htmlspecialchars($nome) ?></h3>
-            <p>Tipo: <?= htmlspecialchars($tipo) ?></p>
-            <p>Localização: <?= htmlspecialchars($cidade) ?><?= $cidade && $estado ? ', ' : '' ?><?= htmlspecialchars($estado) ?></p>
-        </div>
-    <?php endforeach; ?>
-</div>
-
-    <div class="container">
-
-        <div class="filtro-container">
+        <section class="favoritos-content">
             <div class="filtro">
-                <div class="localizacao">
-                    <h2>Localização</h2>
-                    <div class="bs-localizacao">
-                        <input class="bsl" id="bsl">
-                        <label class="bsl-label" for="bsl">Digite seu país, estado ou cidade</label>
-                        <label for="bsl" class="bsl-svg">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" heigth="px" width="20px" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M456.69 421.39 362.6 327.3a173.81 173.81 0 0 0 34.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.81 173.81 0 0 0 327.3 362.6l94.09 94.09a25 25 0 0 0 35.3-35.3zM97.92 222.72a124.8 124.8 0 1 1 124.8 124.8 124.95 124.95 0 0 1-124.8-124.8z"></path>
+                <div class="filtro-left">
+                    <button class="button-tab" onclick="selecionar(this)">Todos <span class="tab-count" id="todos">1</span></button>
+                    <button class="button-tab" onclick="selecionar(this)">Profissionais <span class="tab-count" id="Profissionais">1</span></button>
+                    <button class="button-tab" onclick="selecionar(this)">Empresas <span class="tab-count" id="empresas">0</span></button>
+                </div>
+
+                <div class="filtro-right">
+                    <label for="ord-select">Ordenar por:</label>
+                    <select id="ord-select" class="ord-select">
+                        <option value="recente">Mais recentes</option>
+                        <option value="antigo">Mais antigos</option>
+                        <option value="nome">Nome (A-Z)</option>
+                        <option value="avaliacao">Melhor avaliação</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="home-cards">
+                <div class="card">
+                    <div class="top-content-card">
+                        <div class="foto-perfil"></div>
+
+                        <div class="nome-area">
+                            <h3 class="nome-card">Diego S. F.</h3>
+                            <p class="area-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-4 h-4">
+                                <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect>
                             </svg>
-                        </label>
-                    </div>
-                </div>
-    
-                <div class="categorias">
-                    <h2>Categorias mais pesquisados:</h2>
-    
-                    <div class="ctg-topicos">
-                        <label class="ctg-topico">
-                            <input class="checkbox" type="checkbox" name="calheiro" id="calheiro">
-                            <span class="checkmark"></span>
-                            <p>Calheiro</p>
-                        </label>
-    
-                        <label class="ctg-topico">
-                            <input class="checkbox" type="checkbox" name="pedreiro" id="pedreiro">
-                            <span class="checkmark"></span>
-                            <p>Pedreiro</p>
-                        </label>
-    
-                        <label class="ctg-topico">
-                            <input class="checkbox" type="checkbox" name="pintor" id="pintor">
-                            <span class="checkmark"></span>
-                            <p>Pintor</p>
-                        </label>
-    
-                        <label class="ctg-topico">
-                            <input class="checkbox" type="checkbox" name="eletricista" id="eletricista">
-                            <span class="checkmark"></span>
-                            <p>Eletricista</p>
-                        </label>
-    
-                        <label class="ctg-topico">
-                            <input class="checkbox" type="checkbox" name="encanador" id="encanador">
-                            <span class="checkmark"></span>
-                            <p>Encanador</p>
-                        </label>
-    
-                        <label class="ctg-topico">
-                            <input class="checkbox" type="checkbox" name="gesseiro" id="gesseiro">
-                            <span class="checkmark"></span>
-                            <p>Gesseiro</p>
-                        </label>
-                    </div>
-                </div>
-    
-                <div class="Avaliacao">
-                    <h2>Avaliação</h2>
-                    <div class="av-buttons">
-                        <div class="mais_estrelas">
-                            <button class="av-button" id="mais_quatro">4 estrelas ou mais</button>
-                            <button class="av-button" id="mais_tres">3 estrelas ou mais</button>
+                            Desenvolvedor Front-end</p>
                         </div>
-        
-                        <div class="menos_estrelas">
-                            <button class="av-button" id="menos_tres" onclick="criarcard()">Menos de 3 estrelas</button>
+
+                        <button class="remover-favorito">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <p class="empresa-ou-profissional">Profissional</p>
+
+                    <div class="avaliacao-content">
+                        <div class="flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-4 h-4 fill-yellow-400 text-yellow-400"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-4 h-4 fill-yellow-400 text-yellow-400"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-4 h-4 fill-yellow-400 text-yellow-400"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-4 h-4 fill-yellow-400 text-yellow-400"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-4 h-4 text-gray-300"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
                         </div>
+                        <span class="quant-avaliacoes">(203 avaliações)</span>
                     </div>
-                </div>
 
-                <div class="ordem">
-                    <h2>Ordem de exibição</h2>
-                    <div class="ode-topicos">
-                        <label class="ode-topico">
-                            <input class="checkbox" type="checkbox" name="mais_recente" id="mais_recente">
-                            <span class="checkmark"></span>
-                            <p>Mais recente</p>
-                        </label>
-
-                        <label class="ode-topico">
-                            <input class="checkbox" type="checkbox" name="mais_antigo" id="mais_antigo">
-                            <span class="checkmark"></span>
-                            <p>Eletricista</p>
-                        </label>
-
-                        <label class="ode-topico">
-                            <input class="checkbox" type="checkbox" name="mais_acessado" id="mais_acessado">
-                            <span class="checkmark"></span>
-                            <p>Mais acessado</p>
-                        </label>
-
-                        <label class="ode-topico">
-                            <input class="checkbox" type="checkbox" name="mais_bem_avaliado" id="mais_bem_avaliado">
-                            <span class="checkmark"></span>
-                            <p>Mais bem avaliado</p>
-                        </label>
-
-                        <label class="ode-topico">
-                            <input class="checkbox" type="checkbox" name="mais_avaliado" id="mais_avaliado">
-                            <span class="checkmark"></span>
-                            <p>Mais avaliado</p>
-                        </label>
+                    <div class="localizacao">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Jaú, SP</span>
                     </div>
+
+                    <div class="telefone">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-4 h-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>(14) 99121-1029</span>
+                    </div>
+
+                    <div class="email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-4 h-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>diegosf0104@gmail.com</span>
+                    </div>
+
+                    <button class="ver-perfil">Ver Perfil</button>
                 </div>
             </div>
-        </div>
-
-        <div class="search-container">
-            <div class="homecards"></div>
-            <div class="search-pagination">
-                <div class="pagination">
-                    <button class="arrows">
-                        <span class="material-symbols-outlined" id="sp-arrow-left">
-                            chevron_left
-                        </span>
-                    </button>
-
-                    <div class="pagination-numbers">
-                        <button class="pagination-number-button" id="pagination-number1">1</button>
-                    </div>
-
-                    <button class="arrows">
-                        <span class="material-symbols-outlined" id="sp-arrow-rigth">
-                            chevron_right
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <img src="public/img/logo.png" alt="Logo">
-                    <h3>TCC Platform</h3>
+            <div class="footer-section pri">
+                <div class="ft-logo">
+                    <img src="public/img/logo.png" alt="logo OPI">
+                    <h3 class="footer-title-logo">TCC Plataforma</h3>
                 </div>
-                <p class="footer-description">
-                    Conectando profissionais qualificados com empresas em todo o Brasil. 
-                    Encontre os melhores trabalhadores para seus projetos.
-                </p>
+
+                <p class="footer-subtitle">Profissionais divulgam seus serviços e clientes encontram mão de obra qualificada com facilidade e confiança.</p>
+                
                 <div class="social-links">
                     <a href="#" class="social-link">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0,0,256,256">
                             <g fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M11,4c-3.866,0 -7,3.134 -7,7v28c0,3.866 3.134,7 7,7h28c3.866,0 7,-3.134 7,-7v-28c0,-3.866 -3.134,-7 -7,-7zM13.08594,13h7.9375l5.63672,8.00977l6.83984,-8.00977h2.5l-8.21094,9.61328l10.125,14.38672h-7.93555l-6.54102,-9.29297l-7.9375,9.29297h-2.5l9.30859,-10.89648zM16.91406,15l14.10742,20h3.06445l-14.10742,-20z"></path></g></g>
-                            </svg>
+                        </svg>
                     </a>
+
                     <a href="#" class="social-link">
-                        <svg viewBox="0 0 32 32" id="Camada_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#2e2d37;} </style> <path d="M6,2h20c2.2,0,4,1.8,4,4v20c0,2.2-1.8,4-4,4H6c-2.2,0-4-1.8-4-4V6C2,3.8,3.8,2,6,2z"></path> <g> <path class="st0" d="M21.3,9.7c-0.6,0-1.2,0.5-1.2,1.2c0,0.7,0.5,1.2,1.2,1.2c0.7,0,1.2-0.5,1.2-1.2C22.4,10.2,21.9,9.7,21.3,9.7z"></path> <path class="st0" d="M16,11.2c-2.7,0-4.9,2.2-4.9,4.9c0,2.7,2.2,4.9,4.9,4.9s4.9-2.2,4.9-4.9C21,13.4,18.8,11.2,16,11.2z M16,19.3 c-1.7,0-3.2-1.4-3.2-3.2c0-1.7,1.4-3.2,3.2-3.2c1.7,0,3.2,1.4,3.2,3.2C19.2,17.9,17.8,19.3,16,19.3z"></path> <path class="st0" d="M20,6h-8c-3.3,0-6,2.7-6,6v8c0,3.3,2.7,6,6,6h8c3.3,0,6-2.7,6-6v-8C26,8.7,23.3,6,20,6z M24.1,20 c0,2.3-1.9,4.1-4.1,4.1h-8c-2.3,0-4.1-1.9-4.1-4.1v-8c0-2.3,1.9-4.1,4.1-4.1h8c2.3,0,4.1,1.9,4.1,4.1V20z"></path> </g> </g>
+                        <svg viewBox="0 0 32 32" id="Camada_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#2e2d37;} </style> <path d="M6,2h20c2.2,0,4,1.8,4,4v20c0,2.2-1.8,4-4,4H6c-2.2,0-4-1.8-4-4V6C2,3.8,3.8,2,6,2z"></path> <g> <path class="st0" d="M21.3,9.7c-0.6,0-1.2,0.5-1.2,1.2c0,0.7,0.5,1.2,1.2,1.2c0.7,0,1.2-0.5,1.2-1.2C22.4,10.2,21.9,9.7,21.3,9.7z"></path> <path class="st0" d="M16,11.2c-2.7,0-4.9,2.2-4.9,4.9c0,2.7,2.2,4.9,4.9,4.9s4.9-2.2,4.9-4.9C21,13.4,18.8,11.2,16,11.2z M16,19.3 c-1.7,0-3.2-1.4-3.2-3.2c0-1.7,1.4-3.2,3.2-3.2c1.7,0,3.2,1.4,3.2,3.2C19.2,17.9,17.8,19.3,16,19.3z"></path> <path class="st0" d="M20,6h-8c-3.3,0-6,2.7-6,6v8c0,3.3,2.7,6,6,6h8c3.3,0,6-2.7,6-6v-8C26,8.7,23.3,6,20,6z M24.1,20 c0,2.3-1.9,4.1-4.1,4.1h-8c-2.3,0-4.1-1.9-4.1-4.1v-8c0-2.3,1.9-4.1,4.1-4.1h8c2.3,0,4.1,1.9,4.1,4.1V20z"></path> </g> </g>
                         </svg>
                     </a>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h4>Navegação</h4>
-                <ul class="footer-links">
+                <h4 class="footer-title">Navegação</h4>
+                <ul>
                     <li><a href="#" class="footer-link">Home</a></li>
-                    <li><a href="#" class="footer-link">Trabalhadores</a></li>
+                    <li><a href="#" class="footer-link">Profissionais</a></li>
                     <li><a href="#" class="footer-link">Empresas</a></li>
                     <li><a href="#" class="footer-link">Sobre Nós</a></li>
                     <li><a href="#" class="footer-link">Como Funciona</a></li>
@@ -289,8 +166,8 @@ if (!$usuarios || !is_array($usuarios)) {
             </div>
 
             <div class="footer-section">
-                <h4>Suporte</h4>
-                <ul class="footer-links">
+                <h4 class="footer-title">Suporte</h4>
+                <ul>
                     <li><a href="#" class="footer-link">Central de Ajuda</a></li>
                     <li><a href="#" class="footer-link">Contato</a></li>
                     <li><a href="#" class="footer-link">FAQ</a></li>
@@ -300,18 +177,20 @@ if (!$usuarios || !is_array($usuarios)) {
             </div>
 
             <div class="footer-section">
-                <h4>Legal</h4>
-                <ul class="footer-links">
+                <h4 class="footer-title">Política</h4>
+                <ul>
                     <li><a href="#" class="footer-link">Termos de Uso</a></li>
                     <li><a href="#" class="footer-link">Política de Privacidade</a></li>
                     <li><a href="#" class="footer-link">Política de Cookies</a></li>
                     <li><a href="#" class="footer-link">Diretrizes da Comunidade</a></li>
                 </ul>
             </div>
-    
-            <div class="footer-section">
-                <h4>Baixe nosso App</h4>
-                <p class="app-description">Acesse nossa plataforma em qualquer lugar</p>
+
+            <div class="footer-section end">
+                <h4 class="footer-title">Baixe nosso App</h4>
+
+                <p class="footer-subtitle">Acesse nossa plataforma em qualquer lugar</p>
+
                 <div class="app-stores">
                     <a href="#" class="google-play"><svg width="119" height="36" viewBox="0 0 119 36" fill="none" role="img"><g clip-path="url(#clip0_160_6133)"><path d="M0.447388 6.3C0.447388 4.62914 1.10725 3.02671 2.28182 1.84523C3.45639 0.663748 5.04945 0 6.71055 0L112.289 0C113.951 0 115.544 0.663748 116.718 1.84523C117.893 3.02671 118.553 4.62914 118.553 6.3V28.8378C118.553 30.5087 117.893 32.1111 116.718 33.2926C115.544 34.4741 113.951 35.1378 112.289 35.1378H6.71055C5.04945 35.1378 3.45639 34.4741 2.28182 33.2926C1.10725 32.1111 0.447388 30.5087 0.447388 28.8378V6.3Z" fill="black"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M112.289 0.63H6.71055C5.21556 0.63 3.78181 1.22737 2.7247 2.2907C1.66758 3.35404 1.0737 4.79622 1.0737 6.3V28.8378C1.0737 30.3416 1.66758 31.7838 2.7247 32.8471C3.78181 33.9104 5.21556 34.5078 6.71055 34.5078H112.289C113.784 34.5078 115.218 33.9104 116.275 32.8471C117.332 31.7838 117.926 30.3416 117.926 28.8378V6.3C117.926 4.79622 117.332 3.35404 116.275 2.2907C115.218 1.22737 113.784 0.63 112.289 0.63ZM6.71055 0C5.04945 0 3.45639 0.663748 2.28182 1.84523C1.10725 3.02671 0.447388 4.62914 0.447388 6.3V28.8378C0.447388 30.5087 1.10725 32.1111 2.28182 33.2926C3.45639 34.4741 5.04945 35.1378 6.71055 35.1378H112.289C113.951 35.1378 115.544 34.4741 116.718 33.2926C117.893 32.1111 118.553 30.5087 118.553 28.8378V6.3C118.553 4.62914 117.893 3.02671 116.718 1.84523C115.544 0.663748 113.951 0 112.289 0H6.71055Z" fill="black"></path><path d="M60.1657 19.1583C58.0863 19.1583 56.4221 20.7486 56.4221 22.923C56.42 23.4181 56.5153 23.9087 56.7027 24.3665C56.8901 24.8244 57.1658 25.2403 57.5138 25.5904C57.8619 25.9405 58.2754 26.2178 58.7306 26.4063C59.1857 26.5948 59.6735 26.6907 60.1657 26.6886C62.245 26.6886 63.9084 25.0983 63.9084 22.923C63.9084 20.664 62.1618 19.1583 60.1657 19.1583ZM60.1657 25.0983C59.0839 25.0983 58.0863 24.1785 58.0863 22.8393C58.0863 21.501 59.0839 20.5803 60.1657 20.5803C61.2465 20.5803 62.245 21.501 62.245 22.8393C62.3283 24.1785 61.2465 25.0983 60.1657 25.0983ZM52.0978 19.1583C50.0185 19.1583 48.3551 20.7486 48.3551 22.923C48.353 23.418 48.4484 23.9085 48.6357 24.3663C48.823 24.8241 49.0986 25.24 49.4466 25.5901C49.7945 25.9402 50.2079 26.2175 50.663 26.406C51.118 26.5946 51.6057 26.6906 52.0978 26.6886C54.1772 26.6886 55.8405 25.0983 55.8405 22.923C55.7573 20.664 54.094 19.1583 52.0978 19.1583ZM52.0978 25.0983C51.0161 25.0983 50.0185 24.1785 50.0185 22.8393C50.0185 21.501 51.0161 20.5803 52.0978 20.5803C53.1787 20.5803 54.1772 21.501 54.1772 22.8393C54.1772 24.1785 53.1787 25.0983 52.0978 25.0983ZM42.3658 20.2464V21.8358H46.1917C46.1085 22.7565 45.7756 23.3415 45.2764 23.8428C44.7771 24.3459 43.8627 25.0146 42.3658 25.0146C40.0368 25.0146 38.2903 23.0904 38.2903 20.7486C38.2903 18.4059 40.12 16.4817 42.3658 16.4817C43.6963 16.4817 44.6116 16.983 45.1931 17.5689L46.2749 16.4817C45.3596 15.7284 44.0291 14.9751 42.1994 14.9751C41.4335 14.9703 40.6743 15.1185 39.9657 15.4111C39.2572 15.7037 38.6135 16.1349 38.072 16.6797C37.5304 17.2244 37.1017 17.8719 36.8108 18.5846C36.5199 19.2973 36.3726 20.061 36.3773 20.8314C36.3773 24.0948 39.1215 26.6886 42.1994 26.6886C43.8627 26.6886 45.1931 26.1027 46.1917 25.0983C47.1893 24.0948 47.6054 22.5891 47.6054 21.3336C47.6054 20.9151 47.6054 20.664 47.5221 20.3301L42.3658 20.2464ZM81.9561 21.501C81.6233 20.664 80.7911 19.1583 78.8782 19.1583C76.9653 19.1583 75.3851 20.6649 75.3851 22.923C75.3851 25.0146 76.9653 26.6886 79.1278 26.6886C80.792 26.6886 81.8729 25.6842 82.2057 25.0983L80.8744 24.2613C80.4583 24.8472 79.8767 25.2657 79.0446 25.2657C78.2125 25.2657 77.6309 24.8472 77.2149 24.1785L82.2048 22.0869L81.9561 21.5019V21.501ZM76.9653 22.7565C76.9653 21.3345 78.047 20.4975 78.8782 20.4975C79.4598 20.4975 80.0423 20.8314 80.2919 21.3345L76.9653 22.7565ZM72.8065 26.4375H74.3866V15.3945H72.8065V26.4375ZM70.2279 19.9953C69.9675 19.7292 69.6568 19.518 69.3142 19.3743C68.9716 19.2306 68.6039 19.1571 68.2326 19.1583C66.3197 19.1583 64.6555 20.7486 64.6555 22.923C64.6555 25.0146 66.3197 26.6886 68.2317 26.6886C68.6031 26.6898 68.971 26.6164 69.3138 26.4727C69.6566 26.3289 69.9674 26.1178 70.2279 25.8516H70.312V26.3538C70.312 27.7758 69.4799 28.6128 68.3158 28.6128C67.3173 28.6128 66.7348 27.9432 66.4029 27.2736L64.9892 27.8586C65.4044 28.863 66.4852 30.1176 68.3158 30.1176C70.2288 30.1176 71.8089 29.0304 71.8089 26.1864V19.4094H70.312L70.2288 19.9944L70.2279 19.9953ZM68.3149 25.0983C67.2341 25.0983 66.2365 24.1785 66.2365 22.8393C66.2365 21.501 67.1509 20.4975 68.3149 20.4975C69.3967 20.4975 70.312 21.501 70.312 22.8393C70.312 24.1785 69.3958 25.0983 68.3149 25.0983ZM89.6911 15.3936H85.7811V26.4366H87.3621V22.1706H89.6911C91.5208 22.1706 93.2674 20.8314 93.2674 18.7407C93.2674 16.6491 91.4376 15.3936 89.6911 15.3936ZM89.6911 20.6649H87.3621V16.8993H89.6911C90.8551 16.8993 91.604 17.9037 91.604 18.8244C91.5208 19.6605 90.8551 20.664 89.6911 20.664V20.6649ZM99.7551 19.1583C98.5901 19.1583 97.3429 19.6605 96.8436 20.9151L98.2573 21.501C98.5901 20.916 99.1726 20.664 99.7551 20.664C100.586 20.664 101.418 21.1662 101.418 22.086V22.1706C101.086 22.0032 100.503 21.7521 99.7551 21.7521C98.1741 21.7521 96.6772 22.6728 96.6772 24.2622C96.6772 25.7679 98.0077 26.6886 99.4223 26.6886C100.503 26.6886 101.086 26.1864 101.502 25.6005H101.585V26.4375H103.165V22.1706C103.082 20.1627 101.585 19.1583 99.7551 19.1583ZM99.5887 25.0983C99.0894 25.0983 98.2573 24.7635 98.2573 24.1785C98.2573 23.3415 99.1726 23.0067 99.9206 23.0067C100.586 23.0067 101.002 23.1741 101.418 23.4252C101.418 24.4296 100.503 25.0983 99.5887 25.0983ZM108.821 19.3257L106.908 24.0948H106.824L104.911 19.3257H103.082L105.992 26.019L104.329 29.7837H105.992L110.484 19.4094H108.821V19.3257ZM94.1818 26.4375H95.7628V15.3945H94.1818V26.4375ZM36.7889 12.5496V7.15946H38.6347C39.0517 7.15946 39.3693 7.18556 39.5885 7.23686C39.8954 7.30796 40.1576 7.43666 40.375 7.62296C40.6577 7.86326 40.868 8.17016 41.0067 8.54546C41.148 8.91806 41.2187 9.34466 41.2187 9.82526C41.2187 10.2339 41.1713 10.5975 41.0765 10.9134C40.9983 11.1938 40.8749 11.4596 40.7114 11.7C40.5779 11.8906 40.4119 12.0561 40.2211 12.1887C40.0457 12.3066 39.8328 12.3957 39.5814 12.4578C39.2997 12.5227 39.0113 12.5535 38.7224 12.5496H36.7889ZM37.4984 11.9133H38.6419C38.9953 11.9133 39.2718 11.88 39.4722 11.8143C39.6744 11.7477 39.8346 11.655 39.9545 11.5353C40.1365 11.3424 40.2705 11.1089 40.3455 10.854C40.4403 10.5678 40.4886 10.2204 40.4886 9.81446C40.4886 9.25016 40.3956 8.81726 40.2104 8.51576C40.0269 8.21246 39.8042 8.00906 39.5411 7.90556C39.3514 7.83266 39.0454 7.79576 38.624 7.79576H37.4984V11.9133ZM42.1179 7.91996V7.15946H42.7765V7.92086L42.1179 7.91996ZM42.1179 12.5496V8.64446H42.7765V12.5496H42.1179ZM43.5182 11.3841L44.1687 11.2806C44.2045 11.5434 44.3065 11.7441 44.472 11.8836C44.6402 12.024 44.8746 12.0933 45.1735 12.0933C45.4759 12.0933 45.7005 12.0321 45.8463 11.9097C45.9922 11.7846 46.0655 11.6388 46.0655 11.4723C46.067 11.4016 46.0499 11.3317 46.0159 11.2698C45.982 11.2078 45.9325 11.156 45.8723 11.1195C45.7819 11.0601 45.5573 10.9854 45.1994 10.8945C44.7163 10.7721 44.3816 10.6668 44.1946 10.5795C44.0209 10.4988 43.8737 10.3698 43.7705 10.2078C43.6754 10.0489 43.6258 9.86669 43.6274 9.68126C43.6274 9.50756 43.6667 9.34736 43.7446 9.19976C43.8251 9.05036 43.9334 8.92706 44.0703 8.82896C44.1723 8.75246 44.3118 8.68856 44.4863 8.63726C44.6653 8.58326 44.8549 8.55626 45.0572 8.55626C45.3614 8.55626 45.628 8.60126 45.857 8.68856C46.0888 8.77676 46.2597 8.89736 46.3688 9.04856C46.4789 9.19886 46.554 9.39956 46.5952 9.65156L45.9519 9.74066C45.9318 9.5561 45.8402 9.38695 45.6969 9.26996C45.5573 9.15746 45.3605 9.10076 45.1046 9.10076C44.8021 9.10076 44.5865 9.15116 44.4577 9.25106C44.3279 9.35186 44.2635 9.46976 44.2635 9.60476C44.2635 9.69026 44.2904 9.76676 44.344 9.83606C44.3977 9.90716 44.4818 9.96566 44.5964 10.0125C44.6617 10.0368 44.8558 10.0935 45.1779 10.1817C45.6432 10.3068 45.9671 10.4094 46.1496 10.4904C46.3348 10.5687 46.4798 10.6839 46.5845 10.836C46.6891 10.9881 46.7419 11.1771 46.7419 11.403C46.7419 11.6226 46.6775 11.8314 46.5478 12.0276C46.4114 12.229 46.2196 12.3861 45.9957 12.4794C45.7542 12.5847 45.4822 12.6378 45.177 12.6378C44.6733 12.6378 44.2877 12.5325 44.0228 12.3219C43.7589 12.1104 43.5907 11.7981 43.5182 11.3841ZM47.5239 14.0454V8.64536H48.1234V9.15206C48.2648 8.95406 48.424 8.80556 48.6021 8.70746C48.7801 8.60666 48.9958 8.55626 49.249 8.55626C49.58 8.55626 49.8726 8.64266 50.1258 8.81366C50.3799 8.98556 50.5714 9.22766 50.7003 9.54266C50.8291 9.85316 50.8935 10.1952 50.8935 10.5678C50.8935 10.9674 50.8219 11.3274 50.6788 11.6478C50.5365 11.9673 50.3298 12.2121 50.0569 12.384C49.7867 12.5532 49.5013 12.6378 49.2016 12.6378C48.9824 12.6378 48.7846 12.591 48.6093 12.4983C48.4439 12.4114 48.2983 12.2909 48.1816 12.1446V14.0454H47.5239ZM48.1198 10.6191C48.1198 11.1213 48.2209 11.493 48.4231 11.7333C48.6254 11.9736 48.8705 12.0933 49.1577 12.0933C49.4503 12.0933 49.6999 11.97 49.9066 11.7225C50.1169 11.4723 50.2216 11.0862 50.2216 10.5642C50.2216 10.0665 50.1187 9.69386 49.9147 9.44636C49.7125 9.19886 49.47 9.07466 49.1873 9.07466C48.9072 9.07466 48.6585 9.20696 48.441 9.47156C48.2263 9.73436 48.1198 10.1169 48.1198 10.6191ZM51.4456 10.5975C51.4456 9.87386 51.646 9.33836 52.045 8.99006C52.3788 8.70116 52.7859 8.55626 53.2664 8.55626C53.7996 8.55626 54.2363 8.73266 54.5745 9.08636C54.9136 9.43736 55.0827 9.92156 55.0827 10.5417C55.0827 11.0448 55.0066 11.4399 54.8563 11.7297C54.7078 12.0159 54.4895 12.2391 54.2014 12.3984C53.9155 12.558 53.5933 12.6405 53.2664 12.6378C52.7224 12.6378 52.2821 12.4623 51.9466 12.1122C51.6129 11.7612 51.4456 11.2572 51.4456 10.5975ZM52.122 10.5975C52.122 11.097 52.2303 11.4723 52.4477 11.7225C52.6642 11.97 52.9371 12.0933 53.2664 12.0933C53.5929 12.0933 53.864 11.9682 54.0806 11.7189C54.298 11.4687 54.4063 11.0871 54.4063 10.5759C54.4063 10.0926 54.2971 9.72716 54.0779 9.47966C53.9791 9.36004 53.855 9.26422 53.7145 9.19927C53.5741 9.13431 53.4209 9.10188 53.2664 9.10436C52.9371 9.10436 52.6642 9.22856 52.4477 9.47606C52.2303 9.72356 52.122 10.0971 52.122 10.5975ZM55.8575 12.5496V8.64446H56.4498V9.19976C56.7344 8.77136 57.1468 8.55626 57.6846 8.55626C57.919 8.55626 58.1337 8.59946 58.3288 8.68496C58.5256 8.76866 58.6733 8.87846 58.7708 9.01616C58.8683 9.15296 58.9363 9.31676 58.9748 9.50486C58.9998 9.62726 59.0115 9.84236 59.0115 10.1484V12.5496H58.3538V10.1736C58.3538 9.90446 58.3279 9.70376 58.2769 9.57056C58.2252 9.43535 58.1284 9.3224 58.0031 9.25106C57.8654 9.16822 57.7072 9.12639 57.5468 9.13046C57.2658 9.13046 57.0234 9.21956 56.8185 9.39866C56.6163 9.57776 56.5152 9.91706 56.5152 10.4166V12.5496H55.8575ZM60.2543 12.5496V8.64446H60.9128V12.5496H60.2543ZM60.2211 8.15936L60.7079 7.12976H61.5704L60.766 8.15936H60.2211ZM63.1863 12.5496L61.71 8.64446H62.4034L63.2373 10.9827C63.3268 11.2356 63.41 11.4975 63.4852 11.7702C63.5442 11.5632 63.6256 11.3166 63.7303 11.0277L64.5928 8.64446H65.2693L63.8001 12.5496H63.1863ZM68.5073 11.2923L69.1873 11.3769C69.0799 11.7765 68.8813 12.0861 68.5914 12.3066C68.3015 12.5271 67.9311 12.6378 67.4801 12.6378C66.9129 12.6378 66.4619 12.4623 66.1282 12.1122C65.7971 11.7585 65.6307 11.2653 65.6307 10.6299C65.6307 9.97286 65.7989 9.46346 66.1354 9.10076C66.4718 8.73806 66.9075 8.55626 67.4444 8.55626C67.9633 8.55626 68.3865 8.73446 68.7158 9.08996C69.045 9.44546 69.2097 9.94496 69.2097 10.5894L69.2061 10.7667H66.3107C66.3349 11.1951 66.4557 11.5236 66.6731 11.7513C66.8896 11.9799 67.1598 12.0933 67.4846 12.0933C67.7262 12.0933 67.932 12.0303 68.102 11.9025C68.272 11.7747 68.408 11.5713 68.5073 11.2923ZM66.3474 10.2213H68.5145C68.4858 9.89366 68.4026 9.64706 68.2666 9.48326C68.1695 9.3604 68.0453 9.26191 67.9038 9.19553C67.7624 9.12916 67.6075 9.09672 67.4515 9.10076C67.1491 9.10076 66.8941 9.20246 66.6874 9.40586C66.4825 9.60926 66.3698 9.88016 66.3474 10.2213ZM70.0024 12.5496V7.15946H70.66V12.5496H70.0024ZM76.4239 11.2923L77.1039 11.3769C76.9966 11.7765 76.7988 12.0861 76.5089 12.3066C76.2182 12.5271 75.8477 12.6378 75.3977 12.6378C74.8295 12.6378 74.3786 12.4623 74.0448 12.1122C73.7138 11.7585 73.5483 11.2653 73.5483 10.6299C73.5483 9.97286 73.7165 9.46346 74.052 9.10076C74.3884 8.73806 74.825 8.55626 75.361 8.55626C75.8799 8.55626 76.304 8.73446 76.6324 9.08996C76.9617 9.44546 77.1263 9.94496 77.1263 10.5894L77.1227 10.7667H74.2274C74.2524 11.1951 74.3732 11.5236 74.5897 11.7513C74.8063 11.9799 75.0765 12.0933 75.4013 12.0933C75.6428 12.0933 75.8486 12.0303 76.0186 11.9025C76.1886 11.7747 76.3246 11.5713 76.4239 11.2923ZM74.264 10.2213H76.432C76.4025 9.89366 76.3193 9.64706 76.1833 9.48326C76.0861 9.3604 75.9619 9.26191 75.8204 9.19553C75.679 9.12916 75.5242 9.09672 75.3681 9.10076C75.0657 9.10076 74.8116 9.20246 74.604 9.40586C74.3991 9.60926 74.2864 9.88016 74.264 10.2213ZM77.9343 12.5496V8.64446H78.5221V9.19346C78.6438 9.00176 78.8066 8.84786 79.0088 8.73266C79.211 8.61566 79.441 8.55626 79.6996 8.55626C79.9868 8.55626 80.2221 8.61656 80.4046 8.73626C80.5898 8.85686 80.7205 9.02426 80.7956 9.24026C81.1025 8.78486 81.5025 8.55626 81.9946 8.55626C82.3793 8.55626 82.6755 8.66426 82.883 8.88026C83.0897 9.09356 83.1935 9.42296 83.1935 9.86936V12.5496H82.5395V10.089C82.5395 9.82436 82.5171 9.63446 82.4733 9.51926C82.4315 9.40087 82.3502 9.3007 82.2433 9.23576C82.1246 9.16304 81.9877 9.12618 81.8487 9.12956C81.5758 9.12956 81.3495 9.22136 81.1687 9.40496C80.988 9.58586 80.8985 9.87836 80.8985 10.2798V12.5478H80.24V10.0116C80.24 9.71726 80.1863 9.49676 80.0789 9.35006C79.9716 9.20246 79.7971 9.12956 79.5528 9.12956C79.3707 9.12864 79.1921 9.17949 79.0375 9.27626C78.8792 9.37708 78.7594 9.52865 78.6975 9.70646C78.6268 9.89546 78.5919 10.1673 78.5919 10.5228V12.5478H77.9343V12.5496Z" fill="white"></path><path d="M9.67926 6.69336C9.51284 6.85986 9.2641 7.36206 9.2641 7.86336V27.2737C9.2641 27.7759 9.42963 28.2781 9.67926 28.4455L9.76247 28.5283L20.5754 17.6527V17.4853L9.67926 6.69336Z" fill="url(#paint0_linear_160_6133)"></path><path d="M24.2348 21.3336L20.6586 17.7363V17.5689L24.2348 13.9716H24.318L28.6432 16.398C29.8073 17.0667 29.8073 18.2385 28.6432 18.9072L24.2348 21.3336Z" fill="url(#paint1_linear_160_6133)"></path><path d="M24.318 21.2499L20.5754 17.4852L9.67926 28.4454C10.0953 28.8639 10.761 28.9467 11.509 28.5291L24.3189 21.249L24.318 21.2499Z" fill="url(#paint2_linear_160_6133)"></path><path d="M24.318 13.887L11.509 6.52504C10.8442 6.10744 10.0953 6.10744 9.67926 6.60964L20.5754 17.568L24.318 13.887Z" fill="url(#paint3_linear_160_6133)"></path><path opacity="0.2" d="M24.2348 21.2499L11.5099 28.53C10.8442 28.9476 10.1785 28.9476 9.84566 28.53L9.76245 28.6137L9.84566 28.6974C10.2617 29.115 10.8442 29.115 11.5099 28.6974L24.2348 21.2499Z" fill="black"></path><path opacity="0.12" d="M9.67926 28.4453C9.51284 28.1105 9.2641 27.7757 9.2641 27.2735V27.3572C9.2641 27.8594 9.42963 28.3616 9.67926 28.529V28.4453ZM28.6432 18.7406L24.2348 21.2498L24.318 21.3335L28.6432 18.908C29.2248 18.5732 29.5576 18.071 29.5576 17.5688C29.4744 18.071 29.1416 18.4058 28.6432 18.7406Z" fill="black"></path><path opacity="0.25" d="M11.509 6.77703L28.56 16.5654C29.1416 16.9002 29.4744 17.2341 29.4744 17.6526C29.4744 17.1504 29.1416 16.7328 28.56 16.3143L11.509 6.52503C10.3449 5.85543 9.3464 6.44133 9.3464 7.86333V7.94703C9.26408 6.52503 10.3449 6.02283 11.509 6.77613V6.77703Z" fill="white"></path></g><defs><linearGradient id="paint0_linear_160_6133" x1="19.669" y1="7.66536" x2="4.91195" y2="22.3361" gradientUnits="userSpaceOnUse"><stop stop-color="#00A0FF"></stop><stop offset="0.007" stop-color="#00A1FF"></stop><stop offset="0.26" stop-color="#00BEFF"></stop><stop offset="0.512" stop-color="#00D2FF"></stop><stop offset="0.76" stop-color="#00DFFF"></stop><stop offset="1" stop-color="#00E3FF"></stop></linearGradient><linearGradient id="paint1_linear_160_6133" x1="30.1893" y1="17.64" x2="9.03862" y2="17.64" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE000"></stop><stop offset="0.409" stop-color="#FFBD00"></stop><stop offset="0.775" stop-color="#FFA500"></stop><stop offset="1" stop-color="#FF9C00"></stop></linearGradient><linearGradient id="paint2_linear_160_6133" x1="22.2897" y1="19.5876" x2="2.27942" y2="39.4809" gradientUnits="userSpaceOnUse"><stop stop-color="#FF3A44"></stop><stop offset="1" stop-color="#C31162"></stop></linearGradient><linearGradient id="paint3_linear_160_6133" x1="6.97358" y1="0.183635" x2="15.9086" y2="9.06733" gradientUnits="userSpaceOnUse"><stop stop-color="#32A071"></stop><stop offset="0.069" stop-color="#2DA771"></stop><stop offset="0.476" stop-color="#15CF74"></stop><stop offset="0.801" stop-color="#06E775"></stop><stop offset="1" stop-color="#00F076"></stop></linearGradient><clipPath id="clip0_160_6133"><rect width="119" height="36" fill="white"></rect></clipPath></defs></svg>
                     </a>
@@ -325,6 +204,11 @@ if (!$usuarios || !is_array($usuarios)) {
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <p class="copyright">© 2024 TCC Platform. Todos os direitos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Termos de Uso</a>
+                    <a href="#" class="footer-bottom-link">Política de Privacidade</a>
+                    <a href="#" class="footer-bottom-link">Cookies</a>
+                </div>
             </div>
         </div>
     </footer>

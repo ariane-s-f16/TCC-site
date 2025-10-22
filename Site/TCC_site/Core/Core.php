@@ -60,6 +60,7 @@ class Core
             'esqueci_senha/codigo' => 'esqueci_senha/codigo/index.php',
             'esqueci_senha/verificacao' => 'esqueci_senha/verificacao/index.php',
             'trabalhadores' => 'Trabalhadores/index.php',
+            'favoritos' => 'Favoritos/index.php'
             // adicione mais rotas aqui
         ];
 

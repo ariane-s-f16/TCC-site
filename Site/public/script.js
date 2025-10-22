@@ -101,7 +101,7 @@ function salvarParte2(tipoPerfil) {
     localStorage.setItem("cadastro", JSON.stringify(dados));
 
     const destino = `index.php?url=cadastro/Parte3/${tipoPerfil.charAt(0).toUpperCase() + tipoPerfil.slice(1)}`;
-    console.log("➡️ Redirecionando para:", destino);
+    console.log(" Redirecionando para:", destino);
     window.location.href = destino;
 }
 
@@ -111,10 +111,9 @@ function atualizarNomeHeader() {
     if (!span) return;
 
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
-    const nome = usuarioLogado.nome || "Usuário";
-    span.textContent = nome;
+    span.textContent = usuarioLogado.nome || "Usuário";
 
-    console.log("Nome atualizado no header:", nome);
+    console.log("Nome atualizado no header:", span.textContent);
 }
 
 // ====================== Login ======================
@@ -137,24 +136,21 @@ async function fazerLogin() {
             body: JSON.stringify({ email, password: senha })
         });
 
-        // Se status não for 200, lançar erro
-        if (!res.ok) {
-            throw new Error(`Erro ${res.status}: ${res.statusText}`);
-        }
-
-        // Ler o texto cru
+        if (!res.ok) throw new Error(`Erro ${res.status}: ${res.statusText}`);
         const texto = await res.text();
-        if (!texto) throw new Error("Servidor não retornou dados. Verifique sua rota ou servidor.");
+        if (!texto) throw new Error("Servidor não retornou dados.");
 
-        // Transformar em JSON
         const resposta = JSON.parse(texto);
 
         if (resposta.access_token) {
+            const nomeUsuario = resposta.user?.nome || resposta.user?.name || email;
+
             const usuarioLogado = { 
-                nome: resposta.logado?.name || resposta.logado?.nome || email, 
-                email, 
-                access_token: resposta.access_token 
+                nome: nomeUsuario,
+                email: email,
+                access_token: resposta.access_token
             };
+
             localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
             atualizarNomeHeader();
             window.location.href = "index.php?url=home";
@@ -214,7 +210,7 @@ async function finalizarCadastro() {
     };
 
     try {
-        const res = await fetch("index.php?url=usuario/cadastrar", {
+        const res = await fetch("index.php?url=/api/usuario/cadastro", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dadosCadastro)

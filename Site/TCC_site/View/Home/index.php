@@ -26,7 +26,7 @@
             
             <nav class="right-nav-container">
                 <ul class="nav-links">
-                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="index.php?url=home" class="nav-link">Home</a></li>
                     <li><a href="index.php?url=trabalhadores" class="nav-link">Trabalhadores</a></li>
                     <li><a href="/empresas" class="nav-link">Empresas</a></li>
                     <li><a href="/sobre" class="nav-link">Sobre</a></li>
@@ -42,7 +42,7 @@
 
                 <button class="favoritos-btn" aria-label="Favoritos">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      <a href="index.php?url=favoritos">  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></a>
                     </svg>
                 </button>
             </nav>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="hero-img">
-                <img src="public/img/img-home.png">
+                <img src="public/img/img_home.png">
             </div>
         </section>
 
@@ -380,7 +380,7 @@
         <div class="footer-content">
             <div class="footer-section pri">
                 <div class="ft-logo">
-                    <img src="../img/logo.png" alt="logo OPI">
+                    <img src="public/img/logo.png" alt="logo OPI">
                     <h3 class="footer-title-logo">TCC Plataforma</h3>
                 </div>
 
