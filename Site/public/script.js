@@ -169,86 +169,104 @@ async function fazerLogin() {
 
 // ====================== Finalizar Cadastro ======================
 async function finalizarCadastro() {
+    console.log("🚀 Função finalizarCadastro() foi chamada!");
+
     const cadastro = JSON.parse(localStorage.getItem("cadastro"));
+    console.log("📦 Dados atuais no localStorage:", cadastro);
+
     if (!cadastro) {
         alert("Complete as etapas anteriores do cadastro.");
         window.location.href = "index.php?url=cadastro/parte1";
         return;
     }
 
-    // Pega os campos do formulário
-    const nome = document.getElementById("nome")?.value.trim() || "";
-    const telefone = document.getElementById("telefone")?.value.trim() || "";
-    const cpf = document.getElementById("cpf")?.value.trim() || "";
-    const cep = document.getElementById("cep")?.value.trim() || "";
-    const rua = document.getElementById("rua")?.value.trim() || "";
-    const numero = document.getElementById("numero")?.value.trim() || "";
-    const bairro = document.getElementById("localidade")?.value.trim() || "";
-    const cidade = document.getElementById("Cidade")?.value.trim() || "";
-    const estado = document.getElementById("Estado")?.value.trim() || "";
-    const infoadd = document.getElementById("infoadd")?.value.trim() || "";
+    const fotoInput = document.getElementById("foto");
+    const arquivoFoto = fotoInput?.files?.[0] || null;
 
-    if (!nome || !cpf || !cep) {
-        alert("Preencha os campos obrigatórios: Nome, CPF e CEP.");
+    const formData = new FormData();
+    const dados = {
+        email: cadastro.email,
+        password: cadastro.senha,
+        type: cadastro.perfil,
+        nome: document.getElementById("nome")?.value || '',
+        telefone: document.getElementById("telefone")?.value || '',
+        cpf: document.getElementById("cpf")?.value || '',
+        cnpj: document.getElementById("cnpj")?.value || '',
+        localidade: document.getElementById("localidade")?.value || '',
+        uf: document.getElementById("Estado")?.value || '',
+        cep: document.getElementById("cep")?.value || '',
+        rua: document.getElementById("rua")?.value || '',
+        numero: document.getElementById("numero")?.value || '',
+        infoadd: document.getElementById("infoadd")?.value || '',
+        pais: document.getElementById("Pais")?.value || '',
+        cidade: document.getElementById("Cidade")?.value || '',
+    };
+
+    console.log("🧩 Dados do formulário coletados:", dados);
+
+    // Validação básica
+    for (const key of ['nome','telefone','localidade','uf','rua','numero']) {
+        if (!dados[key]) {
+            const input = document.getElementById(key);
+            mostrarErro(input, "Campo obrigatório");
+            console.warn(`⚠️ Campo obrigatório faltando: ${key}`);
+            return;
+        }
+    }
+
+    if (!arquivoFoto) {
+        alert("Selecione uma foto antes de continuar.");
+        console.warn("⚠️ Nenhum arquivo de foto selecionado!");
         return;
     }
 
-    const dadosCadastro = {
-        nome,
-        email: cadastro.email,
-        senha: cadastro.senha,
-        tipo: cadastro.perfil,
-        telefone,
-        cpf,
-        cep,
-        rua,
-        numero,
-        bairro,
-        cidade,
-        estado,
-        infoadd
-    };
+    // Adiciona dados e arquivo ao FormData
+    for (const chave in dados) formData.append(chave, dados[chave]);
+    formData.append("foto", arquivoFoto);
+
+    console.log("📨 Enviando dados ao servidor...");
 
     try {
-        const res = await fetch("index.php?url=/api/usuario/cadastro", {
+        const response = await fetch("index.php?url=usuario/cadastro", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dadosCadastro)
+            body: formData
         });
 
-        if (!res.ok) {
-            const text = await res.text();
-            console.error("Erro ao cadastrar:", text);
-            alert("Erro ao cadastrar. Verifique os dados e tente novamente.");
+        const texto = await response.text();
+        console.log("🧾 Resposta bruta do servidor:", texto);
+
+        let resposta;
+        try {
+            resposta = JSON.parse(texto);
+        } catch {
+            console.error(" Resposta do servidor não é JSON:", texto);
+            alert("Erro no servidor. Tente novamente.");
             return;
         }
 
-        const resposta = await res.json();
+        console.log(" Resposta parseada:", resposta);
 
-        if (resposta.success) {
-            // Salva usuário logado no localStorage
-            const usuarioLogado = { 
-                nome: dadosCadastro.nome, // ⬅️ garante que o nome será exibido no header
-                email: dadosCadastro.email, 
-                access_token: resposta.access_token || "temporario" 
-            };
-            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
-
-            // Atualiza o header com o nome do usuário
-            atualizarNomeHeader();
-
-            alert("Cadastro finalizado com sucesso!");
+        if (resposta.access_token) {
+            localStorage.setItem("usuarioLogado", JSON.stringify({ 
+                nome: dados.nome, 
+                email: dados.email, 
+                access_token: resposta.access_token 
+            }));
+            localStorage.removeItem("cadastro");
+            console.log("🎉 Cadastro finalizado com sucesso!");
             window.location.href = "index.php?url=home";
         } else {
-            alert(resposta.message || "Erro ao finalizar cadastro.");
+            console.warn(" Erro no cadastro. Resposta sem token.");
+            alert("Erro ao finalizar cadastro.");
         }
-
     } catch (err) {
-        console.error("Erro ao finalizar cadastro:", err);
-        alert("Erro ao finalizar cadastro. Verifique sua conexão.");
+        console.error(" Erro ao enviar cadastro:", err);
+        alert("Erro de comunicação com o servidor.");
     }
 }
 
+// 🔹 Torna a função global para o onclick funcionar
+window.finalizarCadastro = finalizarCadastro;
 
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {

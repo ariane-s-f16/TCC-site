@@ -1,105 +1,25 @@
 <?php
 require_once __DIR__ . '/../../Core/Core.php';
-
 $core = new Core();
 
-// --- pega a base da API (acessa a propriedade privada via Reflection sem alterar Core) ---
-$apiBase = 'http://127.0.0.1:8000'; // fallback
-try {
-    $ref = new ReflectionClass($core);
-    if ($ref->hasProperty('apiBaseUrl')) {
-        $prop = $ref->getProperty('apiBaseUrl');
-        $prop->setAccessible(true);
-        $apiBase = rtrim($prop->getValue($core), '/');
-    }
-} catch (Throwable $e) {
-    // se der erro, usa fallback definido acima
+$apiBase = 'http://127.0.0.1:8000/api';
+
+// Função para buscar dados da API via cURL
+function buscarPortfolios($url) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    $data = json_decode($response, true);
+    return is_array($data) ? $data : [];
 }
 
-// --- Faz requisição para a API (rota que você usa para listar usuários) ---
-$response = $core->makeRequest('GET', $apiBase . '/api/usuario/u');
+// Buscar todos os portfólios
+$portfolios = buscarPortfolios($apiBase . '/portfolio');
 
-// --- Função para decodificar JSON robustamente (também tenta decodificar JSON aninhado) ---
-function robust_json_decode($str) {
-    $attempts = 0;
-    $value = $str;
-    while ($attempts < 3) {
-        $decoded = json_decode($value, true);
-        if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
-            // decodificação falhou
-            return null;
-        }
-        // Se decodificou e é string -> json aninhado
-        if (is_string($decoded)) {
-            $value = $decoded;
-            $attempts++;
-            continue;
-        }
-        return $decoded;
-    }
-    return null;
-}
+// Exemplo: imprimir os dados
 
-$decoded = robust_json_decode($response);
-
-// Se API retornou uma estrutura de erro (laravel), captura a mensagem
-$usuarios = [];
-if (is_array($decoded)) {
-    // Caso padrão: dado já é uma lista de usuários (array indexado)
-    if (array_values($decoded) === $decoded) {
-        // array indexado: pode ser lista de usuários
-        $usuarios = $decoded;
-    }
-    // Caso Laravel style: { "data": [...] }
-    elseif (isset($decoded['data']) && is_array($decoded['data'])) {
-        $usuarios = $decoded['data'];
-    }
-    // Caso a resposta venha como ['message' => 'The route ... could not be found.']
-    elseif (isset($decoded['message'])) {
-        $errorMsg = $decoded['message'];
-    }
-    // Caso seja um objeto com chaves nomeadas de usuários (menor chance)
-    else {
-        // Tenta encontrar arrays dentro do objeto que pareçam usuários
-        foreach ($decoded as $k => $v) {
-            if (is_array($v)) {
-                // se o elemento parece uma lista de usuários (indexado)
-                if (array_values($v) === $v) {
-                    $usuarios = $v;
-                    break;
-                }
-            }
-        }
-    }
-}
-
-// garante que $usuarios é uma lista
-if (!is_array($usuarios)) $usuarios = [];
-
-// helper para montar a URL da foto com base na resposta
-function resolve_foto_url($fotoValue, $apiBase) {
-    // Se vazio
-    if (empty($fotoValue)) return 'public/img/avatar.png';
-
-    // Se já for URL absoluta
-    if (preg_match('#^https?://#i', $fotoValue)) return $fotoValue;
-
-    // Se começar com / ou storage, tenta anexar à base da API
-    $trimmed = ltrim($fotoValue, '/');
-    // se foto veio como "storage/...." ou "fotos/..." => monta com base da api
-    return rtrim($apiBase, '/') . '/' . $trimmed;
-}
-
-// safe getter
-function get_field($arr, $key, $default = '') {
-    if (!is_array($arr)) return $default;
-    if (array_key_exists($key, $arr)) return $arr[$key];
-    // tenta propriedades aninhadas (objeto convertido)
-    foreach ($arr as $k => $v) {
-        if (is_array($v) && array_key_exists($key, $v)) return $v[$key];
-    }
-    return $default;
-}
 ?>
 
 <!DOCTYPE html>
@@ -171,45 +91,28 @@ function get_field($arr, $key, $default = '') {
 
 
     <div class="title"><h1>Trabalhadores em todo o Brasil</h1></div>
-    <?php if (!empty($errorMsg)): ?>
-        <div class="error">Erro da API: <?= htmlspecialchars($errorMsg) ?></div>
-    <?php endif; ?>
-
-    <?php if (empty($usuarios)): ?>
-        <p>Nenhum usuário encontrado.</p>
-    <?php else: ?>
-        <div class="cards-container">
+    <div class="cards">
+        <?php if (empty($usuarios)): ?>
+            <p>Nenhum usuário encontrado.</p>
+        <?php else: ?>
             <?php foreach ($usuarios as $u): 
-                // protege contra $u sendo string por engano
-                if (!is_array($u)) continue;
-
-                // tenta extrair os campos mais comuns que sua API devolve:
-                // 'nome' pode vir em 'nome' (prestador/contratante/empresa) ou em user->name em 'logado' etc.
-                $nome = $u['nome'] ?? ($u['name'] ?? ($u['razao_social'] ?? 'Usuário'));
-                $email = $u['email'] ?? ($u['user_email'] ?? '');
-                $tipo  = $u['type'] ?? ($u['tipo'] ?? '');
-                $cidade = $u['cidade'] ?? ($u['localidade'] ?? '');
-                $estado = $u['estado'] ?? ($u['uf'] ?? '');
-
-                // foto pode vir como 'foto' ou 'imagem' ou 'path'
-                $fotoVal = $u['foto'] ?? ($u['imagem'] ?? ($u['path'] ?? ''));
-
-                $fotoUrl = resolve_foto_url($fotoVal, $apiBase);
+                $nome = $u['nome'] ?? $u['razao_social'] ?? 'Usuário';
+                $foto = isset($u['foto']) && !empty($u['foto']) ? 
+                        $u['foto'] : 
+                        '/public/img/.png';
+                $cidade = $u['localidade'] ?? 'Local não informado';
+                $estado = $u['estado'] ?? '';
             ?>
-                <article class="card">
-                    <img src="<?= htmlspecialchars($fotoUrl) ?>" alt="<?= htmlspecialchars($nome) ?>" onerror="this.onerror=null;this.src='/public/img/avatar.png'">
-                    <div class="info">
-                        <h3><?= htmlspecialchars($nome) ?></h3>
-                        <?php if (!empty($email)): ?><p><?= htmlspecialchars($email) ?></p><?php endif; ?>
-                        <?php if (!empty($tipo)): ?><p>Tipo: <?= htmlspecialchars(ucfirst($tipo)) ?></p><?php endif; ?>
-                        <?php if (!empty($cidade) || !empty($estado)): ?>
-                            <p><?= htmlspecialchars(trim($cidade . ($cidade && $estado ? ', ' : '') . $estado)) ?></p>
-                        <?php endif; ?>
-                    </div>
-                </article>
+            <div class="card">
+                <img src="<?= htmlspecialchars($foto) ?>" alt="<?= htmlspecialchars($nome) ?>">
+                <div class="info">
+                    <h3><?= htmlspecialchars($nome) ?></h3>
+                    <p><?= htmlspecialchars($cidade) ?> - <?= htmlspecialchars($estado) ?></p>
+                </div>
+            </div>
             <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
     <div class="container">
 
         <div class="filtro-container">
