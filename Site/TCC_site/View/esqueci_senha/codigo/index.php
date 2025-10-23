@@ -1,3 +1,9 @@
+<!--Usuário digita o email e clica em Enviar Código.
+fetch envia POST para index.php?url=forgot-password.
+O Core.php vai receber a requisição, detectar que é POST, e encaminhar para  PasswordController@forgot_password.
+O controller cria o código, envia a notificação e retorna JSON com { message: "Código enviado para o e-mail." }.
+Se sucesso, o JS redireciona para verificar-codigo com o email na query string.-->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,14 +29,7 @@
       <form class="form" onsubmit="esqueci_senha(event)">
         <div class="form-group">
           <label for="email" class="label">Endereço de E-mail</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            class="input" 
-            placeholder="seu@email.com"
-            required
-          />
+          <input type="email" id="email" name="email" class="input" placeholder="seu@email.com" required/>
         </div>
 
         <button type="submit" class="button button-primary">
@@ -42,7 +41,6 @@
     </div>
   </div>
 
- 
-  </script>
+  <script src="public/script.js"></script>
 </body>
 </html>

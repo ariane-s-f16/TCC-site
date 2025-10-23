@@ -104,64 +104,22 @@ function salvarParte2(tipoPerfil) {
     window.location.href = destino;
 }
 
-// ====================== Parte 3 / Header ======================
 function atualizarNomeHeader() {
     const span = document.querySelector(".perfil-name");
     if (!span) return;
 
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
+
+    // Sempre usa o nome salvo no localStorage
     span.textContent = usuarioLogado.nome || "Usuário";
 
     console.log("Nome atualizado no header:", span.textContent);
-}
-
-// ====================== Login ======================
-async function fazerLogin() {
-    const emailInput = document.getElementById("email");
-    const senhaInput = document.getElementById("senha");
-    const email = emailInput.value.trim();
-    const senha = senhaInput.value.trim();
-
-    if (!email || !senha) {
-        if (!email) mostrarErro(emailInput, "Digite seu e-mail");
-        if (!senha) mostrarErro(senhaInput, "Digite sua senha");
-        return;
-    }
-
-    try {
-        const res = await fetch("index.php?url=/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password: senha })
-        });
-
-        if (!res.ok) throw new Error(`Erro ${res.status}: ${res.statusText}`);
-        const resposta = await res.json();
-
-        if (resposta.access_token) {
-            const nomeUsuario = resposta.user?.nome || resposta.user?.name || email;
-            const usuarioLogado = { nome: nomeUsuario, email, access_token: resposta.access_token };
-            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
-            atualizarNomeHeader();
-            window.location.href = "index.php?url=home";
-        } else if (resposta.error) {
-            mostrarErro(emailInput, resposta.error);
-            mostrarErro(senhaInput, resposta.error);
-        } else {
-            mostrarErro(emailInput, "Email ou senha incorretos");
-            mostrarErro(senhaInput, "Email ou senha incorretos");
-        }
-    } catch (err) {
-        console.error("Erro no login:", err);
-        alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
-    }
 }
 
 // ====================== Finalizar Cadastro ======================
 async function finalizarCadastro() {
     console.log("🚀 Função finalizarCadastro() chamada!");
 
-    // Pega dados do localStorage
     const cadastro = JSON.parse(localStorage.getItem("cadastro"));
     if (!cadastro) {
         alert("Complete as etapas anteriores do cadastro.");
@@ -169,7 +127,6 @@ async function finalizarCadastro() {
         return;
     }
 
-    // Campos do formulário
     const campos = {
         nome: document.getElementById("nome").value.trim(),
         telefone: document.getElementById("telefone").value.trim(),
@@ -183,7 +140,7 @@ async function finalizarCadastro() {
         infoadd: document.getElementById("infoadd").value.trim()
     };
 
-    // Validação simples
+    // Validação básica
     for (const key in campos) {
         if (!campos[key]) {
             alert(`O campo "${key}" é obrigatório!`);
@@ -191,16 +148,13 @@ async function finalizarCadastro() {
         }
     }
 
-    // Foto
     const fotoInput = document.getElementById("file");
     if (!fotoInput || !fotoInput.files.length) {
         alert("Selecione uma foto!");
         return;
     }
     const foto = fotoInput.files[0];
-    console.log("Arquivo selecionado:", foto);
 
-    // Monta FormData
     const formData = new FormData();
     formData.append("file", foto);
     formData.append("email", cadastro.email);
@@ -218,14 +172,19 @@ async function finalizarCadastro() {
         });
 
         const data = await response.json();
-        console.log("✅ Resposta do servidor:", data);
+        console.log("Resposta do servidor:", data);
 
         if (data.access_token) {
+            // Salva o nome corretamente no localStorage
             localStorage.setItem("usuarioLogado", JSON.stringify({
                 nome: campos.nome,
                 email: cadastro.email,
                 access_token: data.access_token
             }));
+
+            // Atualiza o header imediatamente
+            atualizarNomeHeader();
+
             localStorage.removeItem("cadastro");
             alert("Cadastro realizado com sucesso!");
             window.location.href = "index.php?url=home";
@@ -240,10 +199,59 @@ async function finalizarCadastro() {
     }
 }
 
-// Torna global para o botão onclick
+// ====================== Login ======================
+async function fazerLogin() {
+    const emailInput = document.getElementById("email");
+    const senhaInput = document.getElementById("senha");
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value.trim();
+
+    if (!email || !senha) {
+        if (!email) alert("Digite seu e-mail");
+        if (!senha) alert("Digite sua senha");
+        return;
+    }
+
+    try {
+        const res = await fetch("index.php?url=/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password: senha })
+        });
+
+        if (!res.ok) throw new Error(`Erro ${res.status}: ${res.statusText}`);
+        const resposta = await res.json();
+
+        if (resposta.access_token) {
+            // Aqui pegamos o nome do usuário do backend, se disponível
+            let nomeUsuario = resposta.user?.nome || resposta.user?.name || email;
+
+            localStorage.setItem("usuarioLogado", JSON.stringify({
+                nome: nomeUsuario,
+                email,
+                access_token: resposta.access_token
+            }));
+
+            atualizarNomeHeader();
+            window.location.href = "index.php?url=home";
+        } else if (resposta.error) {
+            alert(resposta.error);
+        } else {
+            alert("Email ou senha incorretos");
+        }
+    } catch (err) {
+        console.error("Erro no login:", err);
+        alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
+    }
+}
+
+// Torna global
 window.finalizarCadastro = finalizarCadastro;
+window.fazerLogin = fazerLogin;
+window.atualizarNomeHeader = atualizarNomeHeader;
 
-
+// Atualiza o header ao carregar a página
+document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
 
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
@@ -272,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cepInput) cepInput.addEventListener("input", async () => {
         let v = cepInput.value.replace(/\D/g, "").slice(0, 8);
         cepInput.value = v.replace(/(\d{5})(\d)/, "$1-$2");
+
         if (v.length === 8) {
             try {
                 const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
@@ -279,8 +288,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!data.erro) {
                     rua.value = data.logradouro || '';
                     bairro.value = data.bairro || '';
-                    estado.innerHTML = `<option value="${data.uf}">${data.uf}</option>`;
-                    cidade.innerHTML = `<option value="${data.localidade}">${data.localidade}</option>`;
+
+                    // Limpa e cria opções de estado e cidade corretamente
+                    estado.innerHTML = '';
+                    cidade.innerHTML = '';
+
+                    const optionEstado = document.createElement('option');
+                    optionEstado.value = data.uf;
+                    optionEstado.text = data.uf;
+                    optionEstado.selected = true;
+                    estado.appendChild(optionEstado);
+
+                    const optionCidade = document.createElement('option');
+                    optionCidade.value = data.localidade;
+                    optionCidade.text = data.localidade;
+                    optionCidade.selected = true;
+                    cidade.appendChild(optionCidade);
+
                     estado.disabled = true;
                     cidade.disabled = true;
                 }
@@ -292,9 +316,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ====================== Função esqueci senha ======================
-function esqueci_senha(event) {
+async function esqueci_senha(event) {
     event.preventDefault();
-    const email = document.getElementById('email').value;
-    console.log('Enviando código para:', email);
-    window.location.href = 'index.php?url=esqueci_senha/verificacao?email=' + encodeURIComponent(email);
+    const email = document.getElementById('email').value.trim();
+    if (!email) {
+        alert("Digite seu e-mail");
+        return;
+    }
+
+    try {
+        const apiUrl = `http://127.0.0.1:8000/api/forgot-password?email=${encodeURIComponent(email)}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+
+        const data = await response.json();
+        console.log("Resposta do servidor:", data);
+
+        if (data.message === 'Código enviado para o e-mail.') {
+            window.location.href = `index.php?url=esqueci_senha/verificacao&email=${encodeURIComponent(email)}`;
+        } else {
+            alert("Erro: " + (data.message || "Não foi possível enviar o código"));
+        }
+    } catch (err) {
+        console.error("Erro ao enviar código:", err);
+        alert("Erro de comunicação com o servidor ou resposta inválida.");
+    }
 }
