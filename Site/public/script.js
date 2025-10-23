@@ -315,10 +315,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ====================== Função esqueci senha ======================
+// ====================== Função esqueci senha  ======================
 async function esqueci_senha(event) {
     event.preventDefault();
     const email = document.getElementById('email').value.trim();
+    
     if (!email) {
         alert("Digite seu e-mail");
         return;
@@ -327,18 +328,46 @@ async function esqueci_senha(event) {
     try {
         const apiUrl = `http://127.0.0.1:8000/api/forgot-password?email=${encodeURIComponent(email)}`;
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+        
+        if (!response.ok) {
+            throw new Error(`Erro HTTP ${response.status}`);
+        }
 
-        const data = await response.json();
-        console.log("Resposta do servidor:", data);
+        // CORREÇÃO: Pega o texto bruto primeiro
+        const text = await response.text();
+        console.log("Resposta bruta:", text);
 
-        if (data.message === 'Código enviado para o e-mail.') {
+        // Verifica se a resposta não está vazia
+        if (!text || text.trim() === '') {
+            console.error("Resposta vazia do servidor");
+            alert("Servidor retornou resposta vazia. Verifique o backend.");
+            return;
+        }
+
+        //  fazer o parse do JSON
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (parseError) {
+            console.error("Erro ao fazer parse do JSON:", parseError);
+            console.error("Texto recebido:", text);
+            alert("Resposta do servidor não é um JSON válido.");
+            return;
+        }
+
+        console.log("Resposta parseada:", data);
+
+        // Verifica se teve sucesso
+        if (data.message === 'Código enviado para o e-mail.' || data.success) {
             window.location.href = `index.php?url=esqueci_senha/verificacao&email=${encodeURIComponent(email)}`;
         } else {
-            alert("Erro: " + (data.message || "Não foi possível enviar o código"));
+            alert("Erro: " + (data.message || data.error || "Não foi possível enviar o código"));
         }
     } catch (err) {
         console.error("Erro ao enviar código:", err);
-        alert("Erro de comunicação com o servidor ou resposta inválida.");
+        alert("Erro de comunicação com o servidor: " + err.message);
     }
 }
+
+// Torna a função global
+window.esqueci_senha = esqueci_senha;
