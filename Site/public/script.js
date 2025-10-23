@@ -18,7 +18,6 @@ function mostrarErro(input, mensagem) {
     input.placeholder = mensagem;
     input.classList.add("input-error");
     input.style.borderColor = "red";
-    input.style.setProperty("--placeholder-color", "red");
     input.style.color = "red";
 }
 
@@ -101,7 +100,7 @@ function salvarParte2(tipoPerfil) {
     localStorage.setItem("cadastro", JSON.stringify(dados));
 
     const destino = `index.php?url=cadastro/Parte3/${tipoPerfil.charAt(0).toUpperCase() + tipoPerfil.slice(1)}`;
-    console.log(" Redirecionando para:", destino);
+    console.log("Redirecionando para:", destino);
     window.location.href = destino;
 }
 
@@ -137,20 +136,11 @@ async function fazerLogin() {
         });
 
         if (!res.ok) throw new Error(`Erro ${res.status}: ${res.statusText}`);
-        const texto = await res.text();
-        if (!texto) throw new Error("Servidor não retornou dados.");
-
-        const resposta = JSON.parse(texto);
+        const resposta = await res.json();
 
         if (resposta.access_token) {
             const nomeUsuario = resposta.user?.nome || resposta.user?.name || email;
-
-            const usuarioLogado = { 
-                nome: nomeUsuario,
-                email: email,
-                access_token: resposta.access_token
-            };
-
+            const usuarioLogado = { nome: nomeUsuario, email, access_token: resposta.access_token };
             localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
             atualizarNomeHeader();
             window.location.href = "index.php?url=home";
@@ -169,104 +159,91 @@ async function fazerLogin() {
 
 // ====================== Finalizar Cadastro ======================
 async function finalizarCadastro() {
-    console.log("🚀 Função finalizarCadastro() foi chamada!");
+    console.log("🚀 Função finalizarCadastro() chamada!");
 
+    // Pega dados do localStorage
     const cadastro = JSON.parse(localStorage.getItem("cadastro"));
-    console.log("📦 Dados atuais no localStorage:", cadastro);
-
     if (!cadastro) {
         alert("Complete as etapas anteriores do cadastro.");
         window.location.href = "index.php?url=cadastro/parte1";
         return;
     }
 
-    const fotoInput = document.getElementById("foto");
-    const arquivoFoto = fotoInput?.files?.[0] || null;
-
-    const formData = new FormData();
-    const dados = {
-        email: cadastro.email,
-        password: cadastro.senha,
-        type: cadastro.perfil,
-        nome: document.getElementById("nome")?.value || '',
-        telefone: document.getElementById("telefone")?.value || '',
-        cpf: document.getElementById("cpf")?.value || '',
-        cnpj: document.getElementById("cnpj")?.value || '',
-        localidade: document.getElementById("localidade")?.value || '',
-        uf: document.getElementById("Estado")?.value || '',
-        cep: document.getElementById("cep")?.value || '',
-        rua: document.getElementById("rua")?.value || '',
-        numero: document.getElementById("numero")?.value || '',
-        infoadd: document.getElementById("infoadd")?.value || '',
-        pais: document.getElementById("Pais")?.value || '',
-        cidade: document.getElementById("Cidade")?.value || '',
+    // Campos do formulário
+    const campos = {
+        nome: document.getElementById("nome").value.trim(),
+        telefone: document.getElementById("telefone").value.trim(),
+        cpf: document.getElementById("cpf").value.trim(),
+        cep: document.getElementById("cep").value.trim(),
+        rua: document.getElementById("rua").value.trim(),
+        numero: document.getElementById("numero").value.trim(),
+        localidade: document.getElementById("localidade").value.trim(),
+        estado: document.getElementById("Estado").value.trim(),
+        cidade: document.getElementById("cidade").value.trim(),
+        infoadd: document.getElementById("infoadd").value.trim()
     };
 
-    console.log("🧩 Dados do formulário coletados:", dados);
-
-    // Validação básica
-    for (const key of ['nome','telefone','localidade','uf','rua','numero']) {
-        if (!dados[key]) {
-            const input = document.getElementById(key);
-            mostrarErro(input, "Campo obrigatório");
-            console.warn(`⚠️ Campo obrigatório faltando: ${key}`);
+    // Validação simples
+    for (const key in campos) {
+        if (!campos[key]) {
+            alert(`O campo "${key}" é obrigatório!`);
             return;
         }
     }
 
-    if (!arquivoFoto) {
-        alert("Selecione uma foto antes de continuar.");
-        console.warn("⚠️ Nenhum arquivo de foto selecionado!");
+    // Foto
+    const fotoInput = document.getElementById("file");
+    if (!fotoInput || !fotoInput.files.length) {
+        alert("Selecione uma foto!");
         return;
     }
+    const foto = fotoInput.files[0];
+    console.log("Arquivo selecionado:", foto);
 
-    // Adiciona dados e arquivo ao FormData
-    for (const chave in dados) formData.append(chave, dados[chave]);
-    formData.append("foto", arquivoFoto);
+    // Monta FormData
+    const formData = new FormData();
+    formData.append("file", foto);
+    formData.append("email", cadastro.email);
+    formData.append("password", cadastro.senha);
+    formData.append("type", cadastro.perfil);
 
-    console.log("📨 Enviando dados ao servidor...");
+    for (const key in campos) {
+        formData.append(key, campos[key]);
+    }
 
     try {
-        const response = await fetch("index.php?url=usuario/cadastro", {
+        const response = await fetch("index.php?url=/usuario/cadastro", {
             method: "POST",
             body: formData
         });
 
-        const texto = await response.text();
-        console.log("🧾 Resposta bruta do servidor:", texto);
+        const data = await response.json();
+        console.log("✅ Resposta do servidor:", data);
 
-        let resposta;
-        try {
-            resposta = JSON.parse(texto);
-        } catch {
-            console.error(" Resposta do servidor não é JSON:", texto);
-            alert("Erro no servidor. Tente novamente.");
-            return;
-        }
-
-        console.log(" Resposta parseada:", resposta);
-
-        if (resposta.access_token) {
-            localStorage.setItem("usuarioLogado", JSON.stringify({ 
-                nome: dados.nome, 
-                email: dados.email, 
-                access_token: resposta.access_token 
+        if (data.access_token) {
+            localStorage.setItem("usuarioLogado", JSON.stringify({
+                nome: campos.nome,
+                email: cadastro.email,
+                access_token: data.access_token
             }));
             localStorage.removeItem("cadastro");
-            console.log("🎉 Cadastro finalizado com sucesso!");
+            alert("Cadastro realizado com sucesso!");
             window.location.href = "index.php?url=home";
+        } else if (data.error) {
+            alert("Erro no cadastro: " + (data.details ? JSON.stringify(data.details) : data.error));
         } else {
-            console.warn(" Erro no cadastro. Resposta sem token.");
-            alert("Erro ao finalizar cadastro.");
+            alert("Erro desconhecido no cadastro.");
         }
     } catch (err) {
-        console.error(" Erro ao enviar cadastro:", err);
+        console.error("Erro ao enviar cadastro:", err);
         alert("Erro de comunicação com o servidor.");
     }
 }
 
-// 🔹 Torna a função global para o onclick funcionar
+// Torna global para o botão onclick
 window.finalizarCadastro = finalizarCadastro;
+
+
 
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
@@ -277,24 +254,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const cepInput = document.getElementById("cep");
     const rua = document.getElementById("rua");
     const bairro = document.getElementById("localidade");
-    const cidade = document.getElementById("Cidade");
+    const cidade = document.getElementById("cidade");
     const estado = document.getElementById("Estado");
 
-    // Máscara CPF
     if (cpfInput) cpfInput.addEventListener("input", () => {
         let v = cpfInput.value.replace(/\D/g, "").slice(0, 11);
         v = v.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
         cpfInput.value = v;
     });
 
-    // Máscara Telefone
     if (telefoneInput) telefoneInput.addEventListener("input", () => {
         let v = telefoneInput.value.replace(/\D/g, "").slice(0, 11);
         v = v.replace(/^(\d{2})(\d)/g, "($1) $2").replace(/(\d{5})(\d{4})$/, "$1-$2");
         telefoneInput.value = v;
     });
 
-    // Preenchimento CEP automático
     if (cepInput) cepInput.addEventListener("input", async () => {
         let v = cepInput.value.replace(/\D/g, "").slice(0, 8);
         cepInput.value = v.replace(/(\d{5})(\d)/, "$1-$2");
@@ -303,11 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
                 const data = await res.json();
                 if (!data.erro) {
-                    // Campos readonly
                     rua.value = data.logradouro || '';
                     bairro.value = data.bairro || '';
-
-                    // Preencher selects e bloquear edição
                     estado.innerHTML = `<option value="${data.uf}">${data.uf}</option>`;
                     cidade.innerHTML = `<option value="${data.localidade}">${data.localidade}</option>`;
                     estado.disabled = true;
@@ -318,116 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    // ====================== Buscador ======================
-    const buscador = document.getElementById('buscador');
-    if (!buscador) return;
-
-    let resultadosDiv = document.createElement('div');
-    resultadosDiv.id = 'resultados-busca';
-    resultadosDiv.style.position = 'absolute';
-    resultadosDiv.style.background = '#fff';
-    resultadosDiv.style.width = buscador.offsetWidth + 'px';
-    resultadosDiv.style.maxHeight = '400px';
-    resultadosDiv.style.overflowY = 'auto';
-    resultadosDiv.style.border = '1px solid #ccc';
-    resultadosDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-    resultadosDiv.style.borderRadius = '8px';
-    resultadosDiv.style.zIndex = '1000';
-    resultadosDiv.style.display = 'none';
-    buscador.parentNode.appendChild(resultadosDiv);
-
-    buscador.addEventListener('input', async () => {
-        const termo = buscador.value.trim().toLowerCase();
-        resultadosDiv.innerHTML = '';
-
-        if (termo.length === 0) {
-            resultadosDiv.style.display = 'none';
-            return;
-        }
-
-        try {
-            const res = await fetch(`index.php?url=usuario/buscar&termo=${encodeURIComponent(termo)}`);
-            const usuarios = await res.json();
-
-            if (!usuarios.length) {
-                resultadosDiv.style.display = 'none';
-                return;
-            }
-
-            usuarios.forEach(u => {
-                const card = document.createElement('div');
-                card.classList.add('card-busca');
-                card.style.display = 'flex';
-                card.style.alignItems = 'center';
-                card.style.padding = '10px';
-                card.style.margin = '5px';
-                card.style.cursor = 'pointer';
-                card.style.borderBottom = '1px solid #eee';
-                card.style.transition = 'background 0.2s';
-
-                card.addEventListener('mouseenter', () => card.style.background = '#f5f5f5');
-                card.addEventListener('mouseleave', () => card.style.background = '#fff');
-
-                card.addEventListener('click', () => {
-                    window.location.href = `index.php?url=perfil/${u.id}`;
-                });
-
-                const img = document.createElement('img');
-                img.src = u.foto || 'public/img/avatar.png';
-                img.alt = u.nome;
-                img.style.width = '50px';
-                img.style.height = '50px';
-                img.style.borderRadius = '50%';
-                img.style.objectFit = 'cover';
-                img.style.marginRight = '10px';
-
-                const info = document.createElement('div');
-                const nome = document.createElement('div');
-                nome.textContent = u.nome;
-                nome.style.fontWeight = 'bold';
-                const cargo = document.createElement('div');
-                cargo.textContent = u.cargo || u.tipo;
-                cargo.style.fontSize = '0.9em';
-                cargo.style.color = '#555';
-                const local = document.createElement('div');
-                local.textContent = `${u.cidade || ''}${u.cidade && u.estado ? ', ' : ''}${u.estado || ''}`;
-                local.style.fontSize = '0.8em';
-                local.style.color = '#888';
-
-                info.appendChild(nome);
-                info.appendChild(cargo);
-                info.appendChild(local);
-
-                card.appendChild(img);
-                card.appendChild(info);
-                resultadosDiv.appendChild(card);
-            });
-
-            resultadosDiv.style.display = 'block';
-        } catch (err) {
-            console.error('Erro ao buscar usuários:', err);
-            resultadosDiv.style.display = 'none';
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!buscador.contains(e.target) && !resultadosDiv.contains(e.target)) {
-            resultadosDiv.style.display = 'none';
-        }
-    });
 });
 
+// ====================== Função esqueci senha ======================
 function esqueci_senha(event) {
-  event.preventDefault();
-  const email = document.getElementById('email').value;
-  // Simular envio de email
-  console.log('Enviando código para:', email);
-  // Redirecionar para página de verificação
-  window.location.href = 'index.php?url=esqueci_senha/verificacao? email=' + encodeURIComponent(email);
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    console.log('Enviando código para:', email);
+    window.location.href = 'index.php?url=esqueci_senha/verificacao?email=' + encodeURIComponent(email);
 }
-
-
-
-
-
