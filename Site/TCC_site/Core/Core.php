@@ -6,21 +6,19 @@ class Core
 
     public function start()
     {
-        // Captura a URL (ex: ?url=entrar)
+        ob_start();
+        error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+
         $url = $_GET['url'] ?? '';
         $url = trim(strtolower($url), '/');
 
-        // Caminho base da pasta View
         $viewBasePath = __DIR__ . '/../View/';
-
-        // Extensões de arquivos estáticos permitidos
         $staticExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'woff', 'ttf', 'ico', 'html'];
 
-        // Verifica se é um arquivo estático
+        // === ARQUIVOS ESTÁTICOS ===
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if (in_array($ext, $staticExtensions)) {
             $staticFilePath = $viewBasePath . $url;
-
             if (file_exists($staticFilePath)) {
                 $mimeTypes = [
                     'css'  => 'text/css',
@@ -35,9 +33,7 @@ class Core
                     'ico'  => 'image/x-icon',
                     'html' => 'text/html',
                 ];
-
-                $contentType = $mimeTypes[$ext] ?? 'application/octet-stream';
-                header('Content-Type: ' . $contentType);
+                header('Content-Type: ' . ($mimeTypes[$ext] ?? 'application/octet-stream'));
                 readfile($staticFilePath);
                 exit;
             } else {
@@ -47,7 +43,7 @@ class Core
             }
         }
 
-        // === ROTEAMENTO DE VIEWS === //
+        // === ROTAS DE VIEW ===
         $viewRoutes = [
             '' => 'cadastro/Parte1/index.php',
             'entrar' => 'Entrar/index.php',
@@ -61,12 +57,10 @@ class Core
             'esqueci_senha/verificacao' => 'esqueci_senha/verificacao/index.php',
             'trabalhadores' => 'Trabalhadores/index.php',
             'favoritos' => 'Favoritos/index.php'
-            // adicione mais rotas aqui
         ];
 
-        if (isset($viewRoutes[$url])) {
+        if (isset($viewRoutes[$url]) && $url !== 'usuarios') {
             $viewFile = $viewBasePath . $viewRoutes[$url];
-
             if (file_exists($viewFile)) {
                 require_once $viewFile;
                 exit;
@@ -77,21 +71,61 @@ class Core
             }
         }
 
-        // === REQUISIÇÃO PARA API === //
+        // === REQUISIÇÕES PARA API ===
         $method = $_SERVER['REQUEST_METHOD'];
-        $data = [];
+        $data = in_array($method, ['POST', 'PUT']) ? json_decode(file_get_contents("php://input"), true) ?? $_POST : $_GET;
+        unset($data['url']);
 
-        if (in_array($method, ['POST', 'PUT'])) {
-            $rawData = file_get_contents("php://input");
-            $data = json_decode($rawData, true) ?? $_POST;
-        } elseif ($method === 'GET') {
-            $data = $_GET;
-            unset($data['url']);
+        // === TRATAMENTO ESPECIAL PARA USUÁRIOS ===
+        if ($url === 'usuarios') {
+            $res = $this->makeRequest('GET', $this->apiBaseUrl . '/api/users');
+            $users = json_decode($res, true);
+
+            if (!is_array($users)) {
+                $users = [];
+                error_log("ERRO: A API /users não retornou array válido. Conteúdo: " . $res);
+            }
+
+            $result = [];
+            foreach ($users as $user) {
+                if (!is_array($user) || !isset($user['id'])) continue;
+
+                $prestador = $empresa = $telefone = null;
+
+                // Busca prestador pelo user_id
+                $prestadorRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/prestadores/user/' . $user['id']);
+                $prestadorData = json_decode($prestadorRes, true);
+                if (is_array($prestadorData)) $prestador = $prestadorData;
+
+                // Busca empresa
+                $empresaRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/empresas/user/' . $user['id']);
+                $empresaData = json_decode($empresaRes, true);
+                if (is_array($empresaData)) $empresa = $empresaData;
+
+                // Busca telefone
+                $telefoneRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/telefones/user/' . $user['id']);
+                $telefoneData = json_decode($telefoneRes, true);
+                if (is_array($telefoneData)) $telefone = $telefoneData;
+
+                $result[] = [
+                    'user' => $user,
+                    'prestador' => $prestador,
+                    'empresa' => $empresa,
+                    'telefone' => $telefone
+                ];
+            }
+
+            ob_end_clean();
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
+            exit;
         }
 
+        // Roteamento padrão para outras APIs
         $apiUrl = rtrim($this->apiBaseUrl, '/') . '/api/' . $url;
         $response = $this->makeRequest($method, $apiUrl, $data);
 
+        ob_end_clean();
         header('Content-Type: application/json; charset=utf-8');
         echo $response;
     }
@@ -99,8 +133,7 @@ class Core
     private function makeRequest(string $method, string $url, array $data = []): string
     {
         $ch = curl_init();
-    
-        // Detecta se há upload de arquivo (via FormData)
+
         $hasFile = false;
         foreach ($_FILES as $file) {
             if ($file['error'] === UPLOAD_ERR_OK) {
@@ -108,64 +141,34 @@ class Core
                 break;
             }
         }
-    
-        // Se for POST e houver arquivo, usa multipart/form-data
+
         if ($method === 'POST' && $hasFile) {
             $postFields = [];
-    
-            // Adiciona campos normais
-            foreach ($_POST as $key => $value) {
-                $postFields[$key] = $value;
-            }
-    
-            // Adiciona arquivos
-            foreach ($_FILES as $key => $file) {
-                $postFields[$key] = new CURLFile($file['tmp_name'], $file['type'], $file['name']);
-            }
-    
+            foreach ($_POST as $key => $value) $postFields[$key] = $value;
+            foreach ($_FILES as $key => $file) $postFields[$key] = new CURLFile($file['tmp_name'], $file['type'], $file['name']);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
             $headers = ['Accept: application/json'];
-    
         } else {
-            // JSON padrão (sem arquivo)
             switch ($method) {
-                case 'GET':
-                    if (!empty($data)) {
-                        $url .= '?' . http_build_query($data);
-                    }
-                    break;
-                case 'POST':
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-                    break;
-                case 'PUT':
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-                    break;
-                case 'DELETE':
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                    break;
+                case 'GET': if (!empty($data)) $url .= '?' . http_build_query($data); break;
+                case 'POST': curl_setopt($ch, CURLOPT_POST, true); curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data)); break;
+                case 'PUT': curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT'); curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data)); break;
+                case 'DELETE': curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE'); break;
             }
-            $headers = [
-                'Content-Type: application/json',
-                'Accept: application/json',
-            ];
+            $headers = ['Content-Type: application/json', 'Accept: application/json'];
         }
-    
+
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    
+
         $result = curl_exec($ch);
         $error = curl_error($ch);
         curl_close($ch);
-    
-        if ($error) {
-            return json_encode(['erro' => 'Erro ao acessar a API: ' . $error]);
-        }
-    
+
+        if ($error) return json_encode(['erro' => 'Erro ao acessar a API: ' . $error]);
+
         return $result;
     }
-    
 }

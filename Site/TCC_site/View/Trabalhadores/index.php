@@ -1,26 +1,3 @@
-<?php
-require_once __DIR__ . '/../../Core/Core.php';
-$core = new Core();
-
-$apiBase = 'http://127.0.0.1:8000/api';
-
-// Função para buscar dados da API via cURL
-function buscarPortfolios($url) {
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    $data = json_decode($response, true);
-    return is_array($data) ? $data : [];
-}
-
-// Buscar todos os portfólios
-$portfolios = buscarPortfolios($apiBase . '/portfolio');
-
-// Exemplo: imprimir os dados
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,29 +67,12 @@ $portfolios = buscarPortfolios($apiBase . '/portfolio');
     
 
 
-    <div class="title"><h1>Trabalhadores em todo o Brasil</h1></div>
-    <div class="cards">
-        <?php if (empty($usuarios)): ?>
-            <p>Nenhum usuário encontrado.</p>
-        <?php else: ?>
-            <?php foreach ($usuarios as $u): 
-                $nome = $u['nome'] ?? $u['razao_social'] ?? 'Usuário';
-                $foto = isset($u['foto']) && !empty($u['foto']) ? 
-                        $u['foto'] : 
-                        '/public/img/.png';
-                $cidade = $u['localidade'] ?? 'Local não informado';
-                $estado = $u['estado'] ?? '';
-            ?>
-            <div class="card">
-                <img src="<?= htmlspecialchars($foto) ?>" alt="<?= htmlspecialchars($nome) ?>">
-                <div class="info">
-                    <h3><?= htmlspecialchars($nome) ?></h3>
-                    <p><?= htmlspecialchars($cidade) ?> - <?= htmlspecialchars($estado) ?></p>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
+    <div class="title">
+    <h1>Trabalhadores em todo o Brasil</h1>
+</div>
+<div class="cards" id="cards-container">
+    <p id="loading">Carregando usuários...</p>
+</div>
     <div class="container">
 
         <div class="filtro-container">
