@@ -56,7 +56,9 @@ class Core
             'esqueci_senha/codigo' => 'esqueci_senha/codigo/index.php',
             'esqueci_senha/verificacao' => 'esqueci_senha/verificacao/index.php',
             'trabalhadores' => 'Trabalhadores/index.php',
-            'favoritos' => 'Favoritos/index.php'
+            'favoritos' => 'Favoritos/index.php',
+            'perfil_acessar' =>'Perfil/acessando/index.php',
+            'perfil_acessarTE' =>'Perfil/acessando/index.php'
         ];
 
         if (isset($viewRoutes[$url]) && $url !== 'usuarios') {

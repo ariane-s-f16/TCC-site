@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="home-cards">
+            <div class="home-cards" id="cards-container">
                 <div class="card">
                     <div class="top-content-card">
                         <div class="foto-perfil"></div>
@@ -123,7 +123,7 @@
                         <span>diegosf0104@gmail.com</span>
                     </div>
 
-                    <button class="ver-perfil">Ver Perfil</button>
+                    <button class="ver-perfil"><a href="index.php?url=perfil_acessar" class="nav-link">Ver Perfil</a></button>
                 </div>
             </div>
         </section>
