@@ -347,30 +347,21 @@ async function esqueci_senha(event) {
     }
 
     try {
-        const apiUrl = `http://127.0.0.1:8000/api/forgot-password?email=${encodeURIComponent(email)}`;
-        const response = await fetch(apiUrl);
+        const apiUrl = `index.php?url=forgot-password`;
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
         if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
 
-        const text = await response.text();
-        if (!text || text.trim() === '') {
-            console.error("Resposta vazia do servidor");
-            alert("Servidor retornou resposta vazia. Verifique o backend.");
-            return;
-        }
+        const data = await response.json();
 
-        let data;
-        try {
-            data = JSON.parse(text);
-        } catch (parseError) {
-            console.error("Erro ao fazer parse do JSON:", parseError);
-            alert("Resposta do servidor não é um JSON válido.");
-            return;
-        }
-
-        if (data.message === 'Código enviado para o e-mail.' || data.success) {
+        if (data.success) {
             window.location.href = `index.php?url=esqueci_senha/verificacao&email=${encodeURIComponent(email)}`;
         } else {
-            alert("Erro: " + (data.message || data.error || "Não foi possível enviar o código"));
+            alert("Erro: " + (data.message || "Não foi possível enviar o código"));
         }
     } catch (err) {
         console.error("Erro ao enviar código:", err);
@@ -381,110 +372,127 @@ async function esqueci_senha(event) {
 
 
 // ====================== Cards Automáticos ======================
-
 let usuariosCache = [];
 let usuariosFiltrados = [];
 
-// --------------------- Preencher os cards existentes ---------------------
+// --------------------- Ativar botões "Ver Perfil" ---------------------
+function ativarBotoesVerPerfil() {
+    document.querySelectorAll(".ver-perfil").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const card = btn.closest(".card");
+            if (!card) return;
+
+            const nome = card.querySelector(".nome-card")?.textContent || "Usuário";
+            const cidadeEstado = card.querySelector(".localizacao span")?.textContent || "Local não informado";
+            const [cidade, estado] = cidadeEstado.split(",").map(s => s.trim());
+            const email = card.querySelector(".email span")?.textContent || "Não informado";
+            const telefone = card.querySelector(".telefone span")?.textContent || "Não informado";
+            const foto = card.querySelector(".foto-perfil img")?.src || "public/img/fundo.png";
+
+            const dados = new URLSearchParams({ nome, cidade, estado, email, telefone, foto });
+            window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
+        });
+    });
+}
+
+// --------------------- Renderizar cards ---------------------
 function renderizarCards(lista) {
     const container = document.getElementById('cards-container');
     if (!container) return;
 
-    // pega todos os cards já existentes no HTML
-    const cardsHTML = container.querySelectorAll('.card');
+    container.innerHTML = ''; // Limpa cards anteriores
 
-    // se tiver menos cards que usuários, apenas preenche os existentes
-    lista.forEach((item, index) => {
-        const card = cardsHTML[index];
-        if (!card) return; // ignora se não houver card suficiente
-
+    lista.forEach(item => {
         const nome = item.contratante?.nome || 'Usuário';
-        const area = item.contratante?.area || 'Área não informada';
+        const area = item.contratante?.profissao || 'Profissão não informada';
         const cidade = item.contratante?.localidade || 'Local não informado';
         const estado = item.contratante?.uf || '';
         const telefone = item.contato?.telefone || 'Não informado';
         const email = item.email || 'Não informado';
-        const foto = item.contratante?.foto ? `public/img/${item.contratante.foto}` : 'public/img/fundo.png';
-        const tipo = item.type === "prestador" ? "Profissional" : "Empresa";
         const avaliacao = item.avaliacao || 0;
-        const quantAvaliacoes = item.quantAvaliacoes || 0;
+        const quantAvaliacoes = item.quant_avaliacoes || 0;
 
-        // foto
-        const fotoImg = card.querySelector('.foto-perfil img');
-        if(fotoImg) {
-            fotoImg.src = foto;
-            fotoImg.onerror = () => fotoImg.src = 'public/img/fundo.png';
-            fotoImg.alt = nome;
-        }
+        // Aqui usamos o link direto do JSON ou fallback
+        const foto = item.contratante?.foto?.trim() 
+            ? item.contratante.foto
+            : 'public/img/fundo.png';
 
-        // nome
-        const nomeCard = card.querySelector('.nome-card');
-        if(nomeCard) nomeCard.textContent = nome;
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+            <div class="top-content-card">
+                <div class="foto-perfil">
+                    <img src="${foto}" alt="${nome}" onerror="this.onerror=null; this.src='public/img/fundo.png';">
+                </div>
+                <div class="nome-area">
+                    <h3 class="nome-card">${nome}</h3>
+                    <p class="area-card">${area}</p>
+                </div>
+                <button class="remover-favorito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+            </div>
 
-        // área
-        const areaCard = card.querySelector('.area-card');
-        if(areaCard) areaCard.textContent = area;
+            <p class="empresa-ou-profissional">${item.type === 'prestador' ? 'Profissional' : 'Empresa'}</p>
 
-        // tipo (profissional/empresa)
-        const tipoCard = card.querySelector('.empresa-ou-profissional');
-        if(tipoCard) tipoCard.textContent = tipo;
+            <div class="avaliacao-content">
+                <div class="flex items-center gap-1">${renderStars(avaliacao)}</div>
+                <span class="quant-avaliacoes">(${quantAvaliacoes} avaliações)</span>
+            </div>
 
-        // localização
-        const localizacao = card.querySelector('.localizacao span');
-        if(localizacao) localizacao.textContent = `${cidade}, ${estado}`;
+            <div class="localizacao">
+                <svg ...>...</svg>
+                <span>${cidade}, ${estado}</span>
+            </div>
 
-        // telefone
-        const telefoneSpan = card.querySelector('.telefone span');
-        if(telefoneSpan) telefoneSpan.textContent = telefone;
+            <div class="telefone">
+                <svg ...>...</svg>
+                <span>${telefone}</span>
+            </div>
 
-        // email
-        const emailSpan = card.querySelector('.email span');
-        if(emailSpan) emailSpan.textContent = email;
+            <div class="email">
+                <svg ...>...</svg>
+                <span>${email}</span>
+            </div>
 
-        // avaliação (preencher estrelas dinamicamente se quiser)
-        const quantAvaliacoesSpan = card.querySelector('.quant-avaliacoes');
-        if(quantAvaliacoesSpan) quantAvaliacoesSpan.textContent = `(${quantAvaliacoes} avaliações)`;
+            <button class="ver-perfil">Ver Perfil</button>
+        `;
 
-        // define data-tipo para filtros
-        card.setAttribute('data-tipo', item.type);
-
-        // botão ver perfil
-        const btnVerPerfil = card.querySelector('.ver-perfil');
-        if(btnVerPerfil){
-            btnVerPerfil.onclick = () => {
-                const dados = new URLSearchParams({
-                    nome, cidade, estado, email, telefone, foto
-                });
-                window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
-            }
-        }
-
-        // garante que o card apareça
-        card.style.display = '';
+        container.appendChild(card);
     });
 
-    // esconde cards extras (se houver mais cards HTML do que usuários)
-    for(let i = lista.length; i < cardsHTML.length; i++){
-        cardsHTML[i].style.display = 'none';
-    }
-
+    ativarBotoesVerPerfil();
     atualizarContadores();
 }
 
-// --------------------- Filtros ---------------------
-function aplicarFiltros(tipoSelecionado = "Todos") {
-    usuariosFiltrados = tipoSelecionado === "Todos" 
-        ? [...usuariosCache] 
-        : usuariosCache.filter(u => (tipoSelecionado === "Profissionais" ? u.type === "prestador" : u.type === "empresa"));
+// --------------------- Renderizar estrelas ---------------------
+function renderStars(avaliacao) {
+    let full = Math.floor(avaliacao);
+    let half = avaliacao % 1 >= 0.5 ? 1 : 0;
+    let empty = 5 - full - half;
+    let stars = '';
 
+    for (let i = 0; i < full; i++) stars += `<svg ... class="fill-yellow-400 w-4 h-4">...</svg>`;
+    if (half) stars += `<svg ... class="fill-yellow-400 w-4 h-4">...</svg>`;
+    for (let i = 0; i < empty; i++) stars += `<svg ... class="text-gray-300 w-4 h-4">...</svg>`;
+
+    return stars;
+}
+
+// --------------------- Filtros ---------------------
+function aplicarFiltros(tipo = "Todos") {
+    usuariosFiltrados = tipo === "Todos" 
+        ? [...usuariosCache] 
+        : usuariosCache.filter(u => tipo === "Profissionais" ? u.type === "prestador" : u.type === "empresa");
     aplicarOrdenacao();
 }
 
 // --------------------- Ordenação ---------------------
 function aplicarOrdenacao() {
     const ordem = document.getElementById("ord-select")?.value || "recente";
-
-    usuariosFiltrados.sort((a, b) => {
+    usuariosFiltrados.sort((a,b) => {
         switch (ordem) {
             case "nome": return (a.contratante?.nome || "").localeCompare(b.contratante?.nome || "");
             case "antigo": return a.id - b.id;
@@ -492,11 +500,8 @@ function aplicarOrdenacao() {
             default: return b.id - a.id;
         }
     });
-
     renderizarCards(usuariosFiltrados);
 }
-
-document.getElementById("ord-select")?.addEventListener("change", aplicarOrdenacao);
 
 // --------------------- Contadores ---------------------
 function atualizarContadores() {
@@ -505,31 +510,24 @@ function atualizarContadores() {
     document.getElementById("empresas").textContent = usuariosCache.filter(u => u.type === "empresa").length;
 }
 
-// --------------------- Carregar API ---------------------
+// --------------------- Carregar usuários da API ---------------------
 function carregarUsuarios() {
     const container = document.getElementById('cards-container');
-    if (!container) return;
+    if (!container) return container.innerHTML = '<p>Container não encontrado!</p>';
 
     container.innerHTML = '<p>Carregando usuários...</p>';
 
-    fetch('index.php?url=usuario&nocache=' + Date.now(), {
-        method: "GET",
-        cache: "no-store"
-    })
-    .then(res => res.json())
-    .then(usuarios => {
-        usuariosCache = usuarios;
-        aplicarFiltros("Todos");
-    })
-    .catch(err => {
-        console.error('Erro ao carregar usuários:', err);
-        container.innerHTML = '<p>Erro ao carregar usuários.</p>';
-    });
+    fetch('index.php?url=usuario&nocache=' + Date.now())
+        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(usuarios => {
+            if (!Array.isArray(usuarios)) throw new Error("Retorno inválido da API");
+            usuariosCache = usuarios;
+            aplicarFiltros("Todos");
+        })
+        .catch(err => container.innerHTML = `<p>Erro ao carregar usuários: ${err}</p>`);
 }
 
 window.addEventListener('load', carregarUsuarios);
-window.selecionar = selecionar;
-
 
 // --------------------- Funções já existentes ---------------------
 window.finalizarCadastro = finalizarCadastro;
@@ -537,3 +535,5 @@ window.fazerLogin = fazerLogin;
 window.atualizarNomeHeader = atualizarNomeHeader;
 window.esqueci_senha = esqueci_senha;
 document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
+
+
