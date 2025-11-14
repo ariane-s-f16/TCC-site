@@ -142,6 +142,7 @@ async function finalizarCadastro() {
 
     // Campos do formulário Parte 3
     const campos = {
+        
         nome: document.getElementById("nome")?.value.trim() || '',
         telefone: document.getElementById("telefone")?.value.trim() || '',
         cpf: document.getElementById("cpf")?.value.trim() || '',
@@ -377,76 +378,162 @@ async function esqueci_senha(event) {
     }
 }
 
+
+
 // ====================== Cards Automáticos ======================
 
-function renderizarUsuarios(lista) {
-    const container = document.getElementById("cards-container");
+let usuariosCache = [];
+let usuariosFiltrados = [];
 
-    //  Apaga todos os cards antigos
-    container.innerHTML = "";
+// --------------------- Preencher os cards existentes ---------------------
+function renderizarCards(lista) {
+    const container = document.getElementById('cards-container');
+    if (!container) return;
 
-    //  Renderiza os novos cards para que ao deletar algo do banco não fique os cards antigos
-    lista.forEach(user => {
-        container.innerHTML += `
-            <div class="card">
-                <h3>${user.email}</h3>
-            </div>
-        `;
+    // pega todos os cards já existentes no HTML
+    const cardsHTML = container.querySelectorAll('.card');
+
+    // se tiver menos cards que usuários, apenas preenche os existentes
+    lista.forEach((item, index) => {
+        const card = cardsHTML[index];
+        if (!card) return; // ignora se não houver card suficiente
+
+        const nome = item.contratante?.nome || 'Usuário';
+        const area = item.contratante?.area || 'Área não informada';
+        const cidade = item.contratante?.localidade || 'Local não informado';
+        const estado = item.contratante?.uf || '';
+        const telefone = item.contato?.telefone || 'Não informado';
+        const email = item.email || 'Não informado';
+        const foto = item.contratante?.foto ? `public/img/${item.contratante.foto}` : 'public/img/fundo.png';
+        const tipo = item.type === "prestador" ? "Profissional" : "Empresa";
+        const avaliacao = item.avaliacao || 0;
+        const quantAvaliacoes = item.quantAvaliacoes || 0;
+
+        // foto
+        const fotoImg = card.querySelector('.foto-perfil img');
+        if(fotoImg) {
+            fotoImg.src = foto;
+            fotoImg.onerror = () => fotoImg.src = 'public/img/fundo.png';
+            fotoImg.alt = nome;
+        }
+
+        // nome
+        const nomeCard = card.querySelector('.nome-card');
+        if(nomeCard) nomeCard.textContent = nome;
+
+        // área
+        const areaCard = card.querySelector('.area-card');
+        if(areaCard) areaCard.textContent = area;
+
+        // tipo (profissional/empresa)
+        const tipoCard = card.querySelector('.empresa-ou-profissional');
+        if(tipoCard) tipoCard.textContent = tipo;
+
+        // localização
+        const localizacao = card.querySelector('.localizacao span');
+        if(localizacao) localizacao.textContent = `${cidade}, ${estado}`;
+
+        // telefone
+        const telefoneSpan = card.querySelector('.telefone span');
+        if(telefoneSpan) telefoneSpan.textContent = telefone;
+
+        // email
+        const emailSpan = card.querySelector('.email span');
+        if(emailSpan) emailSpan.textContent = email;
+
+        // avaliação (preencher estrelas dinamicamente se quiser)
+        const quantAvaliacoesSpan = card.querySelector('.quant-avaliacoes');
+        if(quantAvaliacoesSpan) quantAvaliacoesSpan.textContent = `(${quantAvaliacoes} avaliações)`;
+
+        // define data-tipo para filtros
+        card.setAttribute('data-tipo', item.type);
+
+        // botão ver perfil
+        const btnVerPerfil = card.querySelector('.ver-perfil');
+        if(btnVerPerfil){
+            btnVerPerfil.onclick = () => {
+                const dados = new URLSearchParams({
+                    nome, cidade, estado, email, telefone, foto
+                });
+                window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
+            }
+        }
+
+        // garante que o card apareça
+        card.style.display = '';
     });
+
+    // esconde cards extras (se houver mais cards HTML do que usuários)
+    for(let i = lista.length; i < cardsHTML.length; i++){
+        cardsHTML[i].style.display = 'none';
+    }
+
+    atualizarContadores();
 }
-// Carregar cards de usuários/favoritos
+
+// --------------------- Filtros ---------------------
+function aplicarFiltros(tipoSelecionado = "Todos") {
+    usuariosFiltrados = tipoSelecionado === "Todos" 
+        ? [...usuariosCache] 
+        : usuariosCache.filter(u => (tipoSelecionado === "Profissionais" ? u.type === "prestador" : u.type === "empresa"));
+
+    aplicarOrdenacao();
+}
+
+// --------------------- Ordenação ---------------------
+function aplicarOrdenacao() {
+    const ordem = document.getElementById("ord-select")?.value || "recente";
+
+    usuariosFiltrados.sort((a, b) => {
+        switch (ordem) {
+            case "nome": return (a.contratante?.nome || "").localeCompare(b.contratante?.nome || "");
+            case "antigo": return a.id - b.id;
+            case "avaliacao": return (b.avaliacao || 0) - (a.avaliacao || 0);
+            default: return b.id - a.id;
+        }
+    });
+
+    renderizarCards(usuariosFiltrados);
+}
+
+document.getElementById("ord-select")?.addEventListener("change", aplicarOrdenacao);
+
+// --------------------- Contadores ---------------------
+function atualizarContadores() {
+    document.getElementById("todos").textContent = usuariosCache.length;
+    document.getElementById("Profissionais").textContent = usuariosCache.filter(u => u.type === "prestador").length;
+    document.getElementById("empresas").textContent = usuariosCache.filter(u => u.type === "empresa").length;
+}
+
+// --------------------- Carregar API ---------------------
 function carregarUsuarios() {
     const container = document.getElementById('cards-container');
     if (!container) return;
 
     container.innerHTML = '<p>Carregando usuários...</p>';
 
-    fetch('index.php?url=usuario&nocache=' + Date.now())
-
-     // <-- ROTA CERTA!
-        .then(res => res.json())
-        .then(usuarios => {
-            if (!usuarios.length) {
-                container.innerHTML = '<p>Nenhum usuário encontrado.</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-
-            usuarios.forEach(item => {
-                let nome = item.contratante?.nome || 'Usuário';
-                let cidade = item.contratante?.localidade || 'Local não informado';
-                let estado = item.contratante?.uf || '';
-                let email = item.email || 'Não informado';
-                let telefone = item.contato?.telefone || 'Não informado';
-                let foto = item.contratante?.foto || '/public/img/logo.png';
-
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = `
-                    <img src="${foto}" alt="${nome}">
-                    <div class="info">
-                        <h3>${nome}</h3>
-                        <p>${cidade} - ${estado}</p>
-                        <p>Email: ${email}</p>
-                        <p>Telefone: ${telefone}</p>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        })
-        .catch(err => {
-            console.error('Erro ao carregar usuários:', err);
-            container.innerHTML = '<p>Erro ao carregar usuários.</p>';
-        });
+    fetch('index.php?url=usuario&nocache=' + Date.now(), {
+        method: "GET",
+        cache: "no-store"
+    })
+    .then(res => res.json())
+    .then(usuarios => {
+        usuariosCache = usuarios;
+        aplicarFiltros("Todos");
+    })
+    .catch(err => {
+        console.error('Erro ao carregar usuários:', err);
+        container.innerHTML = '<p>Erro ao carregar usuários.</p>';
+    });
 }
 
 window.addEventListener('load', carregarUsuarios);
+window.selecionar = selecionar;
+
+
+// --------------------- Funções já existentes ---------------------
 window.finalizarCadastro = finalizarCadastro;
 window.fazerLogin = fazerLogin;
 window.atualizarNomeHeader = atualizarNomeHeader;
 window.esqueci_senha = esqueci_senha;
 document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
-
-
-

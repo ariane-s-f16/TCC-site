@@ -7,10 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/usuario/cadastro">
+    <form id="formCadastro" enctype="multipart/form-data">
         <div class="input_foto">
-            <label for="foto"></label>
-            <input type="file" name="foto" id="foto">
+            <label for="file"></label>
+            <input type="file" name="file" id="file" accept="image/*" required>
         </div>
 
         <div class="input_box">
@@ -50,9 +50,15 @@
                
             </select>
         
-            <select name="cidade" id="Cidade" required disabled>
+            <select name="cidade" id="cidade" required disabled>
                 <option value="">Cidade</option>
                 
+            </select>
+
+            <select id="id_ramo">
+                <option value="">Selecione...</option>
+                <option value="1">Elétrica</option>
+                <option value="2">Hidráulica</option>
             </select>
         </div>
 

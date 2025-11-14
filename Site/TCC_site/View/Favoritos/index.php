@@ -59,9 +59,9 @@
         <section class="favoritos-content">
             <div class="filtro">
                 <div class="filtro-left">
-                    <button class="button-tab" onclick="selecionar(this)">Todos <span class="tab-count" id="todos">1</span></button>
-                    <button class="button-tab" onclick="selecionar(this)">Profissionais <span class="tab-count" id="Profissionais">1</span></button>
-                    <button class="button-tab" onclick="selecionar(this)">Empresas <span class="tab-count" id="empresas">0</span></button>
+                    <button class="button-tab" onclick="selecionar(this)">Todos <span class="tab-count" id="todos"></span></button>
+                    <button class="button-tab" onclick="selecionar(this)">Profissionais <span class="tab-count" id="Profissionais"></span></button>
+                    <button class="button-tab" onclick="selecionar(this)">Empresas <span class="tab-count" id="empresas"></span></button>
                 </div>
 
                 <div class="filtro-right">
@@ -78,7 +78,11 @@
             <div class="home-cards" id="cards-container"  >
                 <div class="card">
                     <div class="top-content-card">
-                        <div class="foto-perfil"></div>
+                    <div class="foto-perfil">
+                        <img src="${foto}"
+                            onerror="this.onerror=null; this.src='public/fundo.png';"
+                            alt="${nome}">
+                    </div>
 
                         <div class="nome-area">
                             <h3 class="nome-card">Diego S. F.</h3>
@@ -108,7 +112,7 @@
                         <span class="quant-avaliacoes">(203 avaliações)</span>
                     </div>
 
-                    <div class="localizacao">
+                    <div class="localizacao" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <span>Jaú, SP</span>
                     </div>
@@ -123,7 +127,7 @@
                         <span>diegosf0104@gmail.com</span>
                     </div>
 
-                    <button class="ver-perfil"><a href="index.php?url=perfil_acessar" class="nav-link">Ver Perfil</a></button>
+                    <button class="ver-perfil">Ver Perfil</button>
                 </div>
             </div>
         </section>

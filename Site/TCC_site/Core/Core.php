@@ -58,7 +58,7 @@ class Core
             'trabalhadores' => 'Trabalhadores/index.php',
             'favoritos' => 'Favoritos/index.php',
             'perfil_acessar' =>'Perfil/acessando/index.php',
-            'perfil_acessarTE' =>'Perfil/acessando/index.php'
+            'perfil_acessarTE' =>'Perfil/ProprioTE/index.php'
         ];
 
         if (isset($viewRoutes[$url]) && $url !== 'usuarios') {

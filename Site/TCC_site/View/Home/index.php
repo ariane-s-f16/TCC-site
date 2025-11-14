@@ -28,7 +28,7 @@
                 <ul class="nav-links">
                     <li><a href="index.php?url=home" class="nav-link">Home</a></li>
                     <li><a href="index.php?url=trabalhadores" class="nav-link">Trabalhadores</a></li>
-                    <li><a href="/empresas" class="nav-link">Empresas</a></li>
+                    <li><a href="#" class="nav-link">Empresas</a></li>
                     <li><a href="/sobre" class="nav-link">Sobre</a></li>
                 </ul>
 
