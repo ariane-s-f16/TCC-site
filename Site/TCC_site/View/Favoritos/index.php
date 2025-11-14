@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="home-cards" id="cards-container">
+            <div class="home-cards" id="cards-container"  >
                 <div class="card">
                     <div class="top-content-card">
                         <div class="foto-perfil"></div>

@@ -378,57 +378,48 @@ async function esqueci_senha(event) {
 }
 
 // ====================== Cards Automáticos ======================
-[// Carregar cards de usuários/favoritos
+
+function renderizarUsuarios(lista) {
+    const container = document.getElementById("cards-container");
+
+    //  Apaga todos os cards antigos
+    container.innerHTML = "";
+
+    //  Renderiza os novos cards para que ao deletar algo do banco não fique os cards antigos
+    lista.forEach(user => {
+        container.innerHTML += `
+            <div class="card">
+                <h3>${user.email}</h3>
+            </div>
+        `;
+    });
+}
+// Carregar cards de usuários/favoritos
 function carregarUsuarios() {
     const container = document.getElementById('cards-container');
     if (!container) return;
 
     container.innerHTML = '<p>Carregando usuários...</p>';
 
-    fetch('index.php?url=usuarios')
-        .then(res => res.json())
-        .then(data => {
-            const usuarios = Array.isArray(data) ? data : data.usuarios || data.data || [];
+    fetch('index.php?url=usuario&nocache=' + Date.now())
 
+     // <-- ROTA CERTA!
+        .then(res => res.json())
+        .then(usuarios => {
             if (!usuarios.length) {
                 container.innerHTML = '<p>Nenhum usuário encontrado.</p>';
                 return;
             }
 
-            container.innerHTML = ''; // Limpa container
+            container.innerHTML = '';
 
             usuarios.forEach(item => {
-                let nome = 'Usuário';
-                let cidade = 'Local não informado';
-                let estado = '';
-                let email = 'Não informado';
-                let telefone = 'Não informado';
-                let foto = '/public/img/default.png';
-
-                if (item.user) {
-                    email = item.user.email || email;
-
-                    if (item.user.tipo === 'prestador' && item.prestador) {
-                        nome = item.prestador.nome || nome;
-                        cidade = item.prestador.cidade || cidade;
-                        estado = item.prestador.estado || estado;
-                        telefone = item.prestador.telefone || telefone;
-                        foto = item.prestador.foto || foto;
-                    } else if (item.user.tipo === 'empresa' && item.empresa) {
-                        nome = item.empresa.razao_social || nome;
-                        cidade = item.empresa.localidade || cidade;
-                        estado = item.empresa.uf || estado;
-                        telefone = item.empresa.telefone || telefone;
-                        foto = item.empresa.foto || foto;
-                    }
-                } else {
-                    nome = item.nome || nome;
-                    cidade = item.cidade || cidade;
-                    estado = item.estado || estado;
-                    telefone = item.telefone || telefone;
-                    email = item.email || email;
-                    foto = item.foto || foto;
-                }
+                let nome = item.contratante?.nome || 'Usuário';
+                let cidade = item.contratante?.localidade || 'Local não informado';
+                let estado = item.contratante?.uf || '';
+                let email = item.email || 'Não informado';
+                let telefone = item.contato?.telefone || 'Não informado';
+                let foto = item.contratante?.foto || '/public/img/logo.png';
 
                 const card = document.createElement('div');
                 card.classList.add('card');
@@ -450,26 +441,12 @@ function carregarUsuarios() {
         });
 }
 
-// Evita sobrescrever window.onload
 window.addEventListener('load', carregarUsuarios);
-
-// Torna outras funções globais
 window.finalizarCadastro = finalizarCadastro;
 window.fazerLogin = fazerLogin;
 window.atualizarNomeHeader = atualizarNomeHeader;
 window.esqueci_senha = esqueci_senha;
 document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
-]
-
-// Torna a função global
-window.onload = carregarUsuarios;
 
 
 
-// ====================== Torna funções globais ======================
-
-window.finalizarCadastro = finalizarCadastro;
-window.fazerLogin = fazerLogin;
-window.atualizarNomeHeader = atualizarNomeHeader;
-window.esqueci_senha = esqueci_senha;
-document.addEventListener('DOMContentLoaded', atualizarNomeHeader);
