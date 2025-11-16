@@ -6,11 +6,8 @@ class Core
 
     public function __construct()
     {
-        // Detecta protocolo e host atuais do front-end
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' 
-                     || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $host = $_SERVER['HTTP_HOST']; // inclui porta (ex: 127.0.0.1:8001)
-        $this->apiBaseUrl = $protocol . $host;
+        // Endereço fixo da API na porta 8003
+        $this->apiBaseUrl = 'http://127.0.0.1:8003'; 
     }
 
     public function start()
@@ -68,7 +65,7 @@ class Core
             'favoritos' => 'Favoritos/index.php',
             'perfil_acessar' => 'Perfil/acessando/index.php',
             'perfil_acessarTE' => 'Perfil/ProprioTE/index.php',
-            'empresa' => 'empresa/index.php' // nova rota adicionada
+            'empresa' => 'empresa/index.php'
         ];
 
         if (isset($viewRoutes[$url]) && $url !== 'usuarios') {
