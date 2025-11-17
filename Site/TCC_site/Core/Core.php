@@ -2,13 +2,7 @@
 
 class Core
 {
-    private string $apiBaseUrl;
-
-    public function __construct()
-    {
-        // Endereço fixo da API na porta 8003
-        $this->apiBaseUrl = 'http://192.168.1.62:8003'; 
-    }
+    private string $apiBaseUrl = 'http://127.0.0.1:8000'; // URL da API Laravel
 
     public function start()
     {
@@ -63,9 +57,8 @@ class Core
             'esqueci_senha/verificacao' => 'esqueci_senha/verificacao/index.php',
             'trabalhadores' => 'Trabalhadores/index.php',
             'favoritos' => 'Favoritos/index.php',
-            'perfil_acessar' => 'Perfil/acessando/index.php',
-            'perfil_acessarTE' => 'Perfil/ProprioTE/index.php',
-            'empresa' => 'empresa/index.php'
+            'perfil_acessar' =>'Perfil/acessando/index.php',
+            'perfil_acessarTE' =>'Perfil/ProprioTE/index.php'
         ];
 
         if (isset($viewRoutes[$url]) && $url !== 'usuarios') {
@@ -82,9 +75,7 @@ class Core
 
         // === REQUISIÇÕES PARA API ===
         $method = $_SERVER['REQUEST_METHOD'];
-        $data = in_array($method, ['POST', 'PUT']) 
-                ? json_decode(file_get_contents("php://input"), true) ?? $_POST 
-                : $_GET;
+        $data = in_array($method, ['POST', 'PUT']) ? json_decode(file_get_contents("php://input"), true) ?? $_POST : $_GET;
         unset($data['url']);
 
         // === TRATAMENTO ESPECIAL PARA USUÁRIOS ===
@@ -103,13 +94,19 @@ class Core
 
                 $prestador = $empresa = $telefone = null;
 
-                $prestadorData = json_decode($this->makeRequest('GET', $this->apiBaseUrl . '/api/prestadores/user/' . $user['id']), true);
+                // Busca prestador pelo user_id
+                $prestadorRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/prestadores/user/' . $user['id']);
+                $prestadorData = json_decode($prestadorRes, true);
                 if (is_array($prestadorData)) $prestador = $prestadorData;
 
-                $empresaData = json_decode($this->makeRequest('GET', $this->apiBaseUrl . '/api/empresas/user/' . $user['id']), true);
+                // Busca empresa
+                $empresaRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/empresas/user/' . $user['id']);
+                $empresaData = json_decode($empresaRes, true);
                 if (is_array($empresaData)) $empresa = $empresaData;
 
-                $telefoneData = json_decode($this->makeRequest('GET', $this->apiBaseUrl . '/api/telefones/user/' . $user['id']), true);
+                // Busca telefone
+                $telefoneRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/telefones/user/' . $user['id']);
+                $telefoneData = json_decode($telefoneRes, true);
                 if (is_array($telefoneData)) $telefone = $telefoneData;
 
                 $result[] = [
