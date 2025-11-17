@@ -349,34 +349,50 @@ if (cepInput) {
 }
 async function esqueci_senha(event) {
     event.preventDefault();
+
+    if (enviandoCodigo) return; 
+    enviandoCodigo = true;
+
+    const botao = event.target.querySelector('button[type="submit"]');
+    if (botao) botao.disabled = true;
+
     const email = document.getElementById('email').value.trim();
     if (!email) {
         alert("Digite seu e-mail");
+        enviandoCodigo = false;
+        if (botao) botao.disabled = false;
         return;
     }
 
     try {
-        const apiUrl = `index.php?url=forgot-password`;
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-        });
+        // Envia via GET com query string
+        const apiUrl = `index.php?url=forgot-password&email=${encodeURIComponent(email)}`;
 
-        if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            const erroData = await response.json().catch(() => ({}));
+            throw new Error(erroData.message || `Erro HTTP ${response.status}`);
+        }
 
         const data = await response.json();
 
         if (data.success) {
+            // Redireciona apenas se sucesso
             window.location.href = `index.php?url=esqueci_senha/verificacao&email=${encodeURIComponent(email)}`;
         } else {
             alert("Erro: " + (data.message || "Não foi possível enviar o código"));
         }
+
     } catch (err) {
         console.error("Erro ao enviar código:", err);
         alert("Erro de comunicação com o servidor: " + err.message);
+    } finally {
+        enviandoCodigo = false;
+        if (botao) botao.disabled = false;
     }
 }
+
 
 
 // ====================== Cards Automáticos ======================
