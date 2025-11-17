@@ -15,6 +15,10 @@
         <div class="input_box">
             <input type="text" name="nome" id="nome" placeholder="Nome" maxlength="50">
         </div>
+        <div class="input_box">
+            <input type="text" name="cpf" id="cpf" placeholder="CPF" required>
+        </div>
+       
         
         <div class="input_box">
             <input type="text"  name="telefone" id="telefone" placeholder="Telefone">

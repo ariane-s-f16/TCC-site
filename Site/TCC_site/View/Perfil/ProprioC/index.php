@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/style14.css">
+    <link rel="stylesheet" href="style.css">
     <title>Perfil</title>
 </head>
 
@@ -66,6 +66,7 @@
 
                         <div class="informacoes-card_perfil">
                             <h2 class="nome-perfil">Diego S. F.</h2>
+                            <p class="profissao">Desenvolvedor Front-End</p>
                             <div class="mini-informacoes">
                                 <div class="localizacao-TCC">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -96,58 +97,108 @@
                                             class="quant_avaliacoes-text">avaliações</span>)</p>
                                 </div>
 
-                                <div class="contratante">
-                                    <span class="contratante-text">Contratante</span>
+                                <div class="disponibilidade">
+                                    <span class="disponi-text">Disponível</span>
+                                </div>
+
+                                <div class="empre_profi">
+                                    <span class="empre_profi-text">Profissional</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="TCC-right">
-                        <button class="btn-editar-perfil" onclick="abrirEditarPerfil()">
+                        <button class="btn-editar-perfil">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
                             Editar Perfil
                         </button>
-
-                        <a href="/Favoritos/index.html" class="btn-acessar-favoritos">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
-                                <path
-                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                </path>
-                            </svg>
-                            Acessar Favoritos
-                        </a>
                     </div>
                 </div>
 
                 <div class="line"></div>
 
                 <div class="bottom-content-card">
-                    <button class="button-telefone">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="#6d6c7f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-phone w-4 h-4">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                            </path>
-                        </svg>
+                    <div class="BCC-top">
+                        <div class="projetos_concluidos">
+                            <div class="PC-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="#6d6c7f" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-briefcase w-4 h-4">
+                                    <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                    <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+                                </svg>
+                            </div>
 
-                        <span class="tl-numero">(14) 99121-1029</span>
-                    </button>
+                            <div class="PC-text">
+                                <span class="projetos_concluidos-text">360</span>
+                                <p>Projetos Concluídos</p>
+                            </div>
+                        </div>
 
-                    <button class="button-email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="#6d6c7f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-mail w-4 h-4">
-                            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                        </svg>
+                        <div class="tempo_experiencia">
+                            <div class="TE-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-calendar w-6 h-6 text-accent">
+                                    <path d="M8 2v4"></path>
+                                    <path d="M16 2v4"></path>
+                                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                    <path d="M3 10h18"></path>
+                                </svg>
+                            </div>
 
-                        <span class="email-text">diegosf0104@gmail.com</span>
-                    </button>
+                            <div class="TE-text">
+                                <span class="tempo_experiencia-text">3 anos</span>
+                                <p>Tempo de Experiência</p>
+                            </div>
+                        </div>
+
+                        <div class="avaliacao-BCC">
+                            <div class="ABCC-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="star pri">
+                                    <path
+                                        d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                                    </path>
+                                </svg>
+                            </div>
+
+                            <div class="ABCC-text">
+                                <span class="avaliacao-BCC-text">4.0/5.0</span>
+                                <p>Avaliação Média</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="BCC-bottom">
+                        <button class="button-telefone">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="#6d6c7f" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-phone w-4 h-4">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+
+                            <span class="tl-numero">(14) 99121-1029</span>
+                        </button>
+
+                        <button class="button-email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="#6d6c7f" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-mail w-4 h-4">
+                                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                            </svg>
+
+                            <span class="email-text">diegosf0104@gmail.com</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -155,10 +206,37 @@
         <section class="mais-informacoes">
             <div class="nav-perfil">
                 <button class="button-navper ativo" id="btn_navperfil-sobre">Sobre</button>
+                <button class="button-navper" id="btn_navperfil-postagens">Postagens</button>
                 <button class="button-navper" id="btn_navperfil-avaliacao">Avaliações</button>
             </div>
 
             <div class="sobre sessao">
+                <div class="sobre_profissional">
+                    <h3>Sobre o Profissional</h3>
+                    <p>Pedreiro com mais de 15 anos de experiência em construção civil, reformas residenciais e
+                        comerciais. Especializado em alvenaria, revestimentos e acabamentos de alta qualidade. Trabalho
+                        com seriedade, pontualidade e compromisso com a satisfação do cliente.
+                    </p>
+                </div>
+
+                <div class="especialidades">
+                    <h3>especialidades</h3>
+                    <div class="span-esp_op">
+                        <span class="especialidade-op">Alvenaria</span>
+                    </div>
+                    <div class="span-esp_op">
+                        <span class="especialidade-op">Revestimento</span>
+                    </div>
+                    <div class="span-esp_op">
+                        <span class="especialidade-op">Fundações</span>
+                    </div>
+                    <div class="span-esp_op">
+                        <span class="especialidade-op">Reformas</span>
+                    </div>
+                    <div class="span-esp_op">
+                        <span class="especialidade-op">Acabamento</span>
+                    </div>
+                </div>
 
                 <div class="informacoes-contato_redes">
                     <h3>Formas de Contato e Redes Sociais</h3>
@@ -234,6 +312,39 @@
                         </svg>
 
                         <span class="name_perfil-x">Diego</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="publicacoes">
+                <button class="btn-add-post">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"></path>
+                        <path d="m6 6 12 12"></path>
+                    </svg>
+                    Nova publicação
+                </button>
+
+                <div class="home-cards-post">
+                    <div class="card-publicacoes">
+                        <div class="img-card_publicacoes"></div>
+                        <div class="mini-informacoes-card_publicacoes">
+                            <h4>Casa Moderna Finalizada</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae accusamus fuga ut aut in
+                                asperiores ex eligendi. Natus adipisci, explicabo corrupti distinctio nesciunt facere
+                                dolores? Dolorem eius corporis earum tenetur?</p>
+                        </div>
+                    </div>
+
+                    <div class="card-publicacoes">
+                        <div class="img-card_publicacoes"></div>
+                        <div class="mini-informacoes-card_publicacoes">
+                            <h4>Casa Moderna Finalizada</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae accusamus fuga ut aut in
+                                asperiores ex eligendi. Natus adipisci, explicabo corrupti distinctio nesciunt facere
+                                dolores? Dolorem eius corporis earum tenetur?</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -562,92 +673,201 @@
         </div>
     </footer>
 
-    <div class="fosco">
-        <div class="edite-perfil-container">
-            <div class="epc-top">
-                <h2>Editar perfil</h2>
-                <button class="cancelar_top" onclick="fecharEditarPerfil()">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M10.9393 12L6.9696 15.9697L8.03026 17.0304L12 13.0607L15.9697 17.0304L17.0304 15.9697L13.0607 12L17.0303 8.03039L15.9696 6.96973L12 10.9393L8.03038 6.96973L6.96972 8.03039L10.9393 12Z"
-                            fill="#2e2d37"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="info-basicas">
-                <h3>Informações Básicas</h3>
-                <div class="ib-name-perfil">
-                    <label for="ib-np-text">Nome</label>
-                    <input type="text" id="ib-np-text">
-                </div>
-                <div class="ib-profissao">
-                    <label for="ib-prof-text">Profissão</label>
-                    <input type="text" id="ib-prof-text">
-                </div>
-                <div class="cep">
-                    <label for="ib-cep-text">CEP</label>
-                    <input type="text" id="ib-cep-text">
-                </div>
-                <div class="ib-projetos-concluidos">
-                    <label for="ib-pc-text">Projetos Concluídos</label>
-                    <input type="text" id="ib-pc-text">
-                </div>
-                <div class="ib-tempo-expe">
-                    <label for="ib-tex-text">Tempo de experiência</label>
-                    <input type="text" id="ib-tex-text">
-                </div>
-            </div>
+    <div class="modal-overlay modal-perfil" id="modalPerfil">
+        <div class="register-card">
+            <div class="card-content">
+                <!-- Formulário de Empresa -->
+                <form id="Form" class="register-form active">
+                    <div class="image-uploads-section">
+                        <div class="banner-upload">
+                            <label for="Banner" class="upload-label banner-label">
+                                <div class="upload-placeholder" id="BannerPreview">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    <span>Adicionar Foto de Banner</span>
+                                </div>
+                            </label>
+                            <input type="file" id="Banner" accept="image/*" class="file-input">
+                        </div>
 
-            <div class="Sobre">
-                <h3>Sobre</h3>
-                <div class="sobre-profissional">
-                    <label for="so-prof">Sobre o profissional</label>
-                    <textarea id="so-prof"></textarea>
-                </div>
-                <div class="especialidades">
-                    <label for="campoBusca-espe">Especialidades</label>
-                    <input type="text" id="campoBusca-espe" placeholder="Digite a especialidade...">
-                    <ul id="listaResultados" class="resultados"></ul>
-                </div>
-            </div>
+                        <div class="profile-upload">
+                            <label for="Perfil" class="upload-label profile-label">
+                                <div class="upload-placeholder circular" id="PerfilPreview">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                            </label>
+                            <input type="file" id="Perfil" accept="image/*" class="file-input">
+                        </div>
+                    </div>
 
-            <div class="contato">
-                <h3>Contato</h3>
-                <div class="telefone-edi">
-                    <label for="con-tel-text">Telefone</label>
-                    <input type="text" id="con-tel-text">
-                </div>
-                <div class="email-edi">
-                    <label for="con-email-text">E-mail</label>
-                    <input type="text" id="con-email-text">
-                </div>
-            </div>
+                    <div class="form-fields">
+                        <div class="form-group">
+                            <label for="Nome" class="form-label">Nome de Perfil</label>
+                            <input type="text" id="Nome" class="form-input" placeholder="Digite o nome da empresa"
+                                required>
+                        </div>
 
-            <div class="redes-sociais-edi">
-                <h3>Redes Sociais</h3>
-                <div class="instagram-edi">
-                    <label for="rs-ins-text">Instagram</label>
-                    <input type="text" id="rs-ins-text">
-                </div>
-                <div class="facebook-edi">
-                    <label for="rs-fb-text">Facebook</label>
-                    <input type="text" id="rs-fb-text">
-                </div>
-                <div class="X-edi">
-                    <label for="rs-x-text">X (Twitter)</label>
-                    <input type="text" id="rs-x-text">
-                </div>
-            </div>
+                        <div class="form-group">
+                            <div class="searchable-select">
+                                <label for="AreaInput" class="form-label">Área/Setor</label>
 
-            <div class="line-edi"></div>
+                                <input type="text" id="AreaInput" class="form-input"
+                                    placeholder="Digite para buscar..." autocomplete="off" required>
 
-            <div class="buttons-edi">
-                <button class="limpar">Limpar dados</button>
-                <button class="salvar-alteracoes">Salvar alterações</button>
+                                <ul id="AreaOptions" class="options-list hidden">
+                                    <li data-value="construcao">Construção Civil</li>
+                                    <li data-value="pintura">Pintura</li>
+                                    <li data-value="eletrica">Serviços Elétricos</li>
+                                    <li data-value="hidraulica">Hidráulica</li>
+                                    <li data-value="marcenaria">Marcenaria</li>
+                                    <li data-value="jardinagem">Jardinagem</li>
+                                    <li data-value="limpeza">Limpeza / Conservação</li>
+                                    <li data-value="tecnologia">Tecnologia / Desenvolvimento</li>
+                                    <li data-value="outros">Outros</li>
+                                </ul>
+
+                                <!-- Campo enviado no form -->
+                                <input type="hidden" id="Area" name="Area">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Cep" class="form-label">CEP</label>
+                            <input type="text" id="Cep" class="form-input" placeholder="00000-000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ProjetosConcluidos" class="form-label">Projetos Concluídos</label>
+                            <input type="number" inputmode="numeric" id="ProjetosConcluidos" class="form-input"
+                                placeholder="000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="TempoExpe" class="form-label">Tempo de experiência (em anos)</label>
+                            <input type="number" inputmode="numeric" id="TempoExpe" class="form-input"
+                                placeholder="00" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sobreProfissional" class="form-label">Sobre o Profissional</label>
+                            <textarea id="sobreProfissional" class="form-textarea"
+                                placeholder="Fale um pouco sobre você..." rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="especialidadeInput" class="form-label">especialidades</label>
+                            <div class="especialidades-input-group">
+                                <input type="text" class="form-input" placeholder="Digite uma especialidade..."
+                                    id="especialidadeInput">
+                                <button type="button" class="add-btn" id="addEspecialidadeBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="especialidadesList" class="especialidades-list"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Tel" class="form-label">Telefone</label>
+                            <input type="tel" id="Tel" class="form-input" placeholder="(DDD) 00000-0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" id="registerEmail" class="form-input" placeholder="seu@email.com"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="instagram" class="form-label">Instagram</label>
+                            <input type="text" id="instagram" class="form-input" placeholder="@seuusuario">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="facebook" class="form-label">Facebook</label>
+                            <input type="text" id="facebook" class="form-input" placeholder="Link ou usuário">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="twitter" class="form-label">X (Twitter)</label>
+                            <input type="text" id="twitter" class="form-input" placeholder="@seuusuario">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancelBtn" class="btn btn-secondary">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <script src="public/script.js"></script>
+
+    <div class="modal-add-publicacao-overlay" id="modalAddPub">
+        <div class="modal-add-publicacao">
+            <div class="map-header">
+                <h2>Adicionar Nova Publicação</h2>
+                <button id="fecharAddPub" class="map-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"></path>
+                        <path d="m6 6 12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="map-body">
+                <label>Título</label>
+                <input type="text" id="pubTitulo" placeholder="Ex: Casa Moderna Finalizada">
+
+                <label>Descrição</label>
+                <textarea id="pubDescricao" placeholder="Descreva o projeto..."></textarea>
+
+                <label>Mídias (Fotos e Vídeos)</label>
+
+                <label for="pubMidias" class="btn-upload-midia">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <circle cx="16" cy="8" r="2" stroke="#1C274C" stroke-width="1.5"></circle>
+                            <path
+                                d="M2 12.5001L3.75159 10.9675C4.66286 10.1702 6.03628 10.2159 6.89249 11.0721L11.1822 15.3618C11.8694 16.0491 12.9512 16.1428 13.7464 15.5839L14.0446 15.3744C15.1888 14.5702 16.7369 14.6634 17.7765 15.599L21 18.5001"
+                                stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path>
+                            <path
+                                d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+                                stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path>
+                        </g>
+                    </svg>
+                    Adicionar foto/vídeo
+                </label>
+
+                <input type="file" id="pubMidias" accept="image/*,video/*" multiple>
+
+
+                <div id="previewContainer" class="preview-container"></div>
+            </div>
+
+            <div class="map-footer">
+                <button class="btn-secondary" id="cancelarAddPub">Cancelar</button>
+                <button class="adicionar" id="confirmarAddPub">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
