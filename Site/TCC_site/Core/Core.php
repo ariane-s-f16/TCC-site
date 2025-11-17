@@ -7,7 +7,7 @@ class Core
     public function __construct()
     {
         // Endereço fixo da API na porta 8003
-        $this->apiBaseUrl = 'http://127.0.0.1:8003'; 
+        $this->apiBaseUrl = 'http://192.168.1.62:8003'; 
     }
 
     public function start()
