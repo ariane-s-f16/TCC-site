@@ -59,8 +59,8 @@
         <section class="favoritos-content">
             <div class="filtro">
                 <div class="filtro-left">
-                    <button class="button-tab" onclick="selecionar(this)">Todos <span class="tab-count" id="todos"></span></button>
-                    <button class="button-tab" onclick="selecionar(this)">Profissionais <span class="tab-count" id="Profissionais"></span></button>
+                    <button class="button-tab" onclick="aplicarFiltros('Todos')">Todos <span class="tab-count" id="todos"></span></button>
+                    <button class="button-tab" onclick="aplicarFiltros('Empresas')">Empresas <span class="tab-count" id="Profissionais"></span></button>
                 </div>
 
                 <div class="filtro-right">

@@ -39,47 +39,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 //============avaliação===============================
-const btn_sobre = document.getElementById('btn_navperfil-sobre');
-const btn_avaliacao = document.getElementById('btn_navperfil-avaliacao');
+document.addEventListener('DOMContentLoaded', () => {
+    const btn_sobre = document.getElementById('btn_navperfil-sobre');
+    const btn_avaliacao = document.getElementById('btn_navperfil-avaliacao');
 
-const sessao_sobre = document.querySelector('.sobre');
-const sessao_avaliacao = document.querySelector('.avaliacao');
+    const sessao_sobre = document.querySelector('.sobre');
+    const sessao_avaliacao = document.querySelector('.avaliacao');
 
-function clicou_contatos_redes() {
-    if (!btn_sobre.classList.contains('ativo')) {
-        document.querySelector('.button-navper.ativo').classList.remove('ativo');
-        btn_sobre.classList.add('ativo');
-
-        document.querySelector('.sessao').classList.remove('sessao');
-        sessao_sobre.classList.add('sessao');
+    if (btn_sobre && sessao_sobre) {
+        btn_sobre.addEventListener('click', () => {
+            if (!btn_sobre.classList.contains('ativo')) {
+                document.querySelector('.button-navper.ativo').classList.remove('ativo');
+                btn_sobre.classList.add('ativo');
+                document.querySelector('.sessao').classList.remove('sessao');
+                sessao_sobre.classList.add('sessao');
+            }
+        });
     }
-}
 
-function clicou_avaliacao() {
-    if (!btn_avaliacao.classList.contains('ativo')) {
-        document.querySelector('.button-navper.ativo').classList.remove('ativo');
-        btn_avaliacao.classList.add('ativo');
-
-        document.querySelector('.sessao').classList.remove('sessao');
-        sessao_avaliacao.classList.add('sessao');
+    if (btn_avaliacao && sessao_avaliacao) {
+        btn_avaliacao.addEventListener('click', () => {
+            if (!btn_avaliacao.classList.contains('ativo')) {
+                document.querySelector('.button-navper.ativo').classList.remove('ativo');
+                btn_avaliacao.classList.add('ativo');
+                document.querySelector('.sessao').classList.remove('sessao');
+                sessao_avaliacao.classList.add('sessao');
+            }
+        });
     }
-}
-
-btn_sobre.addEventListener('click', clicou_contatos_redes);
-btn_avaliacao.addEventListener('click', clicou_avaliacao);
-
-const btn_editarper = document.querySelector('.btn-editar-perfil');
-const fosco = document.querySelector('.fosco');
-
-function abrirEditarPerfil() {
-    fosco.classList.add('ativo');
-}
-
-const btn_fechar = document.querySelector('.cancelar_top');
-
-function fecharEditarPerfil() {
-    fosco.classList.remove('ativo');
-}
+});
 
 // ====================== Parte 1 ======================
 async function verificarEmail(email) {
@@ -426,15 +414,16 @@ async function esqueci_senha(event) {
 // ====================== Cards Automáticos ======================
 let usuariosCache = [];
 let usuariosFiltrados = [];
+
 // ====================== Renderizar cards usando template ======================
 function renderizarCards(lista) {
     const container = document.getElementById('cards-container');
     if (!container) return;
 
-    container.innerHTML = ''; // Limpa cards anteriores
+    container.innerHTML = ''; // limpa cards anteriores
 
-    // Filtra apenas prestadores
-    const prestadores = lista.filter(item => item.type === 'prestador');
+    // Filtra apenas usuários com contratante definido (ou prestador se tiver)
+    const prestadores = lista.filter(item => item.contratante !== null);
 
     prestadores.forEach(item => {
         const template = document.querySelector('#card-template').content.cloneNode(true);
@@ -445,8 +434,6 @@ function renderizarCards(lista) {
         const estado = item.contratante?.uf || '';
         const telefone = item.contato?.telefone || 'Não informado';
         const email = item.email || 'Não informado';
-        const avaliacao = item.avaliacao || 0;
-        const quantAvaliacoes = item.quant_avaliacoes || 0;
         const foto = item.contratante?.foto?.trim() ? item.contratante.foto : 'public/img/fundo.png';
 
         template.querySelector('.foto-perfil img').src = foto;
@@ -457,45 +444,17 @@ function renderizarCards(lista) {
         template.querySelector('.telefone').textContent = telefone;
         template.querySelector('.email').textContent = email;
         template.querySelector('.localizacao span').textContent = `${cidade}, ${estado}`;
-        template.querySelector('.avaliacao-content').innerHTML = `
-            <div class="flex items-center gap-1">${renderStars(avaliacao)}</div>
-            <span class="quant-avaliacoes">(${quantAvaliacoes} avaliações)</span>
-        `;
 
         template.querySelector('.ver-perfil').addEventListener('click', () => {
-            const dados = new URLSearchParams({ 
-                nome, cidade, estado, email, telefone, foto 
-            });
+            const dados = new URLSearchParams({ nome, cidade, estado, email, telefone, foto });
             window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
         });
 
         container.appendChild(template);
     });
 
-    ativarBotoesVerPerfil();
     atualizarContadores();
-            }
-// --------------------- Ativar botões "Ver Perfil" ---------------------
-function ativarBotoesVerPerfil() {
-    document.querySelectorAll(".ver-perfil").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const card = btn.closest(".card");
-            if (!card) return;
-
-            const nome = card.querySelector(".nome-card")?.textContent || "Usuário";
-            const cidadeEstado = card.querySelector(".localizacao span")?.textContent || "Local não informado";
-            const [cidade, estado] = cidadeEstado.split(",").map(s => s.trim());
-            const email = card.querySelector(".email span")?.textContent || "Não informado";
-            const telefone = card.querySelector(".telefone span")?.textContent || "Não informado";
-            const foto = card.querySelector(".foto-perfil img")?.src || "public/img/fundo.png";
-
-            const dados = new URLSearchParams({ nome, cidade, estado, email, telefone, foto });
-            window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
-        });
-    });
 }
-
-// --------------------- Renderizar cards ---------------------
 
 
 // --------------------- Renderizar estrelas ---------------------
@@ -514,9 +473,9 @@ function renderStars(avaliacao) {
 
 // --------------------- Filtros ---------------------
 function aplicarFiltros(tipo = "Todos") {
-    usuariosFiltrados = tipo === "Todos" 
-        ? [...usuariosCache] 
-        : usuariosCache.filter(u => tipo === "Profissionais" ? u.type === "prestador" : u.type === "empresa");
+    usuariosFiltrados = tipo === "Todos"
+        ? [...usuariosCache]
+        : usuariosCache.filter(u => tipo === "Profissionais" ? u.contratante !== null : u.empresa !== null);
     aplicarOrdenacao();
 }
 
@@ -525,10 +484,10 @@ function aplicarOrdenacao() {
     const ordem = document.getElementById("ord-select")?.value || "recente";
     usuariosFiltrados.sort((a,b) => {
         switch (ordem) {
-            case "nome": return (a.contratante?.nome || "").localeCompare(b.contratante?.nome || "");
-            case "antigo": return a.id - b.id;
-            case "avaliacao": return (b.avaliacao || 0) - (a.avaliacao || 0);
-            default: return b.id - a.id;
+            case "nome": return (a.prestador?.nome || "").localeCompare(b.prestador?.nome || "");
+            case "antigo": return a.user?.id - b.user?.id;
+            case "avaliacao": return (b.prestador?.avaliacao || 0) - (a.prestador?.avaliacao || 0);
+            default: return (b.user?.id || 0) - (a.user?.id || 0);
         }
     });
     renderizarCards(usuariosFiltrados);
@@ -537,8 +496,8 @@ function aplicarOrdenacao() {
 // --------------------- Contadores ---------------------
 function atualizarContadores() {
     document.getElementById("todos").textContent = usuariosCache.length;
-    document.getElementById("Profissionais").textContent = usuariosCache.filter(u => u.type === "prestador").length;
-    document.getElementById("empresas").textContent = usuariosCache.filter(u => u.type === "empresa").length;
+    document.getElementById("Profissionais").textContent = usuariosCache.filter(u => u.user?.tipo_usuario === "prestador").length;
+    document.getElementById("empresas").textContent = usuariosCache.filter(u => u.user?.tipo_usuario === "empresa").length;
 }
 
 // --------------------- Carregar usuários da API ---------------------
@@ -548,9 +507,10 @@ function carregarUsuarios() {
 
     container.innerHTML = '<p>Carregando usuários...</p>';
 
-    fetch('index.php?url=usuario&nocache=' + Date.now())
+    fetch('index.php?url=prestadores&nocache=' + Date.now())
         .then(res => res.ok ? res.json() : Promise.reject(res.status))
         .then(usuarios => {
+            console.log("Dados recebidos da API:", usuarios); // ✅ VER SE CHEGOU ALGO
             if (!Array.isArray(usuarios)) throw new Error("Retorno inválido da API");
             usuariosCache = usuarios;
             aplicarFiltros("Todos");
@@ -558,7 +518,9 @@ function carregarUsuarios() {
         .catch(err => container.innerHTML = `<p>Erro ao carregar usuários: ${err}</p>`);
 }
 
+
 window.addEventListener('load', carregarUsuarios);
+
 
 // --------------------- Funções já existentes ---------------------
 window.finalizarCadastro = finalizarCadastro;

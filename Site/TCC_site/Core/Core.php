@@ -62,7 +62,7 @@ class Core
             'perfil_acessarTE' =>'Perfil/ProprioTE/index.php'
         ];
 
-        if (isset($viewRoutes[$url]) && $url !== 'usuarios') {
+        if (isset($viewRoutes[$url]) && $url !== 'usuarios' && $url !== 'prestadores') {
             $viewFile = $viewBasePath . $viewRoutes[$url];
             if (file_exists($viewFile)) {
                 require_once $viewFile;
@@ -74,47 +74,42 @@ class Core
             }
         }
 
-        // === REQUISIÇÕES PARA API ===
-        $method = $_SERVER['REQUEST_METHOD'];
-        $data = in_array($method, ['POST', 'PUT']) ? json_decode(file_get_contents("php://input"), true) ?? $_POST : $_GET;
-        unset($data['url']);
-
-        // === TRATAMENTO ESPECIAL PARA USUÁRIOS ===
-        if ($url === 'usuarios') {
+        // === TRATAMENTO ESPECIAL PARA PRESTADORES ===
+        if ($url === 'prestadores') {
             $res = $this->makeRequest('GET', $this->apiBaseUrl . '/api/users');
             $users = json_decode($res, true);
-
-            if (!is_array($users)) {
-                $users = [];
-                error_log("ERRO: A API /users não retornou array válido. Conteúdo: " . $res);
-            }
+            if (!is_array($users)) $users = [];
 
             $result = [];
+
             foreach ($users as $user) {
-                if (!is_array($user) || !isset($user['id'])) continue;
+                if (!is_array($user) || ($user['tipo_usuario'] ?? '') !== 'prestador') continue;
 
-                $prestador = $empresa = $telefone = null;
+                $telefone = $prestadorInfo = null;
 
-                // Busca prestador pelo user_id
-                $prestadorRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/prestadores/user/' . $user['id']);
-                $prestadorData = json_decode($prestadorRes, true);
-                if (is_array($prestadorData)) $prestador = $prestadorData;
-
-                // Busca empresa
-                $empresaRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/empresas/user/' . $user['id']);
-                $empresaData = json_decode($empresaRes, true);
-                if (is_array($empresaData)) $empresa = $empresaData;
-
-                // Busca telefone
-                $telefoneRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/telefones/user/' . $user['id']);
+                // Busca telefone na tabela contatos
+                $telefoneRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/contatos/user/' . $user['id']);
                 $telefoneData = json_decode($telefoneRes, true);
                 if (is_array($telefoneData)) $telefone = $telefoneData;
 
+                // Busca informações do prestador
+                $prestadorRes = $this->makeRequest('GET', $this->apiBaseUrl . '/api/prestadores/user/' . $user['id']);
+                $prestadorData = json_decode($prestadorRes, true);
+                if (is_array($prestadorData)) $prestadorInfo = $prestadorData;
+
                 $result[] = [
-                    'user' => $user,
-                    'prestador' => $prestador,
-                    'empresa' => $empresa,
-                    'telefone' => $telefone
+                    'user' => [
+                        'email' => $user['email'] ?? null,
+                        'senha' => $user['senha'] ?? null,
+                        'tipo_usuario' => $user['tipo_usuario'] ?? null,
+                    ],
+                    'telefone' => $telefone,
+                    'prestador' => [
+                        'nome' => $prestadorInfo['nome'] ?? null,
+                        'uf' => $prestadorInfo['uf'] ?? null,
+                        'estado' => $prestadorInfo['estado'] ?? null,
+                        'foto' => $prestadorInfo['foto'] ?? null,
+                    ]
                 ];
             }
 
@@ -124,7 +119,11 @@ class Core
             exit;
         }
 
-        // Roteamento padrão para outras APIs
+        // === ROTEAMENTO PADRÃO PARA OUTRAS APIs ===
+        $method = $_SERVER['REQUEST_METHOD'];
+        $data = in_array($method, ['POST', 'PUT']) ? json_decode(file_get_contents("php://input"), true) ?? $_POST : $_GET;
+        unset($data['url']);
+
         $apiUrl = rtrim($this->apiBaseUrl, '/') . '/api/' . $url;
         $response = $this->makeRequest($method, $apiUrl, $data);
 
