@@ -241,13 +241,13 @@ async function fazerLogin() {
         const resposta = await res.json();
 
         if (resposta.access_token) {
-            localStorage.setItem("usuarioLogado", JSON.stringify({
-                nome: resposta.user?.nome || null,
-                email,
-                access_token: resposta.access_token,
-                user: resposta.user || null
-            }));
+            // Salva tudo do usuário e token
+            localStorage.setItem("usuarioLogado", JSON.stringify(resposta));
+
+            // Atualiza nome no header
             atualizarNomeHeader();
+
+            // Redireciona para home
             window.location.href = "index.php?url=home";
         } else if (resposta.error) {
             alert(resposta.error);
@@ -258,7 +258,7 @@ async function fazerLogin() {
         console.error("Erro no login:", err);
         alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
     }
-}
+                  }
 
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
