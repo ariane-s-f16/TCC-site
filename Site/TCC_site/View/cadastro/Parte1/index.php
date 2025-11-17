@@ -47,7 +47,7 @@
             </div>
             
             <div class="mudarlogar2">
-                <p>Já tem uma conta? <a href=""index.php?url=entrar>Conecte-se</a>.</p>
+                <p>Já tem uma conta? <a href="index.php?url=entrar">Conecte-se</a>.</p>
             </div>
         </form>
     </div>
