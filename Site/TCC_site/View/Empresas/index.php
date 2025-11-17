@@ -51,8 +51,8 @@
     <main class="home-main">
         <section class="hero-section">
             <div class="hero-text">
-                <h1 class="hero-title">Trabalhadores</h1>
-                <p class="hero-subtitle">Profissionais cadastrados </p>
+                <h1 class="hero-title">Empresas</h1>
+                <p class="hero-subtitle">Empresas cadastrados </p>
             </div>
         </section>
 

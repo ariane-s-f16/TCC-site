@@ -2,7 +2,7 @@
 
 class Core
 {
-    private string $apiBaseUrl = 'http://127.0.0.1:8004'; // URL da API Laravel
+    private string $apiBaseUrl = 'http://127.0.0.1:8000'; // URL da API Laravel
 
     public function start()
     {
@@ -56,6 +56,7 @@ class Core
             'esqueci_senha/codigo' => 'esqueci_senha/codigo/index.php',
             'esqueci_senha/verificacao' => 'esqueci_senha/verificacao/index.php',
             'trabalhadores' => 'Trabalhadores/index.php',
+            'empresas' => 'Empresas/index.php',
             'favoritos' => 'Favoritos/index.php',
             'perfil_acessar' =>'Perfil/acessando/index.php',
             'perfil_acessarTE' =>'Perfil/ProprioTE/index.php'

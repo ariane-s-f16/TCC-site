@@ -258,7 +258,7 @@ async function fazerLogin() {
         console.error("Erro no login:", err);
         alert("Erro ao tentar entrar. Verifique sua conexão ou rota do servidor.");
     }
-                  }
+}
 
 // ====================== Máscaras e CEP ======================
 document.addEventListener('DOMContentLoaded', () => {
@@ -346,7 +346,7 @@ if (cepInput) {
 
 });
 
-}
+
 async function esqueci_senha(event) {
     event.preventDefault();
 
