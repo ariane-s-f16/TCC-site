@@ -2,7 +2,7 @@
 
 class Core
 {
-    private string $apiBaseUrl = 'http://127.0.0.1:8000'; // URL da API Laravel
+    private string $apiBaseUrl = 'http://127.0.0.1:8004'; // URL da API Laravel
 
     public function start()
     {

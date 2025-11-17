@@ -156,6 +156,15 @@ async function finalizarCadastro() {
         infoadd: document.getElementById("infoadd")?.value.trim() || ''
     };
 
+    if (cadastro.perfil === "prestador") {
+    const idRamo = document.getElementById("id_ramo")?.value;
+    if (!idRamo) {
+        alert("Selecione o ramo de atuação!");
+        return;
+    }
+    campos.id_ramo = idRamo;
+    }
+
     // Verifica se todos os campos obrigatórios foram preenchidos
     for (const key in campos) {
         if (!campos[key]) {
@@ -337,7 +346,7 @@ if (cepInput) {
 
 });
 
-// ====================== Função esqueci senha ======================
+}
 async function esqueci_senha(event) {
     event.preventDefault();
     const email = document.getElementById('email').value.trim();
@@ -368,7 +377,6 @@ async function esqueci_senha(event) {
         alert("Erro de comunicação com o servidor: " + err.message);
     }
 }
-
 
 
 // ====================== Cards Automáticos ======================
