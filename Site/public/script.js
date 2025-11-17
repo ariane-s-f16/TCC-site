@@ -374,7 +374,55 @@ async function esqueci_senha(event) {
 // ====================== Cards Automáticos ======================
 let usuariosCache = [];
 let usuariosFiltrados = [];
+// ====================== Renderizar cards usando template ======================
+function renderizarCards(lista) {
+    const container = document.getElementById('cards-container');
+    if (!container) return;
 
+    container.innerHTML = ''; // Limpa cards anteriores
+
+    // Filtra apenas prestadores
+    const prestadores = lista.filter(item => item.type === 'prestador');
+
+    prestadores.forEach(item => {
+        const template = document.querySelector('#card-template').content.cloneNode(true);
+
+        const nome = item.contratante?.nome || 'Usuário';
+        const area = item.contratante?.profissao || 'Profissão não informada';
+        const cidade = item.contratante?.localidade || 'Local não informado';
+        const estado = item.contratante?.uf || '';
+        const telefone = item.contato?.telefone || 'Não informado';
+        const email = item.email || 'Não informado';
+        const avaliacao = item.avaliacao || 0;
+        const quantAvaliacoes = item.quant_avaliacoes || 0;
+        const foto = item.contratante?.foto?.trim() ? item.contratante.foto : 'public/img/fundo.png';
+
+        template.querySelector('.foto-perfil img').src = foto;
+        template.querySelector('.foto-perfil img').alt = nome;
+        template.querySelector('.nome-card').textContent = nome;
+        template.querySelector('.area-card').textContent = area;
+        template.querySelector('.empresa-ou-profissional').textContent = 'Profissional';
+        template.querySelector('.telefone').textContent = telefone;
+        template.querySelector('.email').textContent = email;
+        template.querySelector('.localizacao span').textContent = `${cidade}, ${estado}`;
+        template.querySelector('.avaliacao-content').innerHTML = `
+            <div class="flex items-center gap-1">${renderStars(avaliacao)}</div>
+            <span class="quant-avaliacoes">(${quantAvaliacoes} avaliações)</span>
+        `;
+
+        template.querySelector('.ver-perfil').addEventListener('click', () => {
+            const dados = new URLSearchParams({ 
+                nome, cidade, estado, email, telefone, foto 
+            });
+            window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
+        });
+
+        container.appendChild(template);
+    });
+
+    ativarBotoesVerPerfil();
+    atualizarContadores();
+            }
 // --------------------- Ativar botões "Ver Perfil" ---------------------
 function ativarBotoesVerPerfil() {
     document.querySelectorAll(".ver-perfil").forEach(btn => {
@@ -396,76 +444,7 @@ function ativarBotoesVerPerfil() {
 }
 
 // --------------------- Renderizar cards ---------------------
-function renderizarCards(lista) {
-    const container = document.getElementById('cards-container');
-    if (!container) return;
 
-    container.innerHTML = ''; // Limpa cards anteriores
-
-    lista.forEach(item => {
-        const nome = item.contratante?.nome || 'Usuário';
-        const area = item.contratante?.profissao || 'Profissão não informada';
-        const cidade = item.contratante?.localidade || 'Local não informado';
-        const estado = item.contratante?.uf || '';
-        const telefone = item.contato?.telefone || 'Não informado';
-        const email = item.email || 'Não informado';
-        const avaliacao = item.avaliacao || 0;
-        const quantAvaliacoes = item.quant_avaliacoes || 0;
-
-        // Aqui usamos o link direto do JSON ou fallback
-        const foto = item.contratante?.foto?.trim() 
-            ? item.contratante.foto
-            : 'public/img/fundo.png';
-
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.innerHTML = `
-            <div class="top-content-card">
-                <div class="foto-perfil">
-                    <img src="${foto}" alt="${nome}" onerror="this.onerror=null; this.src='public/img/fundo.png';">
-                </div>
-                <div class="nome-area">
-                    <h3 class="nome-card">${nome}</h3>
-                    <p class="area-card">${area}</p>
-                </div>
-                <button class="remover-favorito">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <p class="empresa-ou-profissional">${item.type === 'prestador' ? 'Profissional' : 'Empresa'}</p>
-
-            <div class="avaliacao-content">
-                <div class="flex items-center gap-1">${renderStars(avaliacao)}</div>
-                <span class="quant-avaliacoes">(${quantAvaliacoes} avaliações)</span>
-            </div>
-
-            <div class="localizacao">
-                <svg ...>...</svg>
-                <span>${cidade}, ${estado}</span>
-            </div>
-
-            <div class="telefone">
-                <svg ...>...</svg>
-                <span>${telefone}</span>
-            </div>
-
-            <div class="email">
-                <svg ...>...</svg>
-                <span>${email}</span>
-            </div>
-
-            <button class="ver-perfil">Ver Perfil</button>
-        `;
-
-        container.appendChild(card);
-    });
-
-    ativarBotoesVerPerfil();
-    atualizarContadores();
-}
 
 // --------------------- Renderizar estrelas ---------------------
 function renderStars(avaliacao) {
