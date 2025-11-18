@@ -937,8 +937,6 @@ async function esqueci_senha(event) {
     }
 }
 
-
-
 // ====================== Cards Automáticos ======================
 let usuariosCache = [];
 let usuariosFiltrados = [];
@@ -954,16 +952,19 @@ function renderizarCards(lista) {
         const template = document.querySelector('#card-template')?.content.cloneNode(true);
         if (!template) return;
 
+        // ====================== AJUSTES PARA O FORMATO DO CORE ======================
         const nome = item.prestador?.nome || 'Usuário';
-        const area = item.prestador?.profissao || 'Profissão não informada';
-        const cidade = item.prestador?.localidade || 'Local não informado';
+        const area = item.prestador?.profissao || 'Profissão não informada'; // pode não existir
+        const cidade = item.prestador?.cidade || item.prestador?.estado || 'Local não informado';
         const estado = item.prestador?.uf || '';
-        const telefone = item.contato?.telefone || 'Não informado';
+        const telefone = item.telefone?.telefone || 'Não informado';
         const email = item.user?.email || 'Não informado';
         const foto = item.prestador?.foto?.trim() ? item.prestador.foto : '/public/img/fundo.png';
+
         const avaliacao = item.prestador?.avaliacao || 0;
         const quantAvaliacoes = item.prestador?.quant_avaliacoes || 0;
 
+        // Preenche o card
         template.querySelector('.foto-perfil img').src = foto;
         template.querySelector('.foto-perfil img').alt = nome;
         template.querySelector('.nome-card').textContent = nome;
@@ -977,6 +978,7 @@ function renderizarCards(lista) {
             <span class="quant-avaliacoes">(${quantAvaliacoes} avaliações)</span>
         `;
 
+        // Botão de perfil
         template.querySelector('.ver-perfil').addEventListener('click', () => {
             const dados = new URLSearchParams({ nome, cidade, estado, email, telefone, foto });
             window.location.href = "index.php?url=perfil_acessar&" + dados.toString();
@@ -1006,7 +1008,10 @@ function renderStars(avaliacao) {
 function aplicarFiltros(tipo = "Todos") {
     usuariosFiltrados = tipo === "Todos"
         ? [...usuariosCache]
-        : usuariosCache.filter(u => tipo === "Profissionais" ? u.user?.tipo_usuario === "prestador" : u.user?.tipo_usuario === "empresa");
+        : usuariosCache.filter(u => tipo === "Profissionais"
+            ? u.user?.tipo_usuario === "prestador"
+            : u.user?.tipo_usuario === "empresa"
+        );
     aplicarOrdenacao();
 }
 
@@ -1038,11 +1043,10 @@ function atualizarContadores() {
     if (empEl) empEl.textContent = usuariosCache.filter(u => u.user?.tipo_usuario === "empresa").length;
 }
 
-// ✅ CORREÇÃO PRINCIPAL: Só carrega se o container existir
+// ====================== CARREGAR USUÁRIOS DO CORE ======================
 function carregarUsuarios() {
     const container = document.getElementById('cards-container');
     
-    // ✅ Se não existe o container, NÃO executa (evita erro)
     if (!container) {
         console.log("⚠️ cards-container não encontrado. Pulando carregamento.");
         return;
@@ -1053,18 +1057,17 @@ function carregarUsuarios() {
     fetch('index.php?url=prestadores&nocache=' + Date.now())
         .then(res => res.ok ? res.json() : Promise.reject(res.status))
         .then(usuarios => {
-            console.log("✅ Dados recebidos da API:", usuarios);
+            console.log("✅ Dados recebidos da API (CORE):", usuarios);
             if (!Array.isArray(usuarios)) throw new Error("Retorno inválido da API");
             usuariosCache = usuarios;
             aplicarFiltros("Todos");
         })
         .catch(err => {
             console.error("❌ Erro ao carregar usuários:", err);
-            if (container) container.innerHTML = `<p>Erro ao carregar usuários: ${err}</p>`;
+            container.innerHTML = `<p>Erro ao carregar usuários: ${err}</p>`;
         });
 }
 
-// ✅ Só executa se estiver na página de prestadores
 window.addEventListener('load', carregarUsuarios);
 
 // ====================== Funções já existentes ======================
